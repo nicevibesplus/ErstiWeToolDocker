@@ -1,0 +1,85 @@
+doctype html
+html
+  head
+    meta(http-equiv='content-type', content='text/html; charset=utf-8')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    title Personliche Daten
+  body
+    //
+      $fields[] = ['first_name', 'Vorname', 'text'];
+      $fields[] = ['last_name', 'Nachname', 'text'];
+      $fields[] = ['gender', 'Geschlecht', 'radio'];
+      $fields[] = ['address', 'Adresse', 'text'];
+      $fields[] = ['post_code', 'PLZ', 'text'];
+      $fields[] = ['city', 'Ort', 'text'];
+      $fields[] = ['email', 'E-Mail', 'email'];
+      $fields[] = ['mobile', 'Handynummer', 'tel'];
+      $fields[] = ['birthday', 'Geburtsdatum', 'date'];
+      $fields[] = ['study', 'Studiengang', 'radio'];
+      $fields[] = ['veggie_level', 'Ich ernähre mich', 'radio'];
+      $fields[] = ['comment', 'Sonstiges', 'textarea'];
+    form(method='POST', action='/review')
+      label(for='first_name')
+        | Vorname: 
+        input#first_name(name='first_name', type='text', required='', autocomplete='off',value='Donald')
+      label(for='last_name')
+        | Nachname: 
+        input#last_name(name='last_name', type='text', required='', autocomplete='off',value='Duck')
+      fieldset#gender
+        legend Geschlecht:
+        label(for='m')
+          input#m(type='radio', name='gender', value='2')
+          | männlich
+        label(for='f')
+          input#f(type='radio', name='gender', value='1')
+          | weiblich
+        label(for='n')
+          input#n(type='radio', name='gender',value='3')
+          | keine Angabe
+      label(for='address')
+        | Adresse: 
+        input#address(name='address', type='text', required='', autocomplete='off',value='Am schiefen Pier 12')
+      label(for='post_code')
+        | PLZ: 
+        input#post_code(name='post_code', type='number', required='', autocomplete='off', maxlength='5',value='66666')
+      label(for='city')
+        | Ort: 
+        input#city(name='city', type='text', required='', autocomplete='off',value='Entenhausen')
+      label(for='email')
+        | E-Mail: 
+        input#email(name='email', type='email', required='', autocomplete='off',value='donald@duck.ente')
+      label(for='mobile')
+        | Handynummer: 
+        input#mobile(name='mobile', type='tel', required='', autocomplete='off',value='0123456789')
+      label(for='birthday')
+        | Geburtstag: 
+        input#birthday(name='birthday', type='date', placeholder='YYYY-MM-DD', required='', autocomplete='off',value='02-02-1523')
+      fieldset#study
+        legend Studiengang:
+        label(for='geo')
+          input#geo(type='radio', name='study', value='1')
+          | Geographie
+        label(for='loek')
+          input#loek(type='radio', name='study', value='2')
+          | Landschaftsökologie
+        label(for='zweifach')
+          input#zweifach(type='radio', name='study', value='3')
+          | Zwei-Fach-Bachelor
+        label(for='geoinf')
+          input#geoinf(type='radio', name='study', value='0')
+          | Geoinformatik
+      fieldset#veggie_level
+        legend Ich ernähre mich
+        label(for='normal')
+          input#normal(type='radio', name='veggie_level', value='0')
+          | auch mit Fleisch
+        label(for='vegetarisch')
+          input#vegetarisch(type='radio', name='veggie_level', value='1')
+          | vegetarisch
+        label(for='vegan')
+          input#vegan(type='radio', name='veggie_level', value='2')
+          | vegan
+      label(for='comment')
+        | Sonstiges: 
+        textarea#comment(name='comment', autocomplete='off')
+      input(type='submit', value='Absenden')

@@ -22,7 +22,7 @@ exports.createDB = function(rootuser, rootpsw, tokencount, nodepsw){
     rootconn.query('DROP USER \'nodejs_erstiwe\';', function(err){if (err) {console.log('INFO: Cannot drop User %s', err)}});
     rootconn.query('FLUSH PRIVILEGES;');
     rootconn.query('CREATE USER \'nodejs_erstiwe\' IDENTIFIED BY \'' + nodepsw +'\';', function(err){if(err){console.log('WARN: Error creating User %s', err)}});
-    rootconn.query('GRANT CREATE,INSERT,UPDATE,SELECT ON ErstiWe' + currentyear + '.* TO \'nodejs_erstiwe\';', function(err){if (err){console.log('WARN: Error granting rights to User %s', err)}});
+    rootconn.query('GRANT CREATE,INSERT,UPDATE,SELECT,DELETE ON ErstiWe' + currentyear + '.* TO \'nodejs_erstiwe\';', function(err){if (err){console.log('WARN: Error granting rights to User %s', err)}});
     rootconn.query('FLUSH PRIVILEGES'); 
     
     // Creating User Table

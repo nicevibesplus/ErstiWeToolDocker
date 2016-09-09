@@ -19,7 +19,7 @@ exports.insertuser = function(waiting, userdata, token){
       connection.beginTransaction(function(err) {
         connection.query('INSERT INTO users (email,firstname,lastname,gender,address,zip,city,mobile,birthday,study,food,additionalinfo,deletetoken,waiting) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);',[userdata.email, userdata.first_name, userdata.last_name, userdata.gender,userdata.address, userdata.post_code, userdata.city, userdata.mobile, userdata.birthday, userdata.study, userdata.veggie_level, userdata.comment, deleteToken, waiting], function(err){
             if (err){console.log(err);}});
-        connection.query('DELETE FROM token WHERE token=?', [token],function(err){if (err) console.log(err)});
+        connection.query('DELETE FROM token WHERE token=?', [token],function(err){if (err) console.log('BEDUG:' + err)});
         connection.commit(function(err){
           if(err){
             return connection.rollback(function(err){throw err;});
@@ -39,7 +39,22 @@ exports.checkToken = function(token, next){
         connection.query('SELECT token AS token FROM token WHERE token=?',[token],function(err,rows){
           try{
             connection.release();
-            if(rows[0].token == token) {next(true);}else{next(false);};
+            if(rows[0].token == token) {console.log(true);next(true);}else{console.log(false);next(false);};
+          }catch(error){next(false);}
+        });
+    });
+  };
+};
+
+exports.checkEmail = function(email, next){
+  if(pool == null){console.log('WARN: Not connected to DB'); next(false);}
+  else{
+    pool.getConnection(function(err,connection){
+        if (err){console.log(err); next(false);};
+        connection.query('SELECT COUNT(*) AS count FROM users WHERE email=?',[email],function(err,rows){
+          try{
+            connection.release();
+            if(rows[0].count == 0) {next(true);}else{next(false);};
           }catch(error){next(false);}
         });
     });
@@ -92,7 +107,7 @@ exports.userexists = function(email, next){
     });
   };
 };
-
+/*
 // What about deletetoken verification?
 exports.deleteuser = function(table,email,next){
   if(pool == null){console.log('WARN: Not connected to DB'); next(false);}
@@ -106,6 +121,7 @@ exports.deleteuser = function(table,email,next){
     });
   };
 };
+*/
 
 //TODO: 
 exports.getEmail= function(){};

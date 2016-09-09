@@ -9,3 +9,4 @@ Prototype of ErstiWeTool in nodejs express framework.
 - AdminPanel Authentification (auth.js)
 - [Email confirmation System]
 - Success.pug
+- Userreview.pug styling

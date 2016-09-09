@@ -10,3 +10,4 @@ Prototype of ErstiWeTool in nodejs express framework.
 - [Email confirmation System]
 - Success.pug
 - Userreview.pug styling
+- DBHandler "getter" (get Userlist, get Waiting etc.)

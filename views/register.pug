@@ -3,7 +3,7 @@ html
   head
     meta(http-equiv='content-type', content='text/html; charset=utf-8')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    title Personliche Daten
+    title Persönliche Daten
   body
     //
       $fields[] = ['first_name', 'Vorname', 'text'];
@@ -20,11 +20,11 @@ html
       $fields[] = ['comment', 'Sonstiges', 'textarea'];
     form(method='POST', action='/review')
       label(for='first_name')
-        | Vorname: 
-        input#first_name(name='first_name', type='text', required='', autocomplete='off',value='Donald')
+        | Vorname:
+        input#first_name(name='first_name', type='text', required='', autocomplete='off',placeholder='Donald')
       label(for='last_name')
-        | Nachname: 
-        input#last_name(name='last_name', type='text', required='', autocomplete='off',value='Duck')
+        | Nachname:
+        input#last_name(name='last_name', type='text', required='', autocomplete='off',placeholder='Duck')
       fieldset#gender
         legend Geschlecht:
         label(for='m')
@@ -34,26 +34,26 @@ html
           input#f(type='radio', name='gender', value='1')
           | weiblich
         label(for='n')
-          input#n(type='radio', name='gender',value='3')
-          | keine Angabe
+          input#n(type='radio', name='gender', value='3')
+          | who cares?!
       label(for='address')
-        | Adresse: 
-        input#address(name='address', type='text', required='', autocomplete='off',value='Am schiefen Pier 12')
+        | Adresse:
+        input#address(name='address', type='text', required='', autocomplete='off',placeholder='Am schiefen Pier 12')
       label(for='post_code')
-        | PLZ: 
-        input#post_code(name='post_code', type='number', required='', autocomplete='off', maxlength='5',value='66666')
+        | PLZ:
+        input#post_code(name='post_code', type='number', required='', autocomplete='off', maxlength='5',placeholder='66666')
       label(for='city')
-        | Ort: 
-        input#city(name='city', type='text', required='', autocomplete='off',value='Entenhausen')
+        | Ort:
+        input#city(name='city', type='text', required='', autocomplete='off',placeholder='Entenhausen')
       label(for='email')
-        | E-Mail: 
-        input#email(name='email', type='email', required='', autocomplete='off',value='donald@duck.ente')
+        | E-Mail:
+        input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
       label(for='mobile')
-        | Handynummer: 
-        input#mobile(name='mobile', type='tel', required='', autocomplete='off',value='0123456789')
+        | Handynummer:
+        input#mobile(name='mobile', type='tel', required='', autocomplete='off',placeholder='0123456789')
       label(for='birthday')
-        | Geburtstag: 
-        input#birthday(name='birthday', type='date', placeholder='YYYY-MM-DD', required='', autocomplete='off',value='02-02-1523')
+        | Geburtstag:
+        input#birthday(name='birthday', type='date', placeholder='1523-02-02', required='', autocomplete='off')
       fieldset#study
         legend Studiengang:
         label(for='geo')
@@ -80,6 +80,6 @@ html
           input#vegan(type='radio', name='veggie_level', value='2')
           | vegan
       label(for='comment')
-        | Sonstiges: 
+        | Sonstiges:
         textarea#comment(name='comment', autocomplete='off')
       input(type='submit', value='Absenden')

@@ -1,37 +1,43 @@
-var express = require('express');
 var path = require('path');
+var express = require('express');
 var cookieSession = require('cookie-session');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var helmet = require('helmet');
-var routes = require('./routes/index');
+
+var routesFront = require('./routes/frontend');
+var routesAdmin = require('./routes/admin');
+var DBconstructor = require('./DBconstructor'); // DEBUG
+var db = require('./DBhandler');
 var app = express();
 
-// Helmet setup
+// Init DB connection
+db.createConnectionPool('Please change me!');
+
+// harden server by sending certain headers
 app.use(helmet());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Create Cookies 
+// Create Cookies
 app.use(cookieSession({
-		name: 'session',
-		secret: Math.random().toString(36).substr(2,10)
+  name: 'session',
+  secret: Math.random().toString(36).substr(2,10)
 }));
-				
+
 // All Routes
-app.use('/', routes);
+app.use('/', routesFront);
+app.use('/admin', routesAdmin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

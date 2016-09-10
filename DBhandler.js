@@ -9,7 +9,7 @@ exports.createConnectionPool = function(nodepsw){
     connectionlimit : 25,
     host : 'localhost',
     user : 'nodejs_erstiwe',
-    password : nodepsw,  
+    password : nodepsw,
     database : 'ErstiWe' + (new Date()).getFullYear(),
   });
 };
@@ -25,7 +25,7 @@ exports.insertuser = function(waiting, userdata, token){
   if(pool == null){console.log('WARN: Not connected to DB')}
   else{
     var deleteToken = Math.random().toString(36).substr(2,8);
-  
+
     pool.getConnection(function(err, connection){
       connection.beginTransaction(function(err) {
         connection.query('INSERT INTO users (email,firstname,lastname,gender,address,zip,city,mobile,birthday,study,food,additionalinfo,deletetoken,waiting) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);',[userdata.email, userdata.first_name, userdata.last_name, userdata.gender,userdata.address, userdata.post_code, userdata.city, userdata.mobile, userdata.birthday, userdata.study, userdata.veggie_level, userdata.comment, deleteToken, waiting], function(err){
@@ -75,7 +75,7 @@ exports.checkEmail = function(email, next){
         connection.query('SELECT COUNT(*) AS count FROM users WHERE email=?;',[email],function(err,rows){
           try{
             connection.release();
-            if(rows[0].count == 1) {next(true);}else{next(false);};
+            if(rows[0].count) {next(false);}else{next(true);};
           }catch(error){next(false);}
         });
     });
@@ -142,6 +142,6 @@ exports.checkDeleteToken = function(email,token,next){
   };
 };
 
-//TODO: 
+//TODO:
 exports.getEmail= function(){};
 exports.getTable= function(){};

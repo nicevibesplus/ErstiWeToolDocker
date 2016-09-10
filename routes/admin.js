@@ -1,5 +1,4 @@
-var DBhandler = require('../DBhandler.js');
-var DBconstructor = require('../DBconstructor.js');
+var db = require('../DBhandler.js');
 var router = require('express').Router();
 var auth = require('http-auth');
 
@@ -17,8 +16,7 @@ router.get('/resetDatabase/:year', function(req, res) {
   // TODO: load credentials from config file or ENV?
   // TODO: check success?
   console.log(req.params);
-  DBconstructor.createDB('root', 'XXXX', 5, 'Please change me!', req.params.year);
-  res.end('success? yolo');
+  res.end(501, 'not implemented');
 })
 
 module.exports = router;

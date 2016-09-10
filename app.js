@@ -9,12 +9,11 @@ var helmet = require('helmet');
 
 var routesFront = require('./routes/frontend');
 var routesAdmin = require('./routes/admin');
-var DBconstructor = require('./DBconstructor'); // DEBUG
 var db = require('./DBhandler');
 var app = express();
 
-// Init DB connection
-db.createConnectionPool('Please change me!');
+// Init mysql connection
+db.connect();
 
 // harden server by sending certain headers
 app.use(helmet());

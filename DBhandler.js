@@ -1,147 +1,122 @@
-var pool;
+var async = require('async');
+var cfg = require('./config.js');
+var mysql = require('mysql');
+
+var pool = null;
 
 /*
   Creates the Database Connection.
   @param {string} nodepsw - Password for the Database User nodejs_erstiwe
 */
-exports.createConnectionPool = function(nodepsw){
-  pool = (require('mysql')).createPool({
-    connectionlimit : 25,
-    host : 'localhost',
-    user : 'nodejs_erstiwe',
-    password : nodepsw,
-    database : 'ErstiWe' + (new Date()).getFullYear(),
+exports.connect = function() {
+  pool = mysql.createPool({
+    connectionlimit: cfg.mysql_poolsize,
+    host: cfg.mysql_host,
+    user: cfg.mysql_user,
+    password: cfg.mysql_pass,
+    database: cfg.mysql_dbname
   });
 };
 
-/*
-  Inserts a new User into the Users table. Deletes the Access token from the Database.
-  If there is a problem during the operation (Invalid token, Invalid Userdata) the operation is reversed.
-  @param {boolean} waiting - Is the User on the Waiting list?
-  @param {json} userdata - JSON of User Data
-  @param {string} token - 8 character long access token
-*/
-exports.insertuser = function(waiting, userdata, token){
-  if(pool == null){console.log('WARN: Not connected to DB')}
-  else{
-    var deleteToken = Math.random().toString(36).substr(2,8);
+/**
+ * creates [amount] tokens for the year [year].
+ * callback returns an array of generated tokens
+ */
+exports.createTokens = function(amount, callback) {
+  var year = cfg.year;
+  var tokens = [];
+  var query = 'INSERT INTO users (token, year) VALUES (?, ?);';
 
-    pool.getConnection(function(err, connection){
-      connection.beginTransaction(function(err) {
-        connection.query('INSERT INTO users (email,firstname,lastname,gender,address,zip,city,mobile,birthday,study,food,additionalinfo,deletetoken,waiting) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);',[userdata.email, userdata.first_name, userdata.last_name, userdata.gender,userdata.address, userdata.post_code, userdata.city, userdata.mobile, userdata.birthday, userdata.study, userdata.veggie_level, userdata.comment, deleteToken, waiting], function(err){
-            if (err){console.log(err);}});
-        connection.query('DELETE FROM token WHERE token=?;', [token],function(err){if (err) console.log(err)});
-        connection.commit(function(err){
-          if(err){
-            return connection.rollback(function(err){/*throw err;*/});
-          };
-        connection.release();
-        });
+  for (let i = 0; i < amount; i++)
+    tokens[i] = Math.random().toString(36).substr(2,8);
+
+  // insert at most [mysql_poolsize] tokens at once
+  async.eachLimit(tokens, cfg.mysql_poolsize, function(token, cb) {
+    pool.getConnection(function(err, conn) {
+      if (err) return cb(err);
+      conn.query(query, [token, year], function(err) {
+        conn.release();
+        cb(err);
       });
     });
-  };
-  };
+  },
+  function allDone(err) { callback(err, tokens); });
+};
 
 /*
-  Checks if token is still valid (e.g. token still in tokenlist)
-  Calls next() with parameter true if Operation was successfull, false otherwise.
+  Checks if token is valid (e.g. token in users table & not used yet)
+  Calls next() with parameter true if Operation was successful, false otherwise.
   @param {string} token - 8 Character long access token
 */
-exports.checkToken = function(token, next){
-  if(pool == null){console.log('WARN: Not connected to DB'); next(false);}
-  else{
-    pool.getConnection(function(err,connection){
-        if (err){console.log(err); next(false);};
-        connection.query('SELECT token AS token FROM token WHERE token=?;',[token],function(err,rows){
-          try{
-            connection.release();
-            if(rows[0].token == token) {next(true);}else{next(false);};
-          }catch(error){next(false);}
-        });
+exports.checkToken = function(token, cb) {
+  var query = 'SELECT COUNT(*) AS count FROM users WHERE token=? AND used=FALSE;';
+  pool.getConnection(function(err,connection) {
+    if (err) return cb(err);
+    connection.query(query, [token], function(err, rows) {
+      connection.release();
+      if (err) return cb(err);
+      rows[0].count ? cb(null, true) : cb(null, false);
     });
-  };
+  });
 };
 
-/*
-  Checks if User (identified by email) is in the Userlist
-  Calls next() with parameter true if Operation was successfull, false otherwise.
-  @param {string} email - Email of User
-*/
-exports.checkEmail = function(email, next){
-  if(pool == null){console.log('WARN: Not connected to DB'); next(false);}
-  else{
-    pool.getConnection(function(err,connection){
-        if (err){console.log(err); next(false);};
-        connection.query('SELECT COUNT(*) AS count FROM users WHERE email=?;',[email],function(err,rows){
-          try{
-            connection.release();
-            if(rows[0].count) {next(false);}else{next(true);};
-          }catch(error){next(false);}
-        });
+/**
+ * adds a user after checking
+ */
+exports.insertUser = function(data, token, callback) {
+  var insertQuery = 'UPDATE users SET email=?,firstname=?,lastname=?,gender=?,address=?,phone=?,birthday=?,study=?,food=?,info=?,used=? WHERE token=? AND year=?';
+  var waitlistQuery = 'DELETE FROM waitlist WHERE email=? AND YEAR=?;';
+
+  pool.getConnection(function(err, conn) {
+    if (err) return callback(err);
+    async.waterfall([
+      // check if token is not used yet
+      function(next) {
+        exports.checkToken(token, next);
+      },
+      // insert new user
+      function(validToken, next) {
+        if (!validToken) return next('invalid token');
+        conn.query(insertQuery, [
+          data.email.substr(0,45),
+          data.first_name.substr(0,45),
+          data.last_name.substr(0,45),
+          data.gender,
+          [data.address, data.post_code, data.city].join(', ').substr(0,200),
+          data.mobile.substr(0,20),
+          data.birthday,
+          data.study,
+          data.veggie_level,
+          data.comment.substr(0, 500),
+          true,
+          token || data.token,
+          cfg.year
+        ], function(err, resilt) { next(err); });
+      },
+      // remove from waitlist
+      function(next) {
+        conn.query(waitlistQuery, [data.email, cfg.year], next);
+      }
+    ], function allDone(err) {
+      conn.release();
+      callback(err);
     });
-  };
-};
-/*
-  Move User from Waiting to Current
-  Calls next() with parameter true if Operation was successfull, false otherwise.
-  @param {string} email - Email of User
-*/
-exports.setActive= function(email,next){
-  if(pool == null){console.log('WARN: Not connected to DB'); next(false);}
-  else{
-    pool.getConnection(function(err,connection){
-        if (err){console.log(err); next(false);};
-        connection.query('UPDATE users SET waiting WHERE email=?;', [email], function(err){
-            connection.release();
-            if(err){next(false);}else{next(true);};
-        });
-    });
-  };
+  });
 };
 
-/*
-  Deletes User from Userlist.
-  Calls next() with parameter true if Operation was successfull, false otherwise.
-  @param {string} email - Email of User
-*/
-exports.deleteuser = function(email,token,next){
-  if(pool == null){console.log('WARN: Not connected to DB'); next(false);}
-  else{
-    checkDeleteToken(email,token, function(bool,email){
-      if(bool){
-      pool.getConnection(function(err,connection){
-          if (err){next(false);};
-            connection.query('DELETE FROM users WHERE email=?;',[email],function(err,rows){
-                connection.release();
-                if(err){next(false);}else{next(true);};
-            });
-        });
-      }else{/* delete_token invalid*/}
-    });
-  };
+exports.getUsers = function(callback) {
+  // TODO
+}
+
+exports.getWaitlist = function(callback) {
+  // TODO
 };
 
-/*
-  Checks if delete_token is valid.
-  Calls next() with parameter true if Operation was successfull, false otherwise.
-  @param {string} token - 8 Character long access token
-  @param  {string} email - Email of user
-*/
-exports.checkDeleteToken = function(email,token,next){
-  if(pool == null){console.log('WARN: Not connected to DB'); next(false);}
-  else{
-    pool.getConnection(function(err,connection){
-        if (err){console.log(err); next(false,email);};
-        connection.query('SELECT delete_token AS token FROM users WHERE email=?;',[email],function(err,rows){
-          try{
-            connection.release();
-            if(rows[0].token == token) {next(true,email);}else{next(false,email);};
-          }catch(error){next(false,email);}
-        });
-    });
-  };
+exports.insertWaitlist = function(data, callback) {
+  // TODO
 };
 
-//TODO:
-exports.getEmail= function(){};
-exports.getTable= function(){};
+exports.dropUser = function(token, callback) {
+  // TODO: delete user
+  exports.createTokens(1, callback);
+}

@@ -1,12 +1,8 @@
 var db = require('../DBhandler.js');
 var router = require('express').Router();
-var auth = require('http-auth');
+var auth = require('../auth.js');
 
-// secure the admin panel via http basic auth
-router.use(auth.connect(auth.basic({
-  realm: 'ErstiWeTool',
-  file: './admin.htpasswd'
-})));
+router.use(auth);
 
 router.get('/', function(req, res){
   res.render('adminpanel');

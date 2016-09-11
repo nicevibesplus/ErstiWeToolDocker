@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS `ersti-we`.`users` (
   `phone` VARCHAR(20) NULL,
   `address` VARCHAR(200) NULL,
   `info` VARCHAR(500) NULL,
-  `birthday` DATE NULL,
+  `birthday` VarCHAR(20) NULL,
   `food` ENUM('any', 'vegan', 'vegetarian') NULL,
-  `study` ENUM('gi', 'geo', 'loek') NULL,
+  `study` ENUM('geoinf', 'geo', 'loek', 'zweifach') NULL,
   `year` INT NOT NULL,
   `used` BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (`token`, `year`))

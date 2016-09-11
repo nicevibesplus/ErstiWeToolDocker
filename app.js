@@ -8,8 +8,11 @@ var bodyParser = require('body-parser');
 var helmet = require('helmet');
 
 var routesFront = require('./routes/frontend');
+var routesApi = require('./routes/api');
 var routesAdmin = require('./routes/admin');
 var db = require('./DBhandler');
+var cfg = require('./config');
+
 var app = express();
 
 // Init mysql connection
@@ -21,6 +24,7 @@ app.use(helmet());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.locals.year = cfg.year;
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -36,6 +40,7 @@ app.use(cookieSession({
 
 // All Routes
 app.use('/', routesFront);
+app.use('/api', routesApi);
 app.use('/admin', routesAdmin);
 
 // catch 404 and forward to error handler
@@ -68,6 +73,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

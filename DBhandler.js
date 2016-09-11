@@ -61,10 +61,10 @@ exports.checkToken = function(token, cb) {
 };
 
 /**
- * adds a user after checking
+ * adds a user, if the provided token exists
  */
-exports.insertUser = function(data, token, callback) {
-  var insertQuery = 'UPDATE users SET email=?,firstname=?,lastname=?,gender=?,address=?,phone=?,birthday=?,study=?,food=?,info=?,used=? WHERE token=? AND year=?';
+exports.insertUser = function(data, callback) {
+  var insertQuery = 'UPDATE users SET email=?,firstname=?,lastname=?,gender=?,address=?,phone=?,birthday=?,study=?,food=?,info=?,used=? WHERE token=? AND year=? AND used=FALSE';
   var waitlistQuery = 'DELETE FROM waitlist WHERE email=? AND YEAR=?;';
 
   pool.getConnection(function(err, conn) {
@@ -72,7 +72,7 @@ exports.insertUser = function(data, token, callback) {
     async.waterfall([
       // check if token is not used yet
       function(next) {
-        exports.checkToken(token, next);
+        exports.checkToken(data.token, next);
       },
       // insert new user
       function(validToken, next) {
@@ -89,9 +89,9 @@ exports.insertUser = function(data, token, callback) {
           data.veggie_level,
           data.comment.substr(0, 500),
           true,
-          token || data.token,
+          data.token,
           cfg.year
-        ], function(err, resilt) { next(err); });
+        ], function(err) { next(err); });
       },
       // remove from waitlist
       function(next) {
@@ -112,11 +112,12 @@ exports.getWaitlist = function(callback) {
   // TODO
 };
 
-exports.insertWaitlist = function(data, callback) {
+exports.insertWaitlist = function(email, callback) {
   // TODO
 };
 
 exports.dropUser = function(token, callback) {
   // TODO: delete user
+
   exports.createTokens(1, callback);
 }

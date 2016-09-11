@@ -12,27 +12,27 @@ var userData = {
   city: 'Aachen',
   mobile: '09823487345',
   birthday: '1994-04-02',
-  study: 'gi',
+  study: 'geoinf',
   veggie_level: 'vegan',
   comment: ''
 };
 
 db.connect();
 
-db.createTokens(10, function(err, tokens) {
-  if (err) console.error(err);
-  console.log(tokens);
-
-  db.checkToken(tokens[0], function(err, valid) {
-    if (err) console.error(err);
-    console.log('valid token: ' + valid);
-  });
-  db.insertUser(userData, tokens[0], function(err) {
-    if (err) console.log(err);
-    db.checkToken(tokens[0], function(err, valid) {
-      if (err) console.error(err);
-      console.log('valid token post insert: ' + valid);
-      process.exit()
-    });
-  });
+async.waterfall([
+  async.apply(db.insertWaitlist, userData.email),
+  async.apply(db.createTokens, 1),
+  function(tokens, next) {
+    console.log(tokens);
+    userData.token = tokens[0].register;
+    db.checkToken(tokens[0].register, next);
+  },
+  function(valid, next) {
+    console.log('token check should pass. token valid = ', valid);
+    db.insertUser(userData, next);
+  },
+  async.apply(db.insertUser, userData)
+], function(err) {
+  console.error('should throw error: ' + err);
+  process.exit();
 });

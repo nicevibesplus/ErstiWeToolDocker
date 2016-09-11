@@ -16,7 +16,8 @@ USE `ersti-we` ;
 DROP TABLE IF EXISTS `ersti-we`.`users` ;
 
 CREATE TABLE IF NOT EXISTS `ersti-we`.`users` (
-  `token` CHAR(8) NOT NULL,
+  `token` CHAR(8) NOT NULL,      -- registration token
+  `emailtoken` CHAR(8) NOT NULL, -- email confirmation token
   `firstname` VARCHAR(45) NULL,
   `lastname` VARCHAR(45) NULL,
   `gender` ENUM('male', 'female', 'other') NULL,
@@ -24,11 +25,12 @@ CREATE TABLE IF NOT EXISTS `ersti-we`.`users` (
   `phone` VARCHAR(20) NULL,
   `address` VARCHAR(200) NULL,
   `info` VARCHAR(500) NULL,
-  `birthday` VarCHAR(20) NULL,
+  `birthday` VARCHAR(20) NULL,
   `food` ENUM('any', 'vegan', 'vegetarian') NULL,
   `study` ENUM('geoinf', 'geo', 'loek', 'zweifach') NULL,
-  `year` INT NOT NULL,
-  `used` BOOLEAN NOT NULL DEFAULT FALSE,
+  `year` INT NOT NULL, -- assigned year of the user
+  `used` BOOLEAN NOT NULL DEFAULT FALSE, -- flag, wether a token is used or not
+  `timestamp` DATETIME NOT NULL DEFAULT NOW(), -- date of registration
   PRIMARY KEY (`token`, `year`))
 ENGINE = InnoDB;
 
@@ -40,10 +42,26 @@ DROP TABLE IF EXISTS `ersti-we`.`waitlist` ;
 
 CREATE TABLE IF NOT EXISTS `ersti-we`.`waitlist` (
   `email` VARCHAR(45) NOT NULL,
-  `timestamp` DATETIME NULL,
   `year` INT NOT NULL,
-  PRIMARY KEY (`email`))
+  `timestamp` DATETIME NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (`email`, `year`))
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Triggers
+-- -----------------------------------------------------
+DROP TRIGGER IF EXISTS `registerUser`;
+
+DELIMITER |
+CREATE TRIGGER `registerUser` BEFORE UPDATE ON `users`
+  FOR EACH ROW
+  BEGIN
+    SET NEW.used = TRUE;
+    DELETE FROM waitlist WHERE email=NEW.email AND year=NEW.year;
+  END;
+|
+DELIMITER ;
+
 
 CREATE USER IF NOT EXISTS `ersti-we`;
 GRANT ALL PRIVILEGES ON `ersti-we`.* TO `ersti-we`;

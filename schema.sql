@@ -29,10 +29,12 @@ CREATE TABLE IF NOT EXISTS `ersti-we`.`users` (
   `food` ENUM('any', 'vegan', 'vegetarian') NULL,
   `study` ENUM('geoinf', 'geo', 'loek', 'zweifach') NULL,
   `year` INT NOT NULL, -- assigned year of the user
-  `used` BOOLEAN NOT NULL DEFAULT FALSE, -- flag, wether a token is used or not
+  `state` ENUM('free', 'registered', 'opted_out') NOT NULL DEFAULT 'free', -- flag, wether a token is used or not
   `timestamp` DATETIME NOT NULL DEFAULT NOW(), -- date of registration
-  PRIMARY KEY (`token`, `year`))
-ENGINE = InnoDB;
+  `prev_user` CHAR(8) NULL, -- references the the user previous user of the spot (for waitlist registrations)
+  PRIMARY KEY (`token`, `year`),
+  FOREIGN KEY (`prev_user`) REFERENCES users(`token`)
+) ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -56,7 +58,6 @@ DELIMITER |
 CREATE TRIGGER `registerUser` BEFORE UPDATE ON `users`
   FOR EACH ROW
   BEGIN
-    SET NEW.used = TRUE;
     DELETE FROM waitlist WHERE email=NEW.email AND year=NEW.year;
   END;
 |

@@ -53,10 +53,27 @@ exports.createTokens = function(amount, callback) {
   @param {string} token - 8 Character long access token
 */
 exports.checkToken = function(token, cb) {
-  var query = 'SELECT COUNT(*) AS count FROM users WHERE token=? AND used=FALSE;';
+  var query = 'SELECT COUNT(*) AS count FROM users WHERE token=? AND state=\'free\';';
   pool.getConnection(function(err, conn) {
     if (err) return cb(err);
     conn.query(query, [token], function(err, rows) {
+      conn.release();
+      if (err) return cb(err);
+      rows[0].count ? cb(null, true) : cb(null, false);
+    });
+  });
+};
+
+/*
+  Checks if a token:email pair is valid
+  Calls next() with parameter true if Operation was successful, false otherwise.
+  @param {string} token - 8 Character long access token
+*/
+exports.checkTokenEmail = function(token, email, cb) {
+  var query = 'SELECT COUNT(*) AS count FROM users WHERE token=? AND email=?;';
+  pool.getConnection(function(err, conn) {
+    if (err) return cb(err);
+    conn.query(query, [token, email], function(err, rows) {
       conn.release();
       if (err) return cb(err);
       rows[0].count ? cb(null, true) : cb(null, false);
@@ -68,7 +85,7 @@ exports.checkToken = function(token, cb) {
  * adds a user, if the provided token exists
  */
 exports.insertUser = function(data, callback) {
-  var query = 'UPDATE users SET email=?,firstname=?,lastname=?,gender=?,address=?,phone=?,birthday=?,study=?,food=?,info=? WHERE token=? AND year=?;';
+  var query = 'UPDATE users SET email=?,firstname=?,lastname=?,gender=?,address=?,phone=?,birthday=?,study=?,food=?,info=?,state=\'registered\' WHERE token=? AND year=?;';
 
   pool.getConnection(function(err, conn) {
     // validate token
@@ -98,16 +115,30 @@ exports.insertUser = function(data, callback) {
   });
 };
 
-exports.getUsers = function(callback) {
-  // TODO
+exports.getUsers = function(year, callback) {
+  var query = 'SELECT * FROM users WHERE year=?;';
+  pool.getConnection(function(err, conn) {
+    if (err) return callback (err);
+    conn.query(query, [year], function(err, rows) {
+      conn.release();
+      callback(err, rows);
+    });
+  });
 }
 
-exports.getWaitlist = function(callback) {
-  // TODO
+exports.getWaitlist = function(year, callback) {
+  var query = 'SELECT * FROM waitlist WHERE year=?;';
+  pool.getConnection(function(err, conn) {
+    if (err) return callback (err);
+    conn.query(query, [year], function(err, rows) {
+      conn.release();
+      callback(err, rows);
+    });
+  });
 };
 
 exports.insertWaitlist = function(email, callback) {
-  var query = 'INSERT INTO waitlist (email, year) VALUES (?, ?);';
+  var query = 'REPLACE INTO waitlist (email, year) VALUES (?, ?);';
   pool.getConnection(function(err, conn) {
     if (err) return callback (err);
     conn.query(query, [email, cfg.year], function(err) {
@@ -117,9 +148,39 @@ exports.insertWaitlist = function(email, callback) {
   });
 };
 
-exports.dropUser = function(token, callback) {
-  // TODO: delete user
+exports.optoutUser = function(token, callback) {
+  var optoutQuery = 'UPDATE users SET state=\'opted_out\' WHERE token=? AND year=?;';
+  var addRefQuery = 'UPDATE users SET prev_user=? WHERE token=? AND year=?;';
 
-  //exports.createTokens(1, callback);
-  // TODO: add old email address to new user, for reference
+  pool.getConnection(function(err, conn) {
+    if (err) return callback (err);
+    async.waterfall([
+      // mark user opted out
+      function(next) {
+        conn.query(optoutQuery, [token, cfg.year], next);
+      },
+      // create new token
+      function(result, asdf, next) {
+        exports.createTokens(1, next);
+      },
+      // add reference to previous user to new user
+      function(tokens, next) {
+        conn.query(addRefQuery, [token, tokens[0].register, cfg.year], next);
+      }
+    ], function allDone(err) {
+      conn.release();
+      callback(err);
+    });
+  });
+};
+
+exports.countAttendants = function(year) {
+  var query = 'SELECT COUNT(*) AS count FROM users WHERE year=? AND state=\'registered\';';
+  pool.getConnection(function(err, conn) {
+    if (err) return callback (err);
+    conn.query(query, [year || cfg.year], function(err, rows) {
+      conn.release();
+      callback(err, rows[0].count);
+    });
+  });
 }

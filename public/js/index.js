@@ -21,11 +21,8 @@ $(document).ready(function() {
       data: $(this).serialize(),
       type: $(this).attr('method'),
       url:  $(this).attr('action'),
-      error: function(asdf, status, err) {
-        console.error(asdf)
-        console.error(status)
-        console.error(err)
-        $('#info').text(status);
+      error: function(xhr, status, err) {
+        $('#info').text(xhr.responseText);
       },
       success: function(res) {
         $('#info').text(res);

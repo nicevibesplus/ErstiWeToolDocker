@@ -1,7 +1,7 @@
 # ErstiWeTool
 Prototype of ErstiWeTool in nodejs express framework.
 
-# Installation
+## Installation
 Requires `node >= 4.x` and `mysql-server`.
 
 ```bash
@@ -15,16 +15,13 @@ cp config.sample.js config.js
 
 Now open `config.js` and configure the application to your likings
 
-You now can start the app by running `npm start`
-Autostart: TODO
+You now can start the app by running `npm start`.
+
 
 **TODO**
 - Email Handler
-- Adminpanel REST API
-- Frontend Error Handling (e.g. duplicate Email Error)
-- Input Validation
-- AdminPanel Authentification (auth.js)
-- [Email confirmation System]
-- Success.pug
-- Userreview.pug styling
-- DBHandler "getter" (get Userlist, get Waiting etc.)
+  - [`nodemailer`](https://www.npmjs.com/package/nodemailer) ?
+- Adminpanel frontend `admin.pug`
+- landinpage `#info` styling as alert/toast/..
+- `index.pug` input validation
+- systemd script for autostart

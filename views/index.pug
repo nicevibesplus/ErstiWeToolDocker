@@ -19,14 +19,14 @@ html
       div#info
 
       div#menu
-        button(onclick='toggleView("register")') Mit Code anmelden!
+        button(onclick='toggleView("register")') Mit Token anmelden!
         br
-        button(onclick='toggleView("waitlist")') Kein Code? Auf die Warteliste!
+        button(onclick='toggleView("waitlist")') Kein Token? Auf die Warteliste!
         br
         button(onclick='toggleView("optout")') Doch keine Zeit? Abmelden!
 
       form#form-register.hidden(action='api/register' method='POST')
-        input#token(name='token', type='text', required='', autocomplete='off', placeholder='Code')
+        input#token(name='token', type='text', required='', autocomplete='off', placeholder='Token')
         label(for='first_name')
           | Vorname:
           input#first_name(name='first_name', type='text', required='', autocomplete='off',placeholder='Donald')

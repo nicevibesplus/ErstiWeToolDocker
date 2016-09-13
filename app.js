@@ -9,7 +9,6 @@ var helmet = require('helmet');
 
 var routesFront = require('./routes/frontend');
 var routesApi = require('./routes/api');
-var routesAdmin = require('./routes/admin');
 var db = require('./DBhandler');
 var cfg = require('./config');
 
@@ -41,7 +40,6 @@ app.use(cookieSession({
 // All Routes
 app.use('/', routesFront);
 app.use('/api', routesApi);
-app.use('/admin', routesAdmin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

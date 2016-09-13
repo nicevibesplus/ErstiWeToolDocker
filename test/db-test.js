@@ -3,7 +3,7 @@ var db = require('../DBhandler.js');
 var cfg = require('../config.js');
 
 var userData = {
-  email: 'asdf@asdf.de',
+  email: Math.random().toString(36).substr(2,6) + '@asdf.de',
   first_name: 'Heinz',
   last_name: 'Kjuni',
   gender: 'male',
@@ -31,7 +31,11 @@ async.waterfall([
     console.log('token check should pass. token valid = ', valid);
     db.insertUser(userData, next);
   },
-  async.apply(db.insertUser, userData)
+  async.apply(db.getUsers, cfg.year),
+  function(users, next) {
+    console.log(users);
+    db.insertUser(userData, next);
+  }
 ], function(err) {
   console.error('should throw error: ' + err);
   process.exit();

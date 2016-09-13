@@ -38,7 +38,6 @@ exports.createTokens = function(amount, callback) {
           email: email    
         };
         i++;
-        console.log('Incrementing i');
       };
   };
 

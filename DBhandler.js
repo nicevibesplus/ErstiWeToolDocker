@@ -6,7 +6,7 @@ var pool = null;
 
 /*
   Creates the Database Connection.
-  @param {string} nodepsw - Password for the Database User nodejs_erstiwe
+  @param {string} nodepsw - Password for the Database User 'ersti-we'
 */
 exports.connect = function() {
   pool = mysql.createPool({
@@ -19,20 +19,28 @@ exports.connect = function() {
 };
 
 /**
- * creates [amount] tokens for the current year
+ * Creates [amount] tokens for the current year
  * callback returns an array of generated tokens
  */
 exports.createTokens = function(amount, callback) {
   var year = cfg.year;
   var tokens = [];
   var query = 'INSERT INTO users (token, emailtoken, year) VALUES (?, ?, ?);';
-
-  for (let i = 0; i < amount; i++) {
-    tokens[i] = {
-      register: Math.random().toString(36).substr(2,8),
-      email: Math.random().toString(36).substr(2,8)
-    };
-  }
+  var i = 0;
+  
+  while (tokens.length < amount){
+      var register = Math.random().toString(36).substr(2,8);
+      var email = Math.random().toString(36).substr(2,8);
+    // Check for duplicates. Register tokens must be unique
+      if (tokens.map(function(e) { return e.register; }).indexOf(register) == -1){
+        tokens[i] = {
+          register: register,
+          email: email    
+        };
+        i++;
+        console.log('Incrementing i');
+      };
+  };
 
   // insert at most [mysql_poolsize] tokens at once
   async.eachLimit(tokens, cfg.mysql_poolsize, function(t, cb) {
@@ -81,8 +89,9 @@ exports.checkTokenEmail = function(token, email, cb) {
   });
 };
 
-/**
- * adds a user, if the provided token exists
+/*
+ * Adds a user, if the provided token exists
+ * @param {json} data - User Information
  */
 exports.insertUser = function(data, callback) {
   var query = 'UPDATE users SET email=?,firstname=?,lastname=?,gender=?,address=?,phone=?,birthday=?,study=?,food=?,info=?,state=\'registered\' WHERE token=? AND year=?;';
@@ -115,6 +124,10 @@ exports.insertUser = function(data, callback) {
   });
 };
 
+/*
+  Gets all user entries for the given year.
+  @param {int} year - Year
+*/
 exports.getUsers = function(year, callback) {
   var query = 'SELECT * FROM users WHERE year=?;';
   pool.getConnection(function(err, conn) {
@@ -126,6 +139,10 @@ exports.getUsers = function(year, callback) {
   });
 }
 
+/*
+  Gets all user entries on waiting list in given year.
+  @param {int} year - Year
+*/
 exports.getWaitlist = function(year, callback) {
   var query = 'SELECT * FROM waitlist WHERE year=?;';
   pool.getConnection(function(err, conn) {
@@ -137,6 +154,10 @@ exports.getWaitlist = function(year, callback) {
   });
 };
 
+/*
+  Inserts a User into the Waiting list in year defined by config.js.
+  @param {string} email - Email of the user
+*/
 exports.insertWaitlist = function(email, callback) {
   var query = 'REPLACE INTO waitlist (email, year) VALUES (?, ?);';
   pool.getConnection(function(err, conn) {
@@ -148,6 +169,10 @@ exports.insertWaitlist = function(email, callback) {
   });
 };
 
+/*
+  Marks a user as not participating.
+  @param {string} email - Email of the user
+*/
 exports.optoutUser = function(token, callback) {
   var optoutQuery = 'UPDATE users SET state=\'opted_out\' WHERE token=? AND year=?;';
   var addRefQuery = 'UPDATE users SET prev_user=? WHERE token=? AND year=?;';
@@ -174,6 +199,11 @@ exports.optoutUser = function(token, callback) {
   });
 };
 
+
+/*
+  Returns the number of attendants for given year to cb function.
+  @param {int} year - Year
+*/
 exports.countAttendants = function(year) {
   var query = 'SELECT COUNT(*) AS count FROM users WHERE year=? AND state=\'registered\';';
   pool.getConnection(function(err, conn) {

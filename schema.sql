@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS `ersti-we`.`users` (
   `food` ENUM('any', 'vegan', 'vegetarian') NULL,
   `study` ENUM('geoinf', 'geo', 'loek', 'zweifach') NULL,
   `year` INT NOT NULL, -- assigned year of the user
-  `state` ENUM('free', 'registered', 'opted_out') NOT NULL DEFAULT 'free', -- flag, wether a token is used or not
-  `timestamp` DATETIME NOT NULL DEFAULT NOW(), -- date of registration
+  `state` ENUM('free', 'registered', 'opted_out') NOT NULL DEFAULT 'free', -- flag, whether a token is used or not
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, -- date of registration
   `prev_user` CHAR(8) NULL, -- references the the user previous user of the spot (for waitlist registrations)
   PRIMARY KEY (`token`, `year`),
   FOREIGN KEY (`prev_user`) REFERENCES users(`token`)
@@ -45,7 +45,7 @@ DROP TABLE IF EXISTS `ersti-we`.`waitlist` ;
 CREATE TABLE IF NOT EXISTS `ersti-we`.`waitlist` (
   `email` VARCHAR(45) NOT NULL,
   `year` INT NOT NULL,
-  `timestamp` DATETIME NOT NULL DEFAULT NOW(),
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`email`, `year`))
 ENGINE = InnoDB;
 
@@ -63,8 +63,13 @@ CREATE TRIGGER `registerUser` BEFORE UPDATE ON `users`
 |
 DELIMITER ;
 
+-- Compatibility to mysql < 5.6.*
+-- Same functionality as:
+-- CREATE USER IF NOT EXISTS `ersti-we`;
+GRANT SELECT ON *.* TO 'ersti-we';
+DROP USER `ersti-we`;
+CREATE USER `ersti-we`;
 
-CREATE USER IF NOT EXISTS `ersti-we`;
 GRANT ALL PRIVILEGES ON `ersti-we`.* TO `ersti-we`;
 
 SET SQL_MODE=@OLD_SQL_MODE;

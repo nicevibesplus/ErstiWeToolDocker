@@ -19,8 +19,9 @@ You now can start the app by running `npm start`.
 
 
 **TODO**
-- Email Handler
-  - [`nodemailer`](https://www.npmjs.com/package/nodemailer) ?
+- Email
+  - More Templates (Free space available, email confirmation, etc.)
+  - Improve Error Handling 
 - Adminpanel frontend `admin.pug`
 - landinpage `#info` styling as alert/toast/..
 - `index.pug` input validation

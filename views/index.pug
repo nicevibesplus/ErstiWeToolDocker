@@ -1,122 +1,122 @@
 doctype html
 html
-    head
-      meta(http-equiv='content-type', content='text/html; charset=utf-8; width=device-width; initial-scale=1.0')
-      link(rel='stylesheet', href='stylesheets/index.css')
-      title Ersti Wochenende Anmeldung
-    body
-      header
-        div(class='alert', style='display:none')
-          //- TODO: make responsive -> no min size
-          a Window too small! Please resize the window.
-        div(class='headline')
-          span(id='titel')='Ersti-Wochenende ' + year
-          div(class='logo')
-            img(src='images/pacman.svg', width='150', alt='', padding="20px")
-            img(src='images/notpacman.svg', width='170', alt='', padding="20px")
+  head
+    meta(http-equiv='content-type', content='text/html; charset=utf-8; width=device-width; initial-scale=1.0')
+    link(rel='stylesheet', href='stylesheets/index.css')
+    title Ersti Wochenende Anmeldung
+  body
+    header
+      div(class='alert', style='display:none')
+        //- TODO: make responsive -> no min size
+        a Window too small! Please resize the window.
+      div(class='headline')
+        span(id='titel')='Ersti-Wochenende ' + year
+        div(class='logo')
+          img(src='images/pacman.svg', width='150', alt='', padding="20px")
+          img(src='images/notpacman.svg', width='170', alt='', padding="20px")
 
-      // TODO: style properly as alert
-      div#info
+    // TODO: style properly as alert
+    div#info
 
-      div#menu
-        button(onclick='toggleView("register")') Mit Token anmelden!
-        br
-        button(onclick='toggleView("waitlist")') Kein Token? Auf die Warteliste!
-        br
-        button(onclick='toggleView("optout")') Doch keine Zeit? Abmelden!
+    div#menu
+      button(onclick='toggleView("register")') Mit Token anmelden!
+      br
+      button(onclick='toggleView("waitlist")') Kein Token? Auf die Warteliste!
+      br
+      button(onclick='toggleView("optout")') Doch keine Zeit? Abmelden!
 
-      form#form-register.hidden(action='api/register' method='POST')
-        input#token(name='token', type='text', required='', autocomplete='off', placeholder='Token')
-        label(for='first_name')
-          | Vorname:
-          input#first_name(name='first_name', type='text', required='', autocomplete='off',placeholder='Donald')
-        label(for='last_name')
-          | Nachname:
-          input#last_name(name='last_name', type='text', required='', autocomplete='off',placeholder='Duck')
-        fieldset#gender
-          legend Geschlecht:
-          label(for='m')
-            input#m(type='radio', name='gender', value='male')
-            | männlich
-          label(for='f')
-            input#f(type='radio', name='gender', value='female')
-            | weiblich
-          label(for='n')
-            input#n(type='radio', name='gender', value='other')
-            | who cares?!
-        // braucht man das wirklich?
-        //label(for='address')
-          | Adresse:
-          input#address(name='address', type='text', required='', autocomplete='off',placeholder='Am schiefen Pier 12')
-        //label(for='post_code')
-          | PLZ:
-          input#post_code(name='post_code', type='number', required='', autocomplete='off', maxlength='5',placeholder='66666')
-        //label(for='city')
-          | Ort:
-          input#city(name='city', type='text', required='', autocomplete='off',placeholder='Entenhausen')
-        label(for='email')
-          | E-Mail:
-          input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
-        label(for='mobile')
-          | Handynummer:
-          input#mobile(name='mobile', type='tel', required='', autocomplete='off',placeholder='0123456789')
-        label(for='birthday')
-          | Geburtstag:
-          input#birthday(name='birthday', type='date', placeholder='1523-02-02', required='', autocomplete='off')
-        fieldset#study
-          legend Studiengang:
-          label(for='geo')
-            input#geo(type='radio', name='study', value='geo')
-            | Geographie
-          label(for='loek')
-            input#loek(type='radio', name='study', value='loek')
-            | Landschaftsökologie
-          label(for='zweifach')
-            input#zweifach(type='radio', name='study', value='zweifach')
-            | Zwei-Fach-Bachelor
-          label(for='geoinf')
-            input#geoinf(type='radio', name='study', value='geoinf')
-            | Geoinformatik
-        fieldset#veggie_level
-          legend Ich ernähre mich
-          label(for='normal')
-            input#normal(type='radio', name='veggie_level', value='any')
-            | auch mit Fleisch
-          label(for='vegetarisch')
-            input#vegetarisch(type='radio', name='veggie_level', value='vegetarian')
-            | vegetarisch
-          label(for='vegan')
-            input#vegan(type='radio', name='veggie_level', value='vegan')
-            | vegan
-        label(for='comment')
-          | Willst du uns noch etwas mitteilen?
-          textarea#comment(name='comment', autocomplete='off', placeholder='Allergene, ... [max 500 Zeichen]')
-        input(type='submit', value='Absenden')
+    form#form-register.hidden(action='api/register' method='POST')
+      input#token(name='token', type='text', required='', autocomplete='off', placeholder='Token')
+      label(for='first_name')
+        | Vorname:
+        input#first_name(name='first_name', type='text', required='', autocomplete='off',placeholder='Donald')
+      label(for='last_name')
+        | Nachname:
+        input#last_name(name='last_name', type='text', required='', autocomplete='off',placeholder='Duck')
+      fieldset#gender
+        legend Geschlecht:
+        label(for='m')
+          input#m(type='radio', name='gender', value='male')
+          | männlich
+        label(for='f')
+          input#f(type='radio', name='gender', value='female')
+          | weiblich
+        label(for='n')
+          input#n(type='radio', name='gender', value='other')
+          | who cares?!
+      // braucht man das wirklich?
+      //label(for='address')
+        | Adresse:
+        input#address(name='address', type='text', required='', autocomplete='off',placeholder='Am schiefen Pier 12')
+      //label(for='post_code')
+        | PLZ:
+        input#post_code(name='post_code', type='number', required='', autocomplete='off', maxlength='5',placeholder='66666')
+      //label(for='city')
+        | Ort:
+        input#city(name='city', type='text', required='', autocomplete='off',placeholder='Entenhausen')
+      label(for='email')
+        | E-Mail:
+        input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
+      label(for='mobile')
+        | Handynummer:
+        input#mobile(name='mobile', type='tel', required='', autocomplete='off',placeholder='0123456789')
+      label(for='birthday')
+        | Geburtstag:
+        input#birthday(name='birthday', type='date', placeholder='1523-02-02', required='', autocomplete='off')
+      fieldset#study
+        legend Studiengang:
+        label(for='geo')
+          input#geo(type='radio', name='study', value='geo')
+          | Geographie
+        label(for='loek')
+          input#loek(type='radio', name='study', value='loek')
+          | Landschaftsökologie
+        label(for='zweifach')
+          input#zweifach(type='radio', name='study', value='zweifach')
+          | Zwei-Fach-Bachelor
+        label(for='geoinf')
+          input#geoinf(type='radio', name='study', value='geoinf')
+          | Geoinformatik
+      fieldset#veggie_level
+        legend Ich ernähre mich
+        label(for='normal')
+          input#normal(type='radio', name='veggie_level', value='any')
+          | auch mit Fleisch
+        label(for='vegetarisch')
+          input#vegetarisch(type='radio', name='veggie_level', value='vegetarian')
+          | vegetarisch
+        label(for='vegan')
+          input#vegan(type='radio', name='veggie_level', value='vegan')
+          | vegan
+      label(for='comment')
+        | Willst du uns noch etwas mitteilen?
+        textarea#comment(name='comment', autocomplete='off', placeholder='Allergene, ... [max 500 Zeichen]')
+      input(type='submit', value='Absenden')
 
-      form#form-waitlist.hidden(action='api/waitlist' method='POST')
-        p.description
-        | Du kannst dich hier auf die Warteliste setzen lassen.
-        | Wenn ein Platz frei wird, bekommen alle Personen auf der Warteliste
-        | zu einer zufälligen Zeit in den nächsten 12 Stunden eine Email mit einem
-        | neuen Zugangscode zugesendet. Den Kostenbeitrag für das Wochenende
-        | gibst du bitte an diejenige Person weiter, deren Platz frei geworden ist (siehe Email).
-        label(for='email')
-          | E-Mail:
-          input#email-waitlist(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
-        input(type='submit', value='Absenden')
+    form#form-waitlist.hidden(action='api/waitlist' method='POST')
+      p.description
+      | Du kannst dich hier auf die Warteliste setzen lassen.
+      | Wenn ein Platz frei wird, bekommen alle Personen auf der Warteliste
+      | zu einer zufälligen Zeit in den nächsten 12 Stunden eine Email mit einem
+      | neuen Zugangscode zugesendet. Den Kostenbeitrag für das Wochenende
+      | gibst du bitte an diejenige Person weiter, deren Platz frei geworden ist (siehe Email).
+      label(for='email')
+        | E-Mail:
+        input#email-waitlist(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
+      input(type='submit', value='Absenden')
 
-      form#form-optout.hidden(action='api/optout' method='POST')
-        p.description
-        | Hier Kannst du dich abmelden und deinen reservierten Platz
-        | für andere frei machen, solltest du an dem Ersti-Wochende nicht teilnehmen können.
-        | Den Kostenbeitrag erhältst du - sofern sich jemand findet - von einem Nachrücker erstattet.
-        label(for='token-optout')
-          | Token:
-          input#token-optout(name='token', type='text', required='', autocomplete='off',placeholder='Code')
-        label(for='email-optout')
-          | E-Mail:
-          input#email-optout(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
-        input(type='submit', value='Absenden')
+    form#form-optout.hidden(action='api/optout' method='POST')
+      p.description
+      | Hier Kannst du dich abmelden und deinen reservierten Platz
+      | für andere frei machen, solltest du an dem Ersti-Wochende nicht teilnehmen können.
+      | Den Kostenbeitrag erhältst du - sofern sich jemand findet - von einem Nachrücker erstattet.
+      label(for='token-optout')
+        | Token:
+        input#token-optout(name='token', type='text', required='', autocomplete='off',placeholder='Code')
+      label(for='email-optout')
+        | E-Mail:
+        input#email-optout(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
+      input(type='submit', value='Absenden')
 
-      script(src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
-      script(src='js/index.js')
+    script(src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
+    script(src='js/index.js')

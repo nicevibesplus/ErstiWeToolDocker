@@ -5,16 +5,15 @@ var mysql = require('mysql');
 var pool = null;
 
 /*
-  Creates the Database Connection.
-  @param {string} nodepsw - Password for the Database User 'ersti-we'
+ Creates the Database Connection.
 */
 exports.connect = function() {
   pool = mysql.createPool({
-    connectionlimit: cfg.mysql_poolsize,
-    host: cfg.mysql_host,
-    user: cfg.mysql_user,
-    password: cfg.mysql_pass,
-    database: cfg.mysql_dbname
+    connectionlimit: cfg.mysql.poolsize,
+    host: cfg.mysql.host,
+    user: cfg.mysql.user,
+    password: cfg.mysql.pass,
+    database: cfg.mysql.dbname
   });
 };
 
@@ -27,7 +26,7 @@ exports.createTokens = function(amount, callback) {
   var tokens = [];
   var query = 'INSERT INTO users (token, emailtoken, year) VALUES (?, ?, ?);';
   var i = 0;
-  
+
   while (tokens.length < amount){
       var register = Math.random().toString(36).substr(2,8);
       var email = Math.random().toString(36).substr(2,8);
@@ -35,14 +34,14 @@ exports.createTokens = function(amount, callback) {
       if (tokens.map(function(e) { return e.register; }).indexOf(register) == -1){
         tokens[i] = {
           register: register,
-          email: email    
+          email: email
         };
         i++;
       };
   };
 
-  // insert at most [mysql_poolsize] tokens at once
-  async.eachLimit(tokens, cfg.mysql_poolsize, function(t, cb) {
+  // insert at most [cfg.mysql.poolsize] tokens at once
+  async.eachLimit(tokens, cfg.mysql.poolsize, function(t, cb) {
     pool.getConnection(function(err, conn) {
       if (err) return cb(err);
       conn.query(query, [t.register, t.email, year], function(err) {

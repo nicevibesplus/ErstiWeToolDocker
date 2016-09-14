@@ -1,7 +1,6 @@
 var path = require('path');
 var express = require('express');
-var cookieSession = require('cookie-session');
-var favicon = require('serve-favicon');
+// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -30,12 +29,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Create Cookies
-app.use(cookieSession({
-  name: 'session',
-  secret: Math.random().toString(36).substr(2,10)
-}));
 
 // All Routes
 app.use('/', routesFront);

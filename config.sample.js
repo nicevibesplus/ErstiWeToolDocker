@@ -12,12 +12,13 @@ module.exports = {
     end:   ['30. Oktober', '13:00']
   },
 
+  // if you change these values, also change them in schema.sql !
   mysql: {
-    dbname: 'ersti-we', // if you change these, also change them in the schema.sql file!
+    database: 'ersti-we',
     host: 'localhost',
     user: 'ersti-we',
-    pass: 'test',
-    poolsize: 25,
+    password: 'test',
+    connectionlimit: 25,
   },
 
   mailer: {
@@ -27,7 +28,7 @@ module.exports = {
       user:'testuser',
       pass:'test'
     },
-    from: 'test@test.test', // Email address which to send from
+    from: '"Foo Bar" <baz@test.com>', // Email address which to send from
     requireTLS: true, // Use STARTTLS
     pool: true, // Use connection pool
     maxConnections: 10, // Maximum number of connections

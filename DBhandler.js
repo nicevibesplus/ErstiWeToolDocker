@@ -8,13 +8,7 @@ var pool = null;
  Creates the Database Connection.
 */
 exports.connect = function() {
-  pool = mysql.createPool({
-    connectionlimit: cfg.mysql.poolsize,
-    host: cfg.mysql.host,
-    user: cfg.mysql.user,
-    password: cfg.mysql.pass,
-    database: cfg.mysql.dbname
-  });
+  pool = mysql.createPool(cfg.mysql);
 };
 
 /**
@@ -40,8 +34,8 @@ exports.createTokens = function(amount, callback) {
       };
   };
 
-  // insert at most [cfg.mysql.poolsize] tokens at once
-  async.eachLimit(tokens, cfg.mysql.poolsize, function(t, cb) {
+  // insert at most [cfg.mysql.connectionlimit] tokens at once
+  async.eachLimit(tokens, cfg.mysql.connectionlimit, function(t, cb) {
     pool.getConnection(function(err, conn) {
       if (err) return cb(err);
       conn.query(query, [t.register, t.email, year], function(err) {

@@ -2,38 +2,45 @@ var cfg = require('../config.js');
 var nodemailer = require('nodemailer');
 var cook = require('handlebars');
 var fs = require('fs');
+var kramed = require('kramed');
 
-/*
- Sends an Email generated from the given template and subject line to the specified Email Adresses. Template-specific personalized Info from the User is extracted from userdata.
+cook.registerHelper('convert_food', function(food) {
+  return food === 'any' ? 'nein' : 'ja';
+});
+
+cook.registerHelper('convert_study', function(study) {
+  if (study === 'geoinf') return 'Geoinformatik';
+  if (study === 'geo') return 'Geographie';
+  if (study === 'loek') return 'Landschaftsökologie';
+  if (study === 'zweifach') return 'Zweifach Bachelor';
+});
+
+/**
+ * Sends an Email generated from the given options. Options have the following structure
+ * { templateName, templateLocals, subject, toAddress }
  */
-exports.sendMail = function(templateName, subject, emailaddress, userdata) {
-  readHTMLFile(templateName, function(err, html) {
+function sendMail(options, callback) {
+  fs.readFile(__dirname + '/' + options.templateName, {encoding: 'utf-8'}, function (err, template) {
+    if (err) return callback(err);
+
     var transporter = nodemailer.createTransport(cfg.mailer);
-    var finalhtml = cook.compile(html)(userdata);
+    var html = kramed(template);
 
     transporter.sendMail({
-      to: emailaddress,
-      subject: subject,
+      to: options.toAddress,
+      subject: options.subject,
       from: cfg.mailer.from,
-      html: finalhtml
-    }, function(err,info){
-      if(err)
-        console.log(err);
-    });
+      html: cook.compile(html)(options.templateLocals)
+    }, callback);
   });
-};
+}
 
-/*
- * Reads a html File and tunnels it to cb function
- */
-var readHTMLFile = function(template, cb) {
-    fs.readFile(__dirname + '/' + template, {encoding: 'utf-8'}, function (err, html) {
-        if (err) {
-            throw err;
-            cb(err);
-        }
-        else {
-            cb(null, html);
-        }
-    });
+exports.sendRegistrationMail = function(userData, callback) {
+  userData.dates = cfg.dates;
+  sendMail({
+    templateName: 'post_registration.md',
+    templateLocals: userData,
+    subject: 'Anmeldung zum Ersti-Wochenende',
+    toAddress: userData.email
+  }, callback);
 };

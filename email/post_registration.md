@@ -14,13 +14,17 @@ Bitte denkt daran am Freitag genügend Proviant für die Busfahrt mitzunehmen! W
   - **WICHTIG**: Bettzeug oder Schlafsack & Bettlaken
     (Wer sich Bettzeug vom Haus leiht, muss diese direkt bezahlen)
   - **WICHTIG**: einen sehr persönlichen Gegenstand!
-  - **WICHTIG**: Regenkleidung (warm & trocken), 2. Paar feste und trockene Schuhe
+  - **WICHTIG**: Regenkleidung (warm & trocken)
+  - **WICHTIG**: Paar feste (Wander-)Schuhe (möglichst wasserdicht)
+  - 2\. Paar trockene Schuhe
+  - Handtuch
+  - Brotdose + Wasserflasche
   - Ausweis
   - Ausreichend Proviant für Freitag Mittag und Nachmittag (es gibt erst etwa 19 Uhr wieder etwas)
   - Musik: CDs, MP3s, Gitarre oder andere Instrumente, Texte, sonstige Abspielgeräte
   - Hausschuhe (nicht brennbar!)
-  - Kleingeld (für Bier, Cola, Saft, Wasser, etc.)
-    (Sonstige Einkaufsmöglichkeiten stark begrenzt)
+  - Kleingeld (für Bier, Saft, Wasser, etc.)
+    (Sonstige Einkaufsmöglichkeiten quasi nicht vorhanden)
   - Schreibzeug
   - Gute Laune!
 
@@ -33,14 +37,14 @@ Folgend noch einmal die von dir angegebenen Daten:
 
 |                 |                            |
 |-----------------|----------------------------|
-|        **Name** | {{firstname}} {{lastname}} |
-|       **Token** | {{token}}                  |
-|    **Addresse** | {{address}}                |
-|  **Geburtstag** | {{birthday}}               |
-| **Studiengang** | {{{convert_study study}}}  |
-|  **vernünftig** | {{{convert_food food}}}    |
+|        **Name:** | {{first_name}} {{last_name}} |
+|       **Token:** | {{token}}                  |
+<!--|    **Adresse** | {{address}}                | -->
+| **Geburtstag:** | {{birthday}}               |
+| **Studiengang:** | {{{convert_study study}}}  |
+| **Ernährungsstil:** | {{{convert_food food}}}    |
 
-Wenn du noch Fragen hast, schreib uns gerne eine E-Mail.
+Wenn du noch Fragen hast, schreib uns gerne eine E-Mail an fsgi@uni-muenster.de.
 
 Viele Grüße,
 deine Fachschaft Geoinformatik und Fachschaft Geographie/Landschaftsökologie

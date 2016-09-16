@@ -5,7 +5,9 @@ var fs = require('fs');
 var kramed = require('kramed');
 
 cook.registerHelper('convert_food', function(food) {
-  return food === 'any' ? 'nein' : 'ja';
+  if(food === 'any') return 'Normal';
+  if(food === 'vegetarian') return 'Vegetarisch';
+  if(food === 'vegan') return 'Vegan';
 });
 
 cook.registerHelper('convert_study', function(study) {

@@ -2,8 +2,8 @@ var mailer = require('../email/mailer.js');
 
 var userData = {
   email: 'noerw@gmx.de',
-  firstname: 'Heinz',
-  lastname: 'Kjuni',
+  first_name: 'Heinz',
+  last_name: 'Kjuni',
   gender: 'male',
   address: 'Hausweg 3, 03566, Münster',
   phone: '09823487345',

@@ -18,27 +18,23 @@ exports.connect = function() {
 exports.createTokens = function(amount, callback) {
   var year = cfg.year;
   var tokens = [];
-  var query = 'INSERT INTO users (token, emailtoken, year) VALUES (?, ?, ?);';
+  var query = 'INSERT INTO users (token, year) VALUES (?, ?);';
   var i = 0;
 
   while (tokens.length < amount){
       var register = Math.random().toString(36).substr(2,8);
-      var email = Math.random().toString(36).substr(2,8);
     // Check for duplicates. Register tokens must be unique
-      if (tokens.map(function(e) { return e.register; }).indexOf(register) == -1){
-        tokens[i] = {
-          register: register,
-          email: email
-        };
+      if (tokens.map(function(e) { return e; }).indexOf(register) == -1) {
+        tokens[i] = register;
         i++;
       };
   };
 
   // insert at most [cfg.mysql.connectionlimit] tokens at once
-  async.eachLimit(tokens, cfg.mysql.connectionlimit, function(t, cb) {
+  async.eachLimit(tokens, cfg.mysql.connectionlimit, function(token, cb) {
     pool.getConnection(function(err, conn) {
       if (err) return cb(err);
-      conn.query(query, [t.register, t.email, year], function(err) {
+      conn.query(query, [token, year], function(err) {
         conn.release();
         cb(err);
       });
@@ -86,29 +82,19 @@ exports.checkTokenEmail = function(token, email, cb) {
  * @param {json} data - User Information
  */
 exports.insertUser = function(data, callback) {
-  var query = 'UPDATE users SET email=?,firstname=?,lastname=?,gender=?,address=?,phone=?,birthday=?,study=?,food=?,info=?,state=\'registered\' WHERE token=? AND year=?;';
+  var query = 'UPDATE users SET ?, state=\'registered\' WHERE token=? AND year=?;';
 
   pool.getConnection(function(err, conn) {
     // validate token
     exports.checkToken(data.token, function(err, validToken) {
-      // insert new user
+      // insert new empty user
       if (err) return callback(err);
       if (!validToken) return callback('invalid token');
 
-      conn.query(query, [
-        data.email.substr(0,45),
-        data.first_name.substr(0,45),
-        data.last_name.substr(0,45),
-        data.gender,
-        [data.address, data.post_code, data.city].join(', ').substr(0,200),
-        data.mobile.substr(0,20),
-        data.birthday,
-        data.study,
-        data.veggie_level,
-        data.comment.substr(0, 500),
-        data.token,
-        cfg.year
-      ], function(err) {
+      // TODO: sanitize user inputs
+      // for (var prop of data) { data[prop].sanitize() ....?
+
+      conn.query(query, [data, data.token, cfg.year], function(err) {
         conn.release();
         callback(err);
       });

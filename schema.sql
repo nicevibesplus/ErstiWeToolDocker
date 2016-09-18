@@ -17,17 +17,15 @@ DROP TABLE IF EXISTS `ersti-we`.`users` ;
 
 CREATE TABLE IF NOT EXISTS `ersti-we`.`users` (
   `token` CHAR(8) NOT NULL,      -- registration token
-  `emailtoken` CHAR(8) NOT NULL, -- email confirmation token
   `firstname` VARCHAR(45) NULL,
   `lastname` VARCHAR(45) NULL,
   `gender` ENUM('male', 'female', 'other') NULL,
   `email` VARCHAR(45) NULL,
   `phone` VARCHAR(20) NULL,
-  `address` VARCHAR(200) NULL,
-  `info` VARCHAR(500) NULL,
+  `comment` VARCHAR(500) NULL,
   `birthday` VARCHAR(20) NULL,
-  `food` ENUM('any', 'vegan', 'vegetarian') NULL,
-  `study` ENUM('geoinf', 'geo', 'loek', 'zweifach') NULL,
+  `food` ENUM('fleischig', 'vegan', 'vegetarisch') NULL,
+  `study` ENUM('Geoinformatik', 'Geographie', 'Landschaftsökologie', 'Zwei-Fach-Bachelor') NULL,
   `year` INT NOT NULL, -- assigned year of the user
   `state` ENUM('free', 'registered', 'opted_out') NOT NULL DEFAULT 'free', -- flag, whether a token is used or not
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, -- date of registration

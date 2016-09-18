@@ -4,16 +4,13 @@ var cfg = require('../config.js');
 
 var userData = {
   email: Math.random().toString(36).substr(2,6) + '@asdf.de',
-  first_name: 'Heinz',
-  last_name: 'Kjuni',
+  firstname: 'Heinz',
+  lastname: 'Kjuni',
   gender: 'male',
-  address: 'Plksdflkjdsf',
-  post_code: 9879,
-  city: 'Aachen',
-  mobile: '09823487345',
+  phone: '09823487345',
   birthday: '1994-04-02',
-  study: 'geoinf',
-  veggie_level: 'vegan',
+  study: 'Zwei-Fach-Bachelor',
+  food: 'vegan',
   comment: ''
 };
 
@@ -24,8 +21,8 @@ async.waterfall([
   async.apply(db.createTokens, 1),
   function(tokens, next) {
     console.log(tokens);
-    userData.token = tokens[0].register;
-    db.checkToken(tokens[0].register, next);
+    userData.token = tokens[0];
+    db.checkToken(tokens[0], next);
   },
   function(valid, next) {
     console.log('token check should pass. token valid = ', valid);

@@ -4,19 +4,6 @@ var cook = require('handlebars');
 var fs = require('fs');
 var kramed = require('kramed');
 
-cook.registerHelper('convert_food', function(food) {
-  if(food === 'any') return 'Normal';
-  if(food === 'vegetarian') return 'Vegetarisch';
-  if(food === 'vegan') return 'Vegan';
-});
-
-cook.registerHelper('convert_study', function(study) {
-  if (study === 'geoinf') return 'Geoinformatik';
-  if (study === 'geo') return 'Geographie';
-  if (study === 'loek') return 'Landschaftsökologie';
-  if (study === 'zweifach') return 'Zweifach Bachelor';
-});
-
 /**
  * Sends an Email generated from the given options. Options have the following structure
  * { templateName, templateLocals, subject, toAddress }
@@ -42,7 +29,7 @@ exports.sendRegistrationMail = function(userData, callback) {
   sendMail({
     templateName: 'post_registration.md',
     templateLocals: userData,
-    subject: 'Anmeldung zum Ersti-Wochenende',
+    subject: 'Anmeldung zum Ersti-Wochenende ' + cfg.year,
     toAddress: userData.email
   }, callback);
 };

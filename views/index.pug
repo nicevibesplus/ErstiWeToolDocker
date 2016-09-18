@@ -27,12 +27,13 @@ html
 
     form#form-register.hidden(action='api/register' method='POST')
       input#token(name='token', type='text', required='', autocomplete='off', placeholder='Token')
-      label(for='first_name')
-        | Vorname:
-        input#first_name(name='first_name', type='text', required='', autocomplete='off',placeholder='Donald')
-      label(for='last_name')
-        | Nachname:
-        input#last_name(name='last_name', type='text', required='', autocomplete='off',placeholder='Duck')
+      p
+        | Bitte gebe deine persönlichen Daten an.
+        | Dies macht die Organisation des Wochenendes für dich & uns deutlich einfacher.
+      label(for='firstname') Vorname:
+        input#firstname(name='firstname', type='text', required='', autocomplete='off',placeholder='Donald')
+      label(for='lastname') Nachname:
+        input#lastname(name='lastname', type='text', required='', autocomplete='off',placeholder='Duck')
       fieldset#gender
         legend Geschlecht:
         label(for='m')
@@ -44,52 +45,40 @@ html
         label(for='n')
           input#n(type='radio', name='gender', value='other')
           | who cares?!
-      // braucht man das wirklich?
-      //label(for='address')
-        | Adresse:
-        input#address(name='address', type='text', required='', autocomplete='off',placeholder='Am schiefen Pier 12')
-      //label(for='post_code')
-        | PLZ:
-        input#post_code(name='post_code', type='number', required='', autocomplete='off', maxlength='5',placeholder='66666')
-      //label(for='city')
-        | Ort:
-        input#city(name='city', type='text', required='', autocomplete='off',placeholder='Entenhausen')
-      label(for='email')
-        | E-Mail:
+      label(for='email') E-Mail:
         input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
-      label(for='mobile')
-        | Handynummer:
-        input#mobile(name='mobile', type='tel', required='', autocomplete='off',placeholder='0123456789')
-      label(for='birthday')
-        | Geburtstag:
+      label(for='email-confirmation') E-Mail bestätigen:
+        input#email-confirmation(name='email-confirmation', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
+      label(for='phone') Telefon:
+        input#phone(name='phone', type='tel', required='', autocomplete='off',placeholder='0123456789')
+      label(for='birthday') Geburtstag:
         input#birthday(name='birthday', type='date', placeholder='1523-02-02', required='', autocomplete='off')
       fieldset#study
         legend Studiengang:
         label(for='geo')
-          input#geo(type='radio', name='study', value='geo')
+          input#geo(type='radio', name='study', value='Geographie')
           | Geographie
         label(for='loek')
-          input#loek(type='radio', name='study', value='loek')
+          input#loek(type='radio', name='study', value='Landschaftsökologie')
           | Landschaftsökologie
         label(for='zweifach')
-          input#zweifach(type='radio', name='study', value='zweifach')
+          input#zweifach(type='radio', name='study', value='Zwei-Fach-Bachelor')
           | Zwei-Fach-Bachelor
         label(for='geoinf')
-          input#geoinf(type='radio', name='study', value='geoinf')
+          input#geoinf(type='radio', name='study', value='Geoinformatik')
           | Geoinformatik
-      fieldset#veggie_level
+      fieldset#food
         legend Ich ernähre mich
         label(for='normal')
-          input#normal(type='radio', name='veggie_level', value='any')
-          | auch mit Fleisch
+          input#normal(type='radio', name='food', value='fleischig')
+          | fleischig
         label(for='vegetarisch')
-          input#vegetarisch(type='radio', name='veggie_level', value='vegetarian')
+          input#vegetarisch(type='radio', name='food', value='vegetarisch')
           | vegetarisch
         label(for='vegan')
-          input#vegan(type='radio', name='veggie_level', value='vegan')
+          input#vegan(type='radio', name='food', value='vegan')
           | vegan
-      label(for='comment')
-        | Willst du uns noch etwas mitteilen?
+      label(for='comment') Willst du uns noch etwas mitteilen?
         textarea#comment(name='comment', autocomplete='off', placeholder='Allergene, ... [max 500 Zeichen]')
       input(type='submit', value='Absenden')
 

@@ -13,23 +13,38 @@ function toggleView(mode) {
   $('#menu').addClass('hidden');
 }
 
-$(document).ready(function() {
+function showAlert(text, type) {
+  // TODO: toggle classes for appropiate styling ('success', 'error')
+  $('#info').html(text);
+  $('html, body').animate({
+    scrollTop: $('#info').offset().top - 20
+  }, 400);
+}
 
-  // submit forms via ajax
+$(document).ready(function() {
+  // submit handler for forms
   $('form').submit(function() {
+
+    // validate email confirmation
+    if ($('#email').val() !== $('#email-confirmation').val()) {
+      showAlert('email stimmt nicht überein!', 'error');
+      return false;
+    }
+
+    // submit via ajax
     $.ajax({
       data: $(this).serialize(),
       type: $(this).attr('method'),
       url:  $(this).attr('action'),
       error: function(xhr, status, err) {
-        $('#info').text(xhr.responseText);
+        showAlert(xhr.responseText, 'error');
       },
       success: function(res) {
-        $('#info').text(res);
         // reset the view
         $('form').addClass('hidden');
         $('#menu').removeClass('hidden');
         $('form').trigger('reset');
+        showAlert(res, 'success');
       }
     });
     return false;

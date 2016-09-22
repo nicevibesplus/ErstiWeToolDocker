@@ -54,9 +54,10 @@ DROP TRIGGER IF EXISTS `registerUser`;
 
 DELIMITER |
 CREATE TRIGGER `registerUser` BEFORE UPDATE ON `users`
-  FOR EACH ROW
-  BEGIN
-    DELETE FROM waitlist WHERE email=NEW.email AND year=NEW.year;
+  FOR EACH ROW BEGIN
+    IF (NEW.state = 'registered') THEN
+      DELETE FROM waitlist WHERE email=NEW.email AND year=NEW.year;
+    END IF;
   END;
 |
 DELIMITER ;

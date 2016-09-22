@@ -168,11 +168,11 @@ exports.optoutUser = function(token, callback) {
       },
       // add reference to previous user to new user
       function(tokens, next) {
-        conn.query(addRefQuery, [token, tokens[0].register, cfg.year], next);
+        conn.query(addRefQuery, [token, tokens[0], cfg.year], err => next(err, tokens[0]));
       }
-    ], function allDone(err) {
+    ], function allDone(err, newToken) {
       conn.release();
-      callback(err);
+      callback(err, newToken);
     });
   });
 };

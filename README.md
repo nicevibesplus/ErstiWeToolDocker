@@ -19,10 +19,13 @@ You now can start the app by running `npm start`.
 
 
 **TODO**
-- Email
-  - More Templates (Free space available, email confirmation, etc.)
-  - Improve Error Handling 
+- email
+    - More Templates (Free space available, email confirmation, etc.)
+    - integrate more hooks
+    - random delay generator for waitlist mail
 - Adminpanel frontend `admin.pug`
-- landinpage `#info` styling as alert/toast/..
-- `index.pug` input validation
+- landingpage `#info` styling as alert/toast/..
+- landingpage register form validation
+    - checkboxes filled?
+    - ensure length (.substr()) from schema.sql on client
 - systemd script for autostart

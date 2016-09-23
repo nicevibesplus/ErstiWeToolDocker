@@ -16,24 +16,60 @@ var userData = {
 
 db.connect();
 
-async.waterfall([
-  async.apply(db.insertWaitlist, userData.email),
-  async.apply(db.createTokens, 1),
-  function(tokens, next) {
-    console.log(tokens);
-    userData.token = tokens[0];
-    db.checkToken(tokens[0], next);
-  },
-  function(valid, next) {
-    console.log('token check should pass. token valid = ', valid);
-    db.insertUser(userData, next);
-  },
-  async.apply(db.getUsers, cfg.year),
-  function(users, next) {
-    console.log(users);
-    db.insertUser(userData, next);
-  }
-], function(err) {
-  console.error('should throw error: ' + err);
+async.series([
+  async.apply(insertTest),
+  async.apply(optoutTest)
+], function(err, results) {
+  if (err) console.error(err);
   process.exit();
 });
+
+function insertTest(done) {
+  async.series([
+    async.apply(db.insertWaitlist, userData.email),
+    async.apply(db.insertWaitlist, userData.email),
+    function(next) {
+      db.createTokens(1, function(err, tokens) {
+        if (err) return next(err);
+        console.log(tokens);
+        userData.token = tokens[0];
+        next();
+      });
+    },
+    async.apply(db.insertUser, userData),
+    function(next) {
+      db.getUsers(cfg.year, function(err, users) {
+        if (err) return next(err);
+        console.log(users);
+        next();
+      });
+    },
+    function(next) {
+      db.getWaitlist(cfg.year, function(err, waitlist) {
+        if (err) return next(err);
+        console.log('waitlist should be empty. length: ', waitlist.length);
+        next();
+      });
+    },
+    async.apply(db.insertUser, userData)
+  ], function(err, result) {
+    console.error('should throw error: ' + (err === 'invalid token'));
+    done();
+  });
+};
+
+
+function optoutTest(done) {
+  async.series([
+    function(next) {
+      db.optoutUser(userData.token, userData.email, function(err, newToken) {
+        console.log(newToken);
+        userData.token = newToken;
+        userData.email = 'noerw@gmx.de';
+        next(err, newToken);
+      })
+    },
+    async.apply(db.insertUser, userData),
+    async.apply(db.getUsers, cfg.year)
+  ], done);
+}

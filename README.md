@@ -17,15 +17,11 @@ Now open `config.js` and configure the application to your likings
 
 You now can start the app by running `npm start`.
 
-
-**TODO**
-- email
-    - More Templates (Free space available, email confirmation, etc.)
-    - integrate more hooks
-    - random delay generator for waitlist mail
+## TODO
 - Adminpanel frontend `admin.pug`
 - landingpage `#info` styling as alert/toast/..
 - landingpage register form validation
+    - sanitize html
     - checkboxes filled?
     - ensure length (.substr()) from schema.sql on client
 - systemd script for autostart

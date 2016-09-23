@@ -11,6 +11,11 @@ module.exports = {
     begin: ['28. Oktober', '09:30'],
     end:   ['30. Oktober', '13:00']
   },
+  // delay for the waitlist token-notification mails in minutes
+  waitlistDelay: {
+    min: 30,
+    max: 480 // 8 hours
+  },
 
   // if you change these values, also change them in schema.sql !
   mysql: {

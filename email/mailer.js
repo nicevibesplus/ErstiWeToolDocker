@@ -1,4 +1,5 @@
 var cfg = require('../config.js');
+var db = require('../DBhandler.js');
 var async = require('async');
 var nodemailer = require('nodemailer');
 var cook = require('handlebars');
@@ -37,36 +38,55 @@ exports.sendRegistrationMail = function(userData, callback) {
   }, callback);
 };
 
-exports.sendMoneyTransfer = function(newUserData, oldUserData, callback) {
-  var locals = { oldUser: oldUserData, newUser: newUserData };
+exports.sendMoneyTransfer = function(newToken, callback) {
+  var locals = {}, newUserMail, oldUserMail;
+  db.getUsers(cfg.year, function(err, users) {
+    if (err) return callback('error getting users: ' + err);
+    locals.newUser = users.find(el => (el.token === newToken));
 
-  var oldUserMail = {
-    templateName: 'moneytransfer_olduser.md',
-    templateLocals: locals,
-    subject: 'Nachrücker für deinen Platz am Ersti-Wochenende ' + cfg.year,
-    toAddress: oldUserData.email
-  };
+    // no need to send the mails if prev_user is undefined
+    if (!locals.newUser['prev_user']) return callback(null);
 
-  var newUserMail = {
-    templateName: 'moneytransfer_newuser.md',
-    templateLocals: locals,
-    subject: 'Teilnehmerbeitrag für das Ersti-Wochenende ' + cfg.year,
-    toAddress: newUserData.email
-  };
+    locals.oldUser = users.find(el => (el.token === locals.newUser['prev_user']));
 
-  async.parallel([
-    async.apply(sendMail, oldUserMail),
-    async.apply(sendMail, newUserMail)
-  ], callback);
+    oldUserMail = {
+      templateName: 'moneytransfer_olduser.md',
+      templateLocals: locals,
+      subject: 'Nachrücker für deinen Platz am Ersti-Wochenende ' + cfg.year,
+      toAddress: locals.oldUser.email
+    };
+
+    newUserMail = {
+      templateName: 'moneytransfer_newuser.md',
+      templateLocals: locals,
+      subject: 'Teilnehmerbeitrag für das Ersti-Wochenende ' + cfg.year,
+      toAddress: locals.newUser.email
+    };
+
+    async.parallel([
+      async.apply(sendMail, oldUserMail),
+      async.apply(sendMail, newUserMail)
+    ], callback);
+  });
 };
 
-exports.sendWaitlistNotification = function(token, waitlist, timeout, callback) {
-  setTimeout(function() {
-    sendMail({
-      templateName: 'waitlist_notification.md',
-      templateLocals: { token: token },
-      subject: 'Freier Platz fürs Ersti-Wochenende ' + cfg.year + '!',
-      bccAddress: waitlist
-    }, callback);
-  }, timeout);
+exports.sendWaitlistNotification = function(token, callback) {
+  var timeout = Math.random() * (cfg.waitlistDelay.max - cfg.waitlistDelay.min);
+  timeout = Math.floor((timeout + cfg.waitlistDelay.min) * 60000); // scale minutes to millisec
+
+  db.getWaitlist(cfg.year, function(err, waitlist) {
+    if (err) return callback('error getting waitlist: ', err);
+
+    // create string from waitlist
+    waitlist = waitlist.map(el => el.email).join(',');
+
+    setTimeout(function() {
+      sendMail({
+        templateName: 'waitlist_notification.md',
+        templateLocals: { token: token },
+        subject: 'Freier Platz für das Ersti-Wochenende ' + cfg.year + '!',
+        bccAddress: waitlist // BCC for privacy
+      }, callback);
+    }, timeout);
+  });
 };

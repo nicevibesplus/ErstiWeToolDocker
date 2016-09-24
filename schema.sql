@@ -56,6 +56,7 @@ DELIMITER |
 CREATE TRIGGER `registerUser` BEFORE UPDATE ON `users`
   FOR EACH ROW BEGIN
     IF (NEW.state = 'registered') THEN
+      SET NEW.timestamp = CURRENT_TIMESTAMP;
       DELETE FROM waitlist WHERE email=NEW.email AND year=NEW.year;
     END IF;
   END;

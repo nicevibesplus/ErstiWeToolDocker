@@ -34,7 +34,7 @@ router.post('/waitlist', function(req, res) {
 });
 
 router.post('/optout', function(req, res) {
-  db.optoutUser(db.optoutUser, req.body.token, req.body.email, function(err, newToken) {
+  db.optoutUser(req.body.token, req.body.email, function(err, newToken) {
     if (err) return res.end(err);
     res.end('Erfolgreich abgemeldet!');
 

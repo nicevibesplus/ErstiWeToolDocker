@@ -67,7 +67,7 @@ function optoutTest(done) {
         userData.token = newToken;
         userData.email = 'noerw@gmx.de';
         next(err, newToken);
-      })
+      });
     },
     async.apply(db.insertUser, userData),
     async.apply(db.getUsers, cfg.year)

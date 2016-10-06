@@ -21,16 +21,16 @@ You now can start the app by running `npm start`.
 - Adminpanel frontend `admin.pug`
 - Add "create admin.htpasswd" file to installation instructions
 - landingpage `#info` styling as alert/toast/..
-- Token export
-- User export
 - improve landingpage styling
-- query für nachrücker auflistung
 - improve delayed email sending times
     - nicht nachts
     - spätestens am abend vor fahrtbeginn?
 - systemd script for autostart
 
 ## DONE
+- Token export
+- User export
+- query für nachrücker auflistung
 - improve registration mail template
     - teilnehmerbeitrag aus config übernehmen
     - hinweis für nachrücker: perso wird geprüft

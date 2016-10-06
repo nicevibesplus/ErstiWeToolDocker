@@ -52,41 +52,43 @@ router.post('/optout', validator.optout, function(req, res) {
   });
 });
 
-// return list of all registered users
+// return list of all registered users as downloadable File
 router.get('/users/:year?', auth, function(req, res) {
   db.getAttendees(req.params.year || cfg.year, function(err, users) {
     if(err){res.status(501).send(err)}
     else{
-      fs.writeFile("/tmp/erstiwe" + cfg.year + "-attendees.txt", JSON.stringify(users), function(err){});
+      fs.writeFile("/tmp/erstiwe" + cfg.year + "-attendees.txt", JSON.stringify(users), function(err){if (!err) {res.download('/tmp/erstiwe' + cfg.year + "-attendees.txt");}});
     };
   });
 });
 
-// return list of all users on waitlist
+// return list of all users on waitlist as downloadable File
 router.get('/waitlist/:year?', auth, function(req, res) {
   db.getWaitlist(req.params.year || cfg.year, function(err, waitlist) {
         if(err){res.status(501).send(err)}
     else{
-      fs.writeFile("/tmp/erstiwe" + cfg.year + "-waitinglist.txt", JSON.stringify(waitlist), function(err){});
+      fs.writeFile("/tmp/erstiwe" + cfg.year + "-waitinglist.txt", JSON.stringify(waitlist), function(err){if (!err) {res.download('/tmp/erstiwe' + cfg.year + "-waitinglist.txt");}});
     };
   });
 });
 
-// return list of all waitings now attending [Nachruecker]
+// return list of all waitings now attending [Nachruecker] as downloadable File
 router.get('/successor/:year?', auth, function(req, res) {
   db.getSuccessors(req.params.year || cfg.year, function(err, successors) {
         if(err){res.status(501).send(err)}
     else{
-      fs.writeFile("/tmp/erstiwe" + cfg.year + "-successors.txt", JSON.stringify(successors), function(err){});
-      res.download('/tmp/erstiwe' + cfg.year + "-successors.txt");
+      fs.writeFile("/tmp/erstiwe" + cfg.year + "-successors.txt", JSON.stringify(successors), function(err){if (!err) {res.download('/tmp/erstiwe' + cfg.year + "-successors.txt");}});      
     };
   });
 });
 
-// generate [amount] new tokens
+// generate [amount] new tokens as downloadable File
 router.get('/generateTokens/:amount', auth, function(req, res) {
   db.createTokens(req.params.amount, function(err, tokens) {
-    err ? res.status(501).send(err) : res.json(tokens);
+    if(err){res.status(501).send(err)}
+    else{
+      fs.writeFile("/tmp/erstiwe" + cfg.year + "-tokens.txt", JSON.stringify(tokens), function(err){if (!err) {res.download('/tmp/erstiwe' + cfg.year + "-tokens.txt");}});
+    };
   });
 });
 

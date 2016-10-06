@@ -9,7 +9,8 @@ html
   
     form(action='api/generateTokens/', method='GET')
       label(for='amount') Tokenanzahl:
-        input#email(name='amount', type='text', required='', autocomplete='off',placeholder='70', maxlength="3")
+        input#email(name='amount', type='text', required='', autocomplete='off',placeholder='70', maxlength='3')
       input(type='submit', value='Generieren')
+      
     script(src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
     script(src='js/admin.js')

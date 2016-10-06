@@ -7,6 +7,7 @@ module.exports = {
 
   // affects the database queries & email templates
   year: 2016,
+  attendee_cost: 40,
   dates: {
     begin: ['28. Oktober', '09:30'],
     end:   ['30. Oktober', '13:00']

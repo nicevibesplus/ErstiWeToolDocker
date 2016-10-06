@@ -12,5 +12,11 @@ html
         input#email(name='amount', type='text', required='', autocomplete='off',placeholder='70', maxlength='3')
       input(type='submit', value='Generieren')
       
+    button(onclick="download_users()") Get All Users
+    br
+    button(onclick="download_waitlist()") Get Waitlist
+    br
+    button(onclick="download_successors()") Get Nachruecker
+      
     script(src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
     script(src='js/admin.js')

@@ -19,6 +19,7 @@ You now can start the app by running `npm start`.
 
 ## TODO
 - Adminpanel frontend `admin.pug`
+- Add "create admin.htpasswd" file to installation instructions
 - landingpage `#info` styling as alert/toast/..
 - improve landingpage styling
 - query für nachrücker auflistung

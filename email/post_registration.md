@@ -35,7 +35,7 @@ Wenn du an der Fahrt nicht mehr teilnehmen willst/kannst,
 ist die Rückerstattung des Teilnehmerbetrages nur möglich,
 wenn ein Nachfolger gefunden wird (je nach Andrang auf der Warteliste).
 
-Um dich abzumelden, besuche https://geofs.uni-muenster.de/erstiwe/
+Um dich abzumelden, besuche [geofs.de/erstiwe](https://geofs.uni-muenster.de/erstiwe/)
 und gebe unter "Abmelden" deinen Token und deine Emailaddresse an.
 Die Nachrücker auf der Warteliste werden informiert werden,
 und bei der Registrierung deine Emailaddresse erhalten,

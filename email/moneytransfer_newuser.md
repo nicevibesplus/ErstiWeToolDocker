@@ -2,7 +2,7 @@ Herzlichen Glückwunsch {{ newUser.firstname }},
 
 du hast auf der Warteliste den frei gewordenen Platz von {{ oldUser.firstname }} {{ oldUser.lastname }} bekommen!
 
-{{ oldUser.firstname }} hatte für diesen Platz bereits seinen Teilnehmerbeitrag von 40€ bezahlt.
+{{ oldUser.firstname }} hatte für diesen Platz bereits seinen Teilnehmerbeitrag von ]]{{ attendee_cost }}€ bezahlt.
 Bitte zahle deinen Teilnehmerbeitrag zeitnah an {{ oldUser.firstname }}.
 Diese Transaktion über uns abzuwickeln würde den Prozess unnötig kompliziert machen,
 und wird aufgrund des damit verbundenen Aufwands nicht angeboten.

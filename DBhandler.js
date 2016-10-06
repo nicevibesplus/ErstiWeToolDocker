@@ -87,6 +87,24 @@ exports.getUsers = function(year, callback) {
 }
 
 /*
+  Gets all attendees for the given year.
+  @param {int} year - Year
+*/
+exports.getAttendees = function(year, callback) {
+  var q = 'SELECT * FROM users WHERE year=? AND state=\'registered\';';
+  queryWrapper(q, [year], callback);
+}
+
+/*
+  Gets all successors for the given year.
+  @param {int} year - Year
+*/
+exports.getSuccessors = function(year, callback) {
+  var q = 'SELECT * FROM users WHERE year=? AND state=\'registered\' AND prev_user IS NOT NULL;';
+  queryWrapper(q, [year], callback);
+}
+
+/*
   Gets all user entries on waiting list in given year.
   @param {int} year - Year
 */

@@ -5,6 +5,7 @@ let auth = require('../auth.js');
 let mailer = require('../email/mailer.js');
 let validator = require('./inputvalidation.js');
 let cfg = require('../config.js');
+let fs = require('fs');
 
 router.post('/register', validator.registration, function(req, res) {
   let data = validator.escapeHtml(req.body);
@@ -53,15 +54,32 @@ router.post('/optout', validator.optout, function(req, res) {
 
 // return list of all registered users
 router.get('/users/:year?', auth, function(req, res) {
-  db.getUsers(req.params.year || cfg.year, function(err, users) {
-    err ? res.status(501).send(err) : res.json(users);
+  db.getAttendees(req.params.year || cfg.year, function(err, users) {
+    if(err){res.status(501).send(err)}
+    else{
+      fs.writeFile("/tmp/erstiwe" + cfg.year + "-attendees.txt", JSON.stringify(users), function(err){});
+    };
   });
 });
 
 // return list of all users on waitlist
 router.get('/waitlist/:year?', auth, function(req, res) {
   db.getWaitlist(req.params.year || cfg.year, function(err, waitlist) {
-    err ? res.status(501).send(err) : res.json(waitlist);
+        if(err){res.status(501).send(err)}
+    else{
+      fs.writeFile("/tmp/erstiwe" + cfg.year + "-waitinglist.txt", JSON.stringify(waitlist), function(err){});
+    };
+  });
+});
+
+// return list of all waitings now attending [Nachruecker]
+router.get('/successor/:year?', auth, function(req, res) {
+  db.getSuccessors(req.params.year || cfg.year, function(err, successors) {
+        if(err){res.status(501).send(err)}
+    else{
+      fs.writeFile("/tmp/erstiwe" + cfg.year + "-successors.txt", JSON.stringify(successors), function(err){});
+      res.download('/tmp/erstiwe' + cfg.year + "-successors.txt");
+    };
   });
 });
 

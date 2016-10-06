@@ -22,8 +22,13 @@ You now can start the app by running `npm start`.
 - landingpage `#info` styling as alert/toast/..
 - improve landingpage styling
 - query für nachrücker auflistung
+- improve registration mail template
+    - teilnehmerbeitrag aus config übernehmen
+    - hinweis für nachrücker: perso wird geprüft
 - registration disclaimers:
     - du bist 18 jahre alt (wird vor fahrtantritt geprüft!)
     - auf dem wochenende wird gefilmt!
 - improve delayed email sending times
+    - nicht nachts
+    - spätestens am abend vor fahrtbeginn?
 - systemd script for autostart

@@ -10,7 +10,7 @@ let checkRegistration = validator.isObject()
   .withRequired('phone', validator.isString({regex: /^(?=.{1,50}$).+$/}))
   .withRequired('food', validator.isString({regex: /^(vegan|vegetarisch|fleischig)$/}))
   .withRequired('gender', validator.isString({regex: /^(male|female|other)$/}))
-  .withRequired('study', validator.isString({regex: /^(Geoinformatik|Zwei-Fach-Bachelor|Geographie|Lanschaftsökologie)$/}))
+  .withRequired('study', validator.isString({regex: /^(Geoinformatik|Zwei-Fach-Bachelor|Geographie|Landschaftsökologie)$/}))
   .withOptional('comment');
 
 let checkOptout = validator.isObject()

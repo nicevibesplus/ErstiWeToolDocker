@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/admin', auth, function(req, res){
-  res.render('adminpanel');
+  res.render('admin');
 });
 
 module.exports = router;

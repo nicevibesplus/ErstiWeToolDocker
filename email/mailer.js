@@ -43,12 +43,13 @@ exports.sendMoneyTransfer = function(newToken, callback) {
   db.getUsers(cfg.year, function(err, users) {
     if (err) return callback('error getting users: ' + err);
     locals.newUser = users.find(el => (el.token === newToken));
-
+    
     // no need to send the mails if prev_user is undefined
     if (!locals.newUser['prev_user']) return callback(null);
 
     locals.oldUser = users.find(el => (el.token === locals.newUser['prev_user']));
-
+    locals.attendee_cost = cfg.attendee_cost;
+    
     oldUserMail = {
       templateName: 'moneytransfer_olduser.md',
       templateLocals: locals,

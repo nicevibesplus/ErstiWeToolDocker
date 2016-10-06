@@ -33,6 +33,7 @@ html
       p
         | Bitte gebe deine persönlichen Daten an.
         | Dies macht die Organisation des Wochenendes für dich & uns deutlich einfacher.
+        | 
       label(for='firstname') Vorname:
         input#firstname(name='firstname', type='text', required='', autocomplete='off',placeholder='Donald', maxlength="50")
       label(for='lastname') Nachname:
@@ -83,6 +84,8 @@ html
           | vegan
       label(for='comment') Willst du uns noch etwas mitteilen?
         textarea#comment(name='comment', autocomplete='off', placeholder='Allergene, ... [max 500 Zeichen]', maxlength="500")
+        p
+        | Auf dem Ersti-Wochende wird gefilmt. Aus diesen Filmaufnahmen wird ein Video geschnitten welches auf der Weihnachtsfeier ausgestrahlt wird. Mit der Anmeldung zum Ersti-Wochenende erklärst du dich damit einverstanden, dass auch Material verwendet wird auf dem du zu sehen bist.
       input(type='submit', value='Absenden')
 
     form#form-waitlist.hidden(action='api/waitlist' method='POST')

@@ -19,67 +19,70 @@ html
     div#info
 
     div#menu
-      button(onclick='toggleView("register")') Mit Token anmelden!
+      button(onclick='toggleView("register")') Mit Code anmelden!
       br
-      button(onclick='toggleView("waitlist")') Kein Token? Auf die Warteliste!
+      button(onclick='toggleView("waitlist")') Kein Code? Auf die Warteliste!
       br
       button(onclick='toggleView("optout")') Doch keine Zeit? Abmelden!
 
+    div#back.hidden
+      button(onclick='toggleView("menu")') zurück
+
     form#form-register.hidden(action='api/register' method='POST')
-      input#token(name='token', type='text', required='', autocomplete='off', placeholder='Token')
+      input#token(name='token', type='text', required='', autocomplete='off', placeholder='Code', maxlength="8")
       p
         | Bitte gebe deine persönlichen Daten an.
         | Dies macht die Organisation des Wochenendes für dich & uns deutlich einfacher.
       label(for='firstname') Vorname:
-        input#firstname(name='firstname', type='text', required='', autocomplete='off',placeholder='Donald')
+        input#firstname(name='firstname', type='text', required='', autocomplete='off',placeholder='Donald', maxlength="50")
       label(for='lastname') Nachname:
-        input#lastname(name='lastname', type='text', required='', autocomplete='off',placeholder='Duck')
+        input#lastname(name='lastname', type='text', required='', autocomplete='off',placeholder='Duck', maxlength="50")
       fieldset#gender
         legend Geschlecht:
         label(for='m')
-          input#m(type='radio', name='gender', value='male')
+          input#m(type='radio', name='gender', value='male', required='')
           | männlich
         label(for='f')
-          input#f(type='radio', name='gender', value='female')
+          input#f(type='radio', name='gender', value='female', required='')
           | weiblich
         label(for='n')
-          input#n(type='radio', name='gender', value='other')
+          input#n(type='radio', name='gender', value='other', required='')
           | who cares?!
       label(for='email') E-Mail:
-        input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
+        input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength="50")
       label(for='email-confirmation') E-Mail bestätigen:
-        input#email-confirmation(type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
+        input#email-confirmation(type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength="50")
       label(for='phone') Telefon:
-        input#phone(name='phone', type='tel', required='', autocomplete='off',placeholder='0123456789')
+        input#phone(name='phone', type='tel', required='', autocomplete='off',placeholder='0123456789', maxlength="50")
       label(for='birthday') Geburtstag:
-        input#birthday(name='birthday', type='date', placeholder='1523-02-02', required='', autocomplete='off')
-      fieldset#study
+        input#birthday(name='birthday', type='date', placeholder='1523-02-02', autocomplete='off', maxlength="50")
+      fieldset#study(required='true')
         legend Studiengang:
         label(for='geo')
-          input#geo(type='radio', name='study', value='Geographie')
+          input#geo(type='radio', name='study', value='Geographie' required='')
           | Geographie
         label(for='loek')
-          input#loek(type='radio', name='study', value='Landschaftsökologie')
+          input#loek(type='radio', name='study', value='Landschaftsökologie', required='')
           | Landschaftsökologie
         label(for='zweifach')
-          input#zweifach(type='radio', name='study', value='Zwei-Fach-Bachelor')
+          input#zweifach(type='radio', name='study', value='Zwei-Fach-Bachelor', required='')
           | Zwei-Fach-Bachelor
         label(for='geoinf')
-          input#geoinf(type='radio', name='study', value='Geoinformatik')
+          input#geoinf(type='radio', name='study', value='Geoinformatik', required='')
           | Geoinformatik
       fieldset#food
         legend Ich ernähre mich
         label(for='normal')
-          input#normal(type='radio', name='food', value='fleischig')
+          input#normal(type='radio', name='food', value='fleischig', required='')
           | fleischig
         label(for='vegetarisch')
-          input#vegetarisch(type='radio', name='food', value='vegetarisch')
+          input#vegetarisch(type='radio', name='food', value='vegetarisch', required='')
           | vegetarisch
         label(for='vegan')
-          input#vegan(type='radio', name='food', value='vegan')
+          input#vegan(type='radio', name='food', value='vegan', required='')
           | vegan
       label(for='comment') Willst du uns noch etwas mitteilen?
-        textarea#comment(name='comment', autocomplete='off', placeholder='Allergene, ... [max 500 Zeichen]')
+        textarea#comment(name='comment', autocomplete='off', placeholder='Allergene, ... [max 500 Zeichen]', maxlength="500")
       input(type='submit', value='Absenden')
 
     form#form-waitlist.hidden(action='api/waitlist' method='POST')
@@ -100,7 +103,7 @@ html
       | für andere frei machen, solltest du an dem Ersti-Wochende nicht teilnehmen können.
       | Den Kostenbeitrag erhältst du - sofern sich jemand findet - von einem Nachrücker erstattet.
       label(for='token-optout')
-        | Token:
+        | Code:
         input#token-optout(name='token', type='text', required='', autocomplete='off',placeholder='Code')
       label(for='email-optout')
         | E-Mail:

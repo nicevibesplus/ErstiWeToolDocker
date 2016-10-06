@@ -60,29 +60,25 @@ body {
     display: block;
 }
 
-form, #menu {
-  width:400px;
+form, #menu, #back {
+  width: 400px;
   margin: auto;
 }
 
+#back {
+  padding-bottom: 15px;
+}
+
 #token{
-  width: 100%;
-  max-width: 400px;
   margin-bottom:22px;
-  margin-left: auto;
-  margin-right: auto;
   padding: 10px;
   font-size: 2em;
   text-align: center;
 }
 
-input:focus, textarea:focus, input:hover, textarea:hover button:hover {
-  box-shadow:0 0  10px 0px grey;
-}
-
 input[type="submit"], button {
     font-size: 1.2em;
-    width: 400px;
+    width: 100%;
     padding:5px 15px;
     background:#ccc;
     border:0 none;
@@ -94,20 +90,19 @@ input[type="submit"], button {
     cursor: pointer;
 }
 
+input:focus, textarea:focus, input:hover, textarea:hover button:hover {
+  box-shadow:0 0  10px 0px grey;
+}
+
 input[type="submit"]:hover, button:hover {
   box-shadow:0 0  10px 0px grey;
   background-color:#aaa;
 }
 
-input[type="text"]{
-	width: 100%;
-	max-width: 400px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 input, textarea {
   width:100%;
+	margin-left: auto;
+	margin-right: auto;
   margin-top:5px;
   margin-bottom:20px;
   padding:3px 8px;

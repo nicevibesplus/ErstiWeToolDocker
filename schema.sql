@@ -17,13 +17,13 @@ DROP TABLE IF EXISTS `ersti-we`.`users` ;
 
 CREATE TABLE IF NOT EXISTS `ersti-we`.`users` (
   `token` CHAR(8) NOT NULL,      -- registration token
-  `firstname` VARCHAR(45) NULL,
-  `lastname` VARCHAR(45) NULL,
+  `firstname` VARCHAR(50) NULL,
+  `lastname` VARCHAR(50) NULL,
   `gender` ENUM('male', 'female', 'other') NULL,
-  `email` VARCHAR(45) NULL,
-  `phone` VARCHAR(20) NULL,
+  `email` VARCHAR(50) NULL,
+  `phone` VARCHAR(50) NULL,
   `comment` VARCHAR(500) NULL,
-  `birthday` VARCHAR(20) NULL,
+  `birthday` VARCHAR(50) NULL,
   `food` ENUM('fleischig', 'vegan', 'vegetarisch') NULL,
   `study` ENUM('Geoinformatik', 'Geographie', 'Landschaftsökologie', 'Zwei-Fach-Bachelor') NULL,
   `year` INT NOT NULL, -- assigned year of the user

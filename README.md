@@ -20,8 +20,10 @@ You now can start the app by running `npm start`.
 ## TODO
 - Adminpanel frontend `admin.pug`
 - landingpage `#info` styling as alert/toast/..
-- landingpage register form validation
-    - sanitize html
-    - checkboxes filled?
-    - ensure length (.substr()) from schema.sql on client
+- improve landingpage styling
+- query für nachrücker auflistung
+- registration disclaimers:
+    - du bist 18 jahre alt (wird vor fahrtantritt geprüft!)
+    - auf dem wochenende wird gefilmt!
+- improve delayed email sending times
 - systemd script for autostart

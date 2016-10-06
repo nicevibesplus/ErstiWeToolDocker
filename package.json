@@ -15,7 +15,9 @@
     "http-auth": "~2.4.0",
     "kramed": "^0.5.6",
     "mysql": "~2.11.1",
+    "node-validator": "^0.1.23",
     "nodemailer": "^2.6.0",
-    "pug": "~2.0.0-beta6"
+    "pug": "~2.0.0-beta6",
+    "sanitize-html": "^1.13.0"
   }
 }

@@ -9,48 +9,21 @@ function showAlert(text, type) {
   }, 400);
 }
 
-function download_users(){
-  $.ajax({
+$(document).ready(function() {  
+  var that = this;
+  
+  $.ajax({ 
       type: 'GET',
-      url:  '/api/users/2016',
+      url:  '/api/statistics',
       error: function(xhr, status, err) {
         showAlert(xhr.responseText, 'error');
       },
       success: function(res) {
-        // Show Success
-        showAlert(res, 'success');
+        $('#attendeecount').text(res);
       }
-    });
-}
-
-function download_waitlist(){
-  $.ajax({
-      type: 'GET',
-      url:  '/api/waitlist/',
-      error: function(xhr, status, err) {
-        showAlert(xhr.responseText, 'error');
-      },
-      success: function(res) {
-        // Show Success
-        showAlert(res, 'success');
-      }
-    });
-}
-function download_successors(){
-  $.ajax({
-      type: 'GET',
-      url:  '/api/successor/',
-      error: function(xhr, status, err) {
-        showAlert(xhr.responseText, 'error');
-      },
-      success: function(res) {
-        // Show Success
-        showAlert(res, 'success');
-      }
-    });
-}
-
-$(document).ready(function() {
+  });
+  
+  
   // submit handler for forms
   $('form').submit(function() {
     var that = this;

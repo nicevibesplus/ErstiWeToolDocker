@@ -87,12 +87,12 @@ exports.getUsers = function(year, callback) {
 }
 
 /*
-  Gets all attendees for the given year.
+  Gets all attendees for the given year who are not Successors.
   @param {int} year - Year
 */
-exports.getAttendees = function(year, callback) {
-  var q = 'SELECT * FROM users WHERE year=? AND state=\'registered\';';
-  queryWrapper(q, [year], callback);
+exports.getRegulars = function(year, callback) {
+  var q = 'SELECT * FROM users as u WHERE year=? AND state=\'registered\' AND NOT u.email IN (SELECT email FROM users WHERE year=? AND state=\'registered\' AND prev_user IS NOT NULL) ORDER BY lastname;';
+  queryWrapper(q, [year, year], callback);
 }
 
 /*
@@ -100,7 +100,7 @@ exports.getAttendees = function(year, callback) {
   @param {int} year - Year
 */
 exports.getSuccessors = function(year, callback) {
-  var q = 'SELECT * FROM users WHERE year=? AND state=\'registered\' AND prev_user IS NOT NULL;';
+  var q = 'SELECT * FROM users WHERE year=? AND state=\'registered\' AND prev_user IS NOT NULL ORDER BY lastname;';
   queryWrapper(q, [year], callback);
 }
 
@@ -110,6 +110,15 @@ exports.getSuccessors = function(year, callback) {
 */
 exports.getWaitlist = function(year, callback) {
   var q = 'SELECT * FROM waitlist WHERE year=?;';
+  queryWrapper(q, [year], callback);
+};
+
+/*
+  Gets all unused Tokens in given year.
+  @param {int} year - Year
+*/
+exports.getUnusedToken = function(year, callback) {
+  var q = 'SELECT token FROM users WHERE year=? AND email IS NULL;';
   queryWrapper(q, [year], callback);
 };
 
@@ -163,5 +172,14 @@ exports.optoutUser = function(token, email, callback) {
 */
 exports.countAttendants = function(year, cb) {
   var q = 'SELECT COUNT(*) AS count FROM users WHERE year=? AND state=\'registered\';';
+  queryWrapper(q, [year || cfg.year], (err, rows) => cb(err, rows[0].count));
+}
+
+/*
+  Returns the number of people on waitlist for given year to cb function.
+  @param {int} year - Year
+*/
+exports.countWaiting = function(year, cb) {
+  var q = 'SELECT COUNT(*) AS count FROM waitlist;';
   queryWrapper(q, [year || cfg.year], (err, rows) => cb(err, rows[0].count));
 }

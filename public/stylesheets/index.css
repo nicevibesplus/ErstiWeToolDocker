@@ -33,6 +33,7 @@
   }
 }
 
+
 body {
     font-family:Titillium Web;
     margin: 0;
@@ -51,35 +52,56 @@ body {
     padding-top: 50px;
     text-align: center;
     align-content: center;
+    text-decoration:underline;
 }
 
 .logo{
     float: right;
-    margin-top: 10px;
-    margin-left:25px;
+    bottom: 0;
+    right: 0;
+    position: fixed;
     display: block;
+    padding-bottom: 50px;
+    padding-right: 50px
 }
 
 form, #menu, #back {
   width: 400px;
   margin: auto;
+  padding: 5px;
 }
 
 #back {
-  padding-bottom: 15px;
+}
+
+#info{
+    width:430px;
+    margin: auto;
+    height:auto;
+    min-height: 40px;
+    line-height: 40px;
+    border:0 none;
+    font-size: 1.4em;
+    background-color: #99f47a;
+    font-family: Calibri;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);  
+    text-align: center;
+    cursor: default;
 }
 
 #token{
   margin-bottom:22px;
-  padding: 10px;
   font-size: 2em;
   text-align: center;
 }
 
 input[type="submit"], button {
     font-size: 1.2em;
-    width: 100%;
-    padding:5px 15px;
+    width: 432px;
+    padding: 5px; 
     background:#ccc;
     border:0 none;
     margin-top: 20px;
@@ -100,12 +122,12 @@ input[type="submit"]:hover, button:hover {
 }
 
 input, textarea {
-  width:100%;
+  width:420px;
+  padding: 5px;
 	margin-left: auto;
 	margin-right: auto;
   margin-top:5px;
   margin-bottom:20px;
-  padding:3px 8px;
   border:1px solid grey;
   transition: border 0.3s;
   transition: box-shadow 0.3s;

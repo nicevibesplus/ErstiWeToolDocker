@@ -18,17 +18,18 @@ Now open `config.js` and configure the application to your likings
 You now can start the app by running `npm start`.
 
 ## TODO
+- Invalid Token Alert!
+- improve landingpage styling
 - Adminpanel Styling `admin.pug`
 - Improve Statistics API
 - Add "create admin.htpasswd" file to installation instructions
-- landingpage `#info` styling as alert/toast/..
-- improve landingpage styling
 - improve delayed email sending times
     - nicht nachts
     - spätestens am abend vor fahrtbeginn?
 - systemd script for autostart
 
 ## DONE
+- landingpage `#info` styling as alert/toast/..
 - Token export
 - User export
 - query für nachrücker auflistung

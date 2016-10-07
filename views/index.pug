@@ -11,20 +11,17 @@ html
         a Window too small! Please resize the window.
       div(class='headline')
         span(id='titel')='Ersti-Wochenende ' + year
-        div(class='logo')
-          img(src='images/pacman.svg', width='150', alt='', padding="20px")
-          img(src='images/notpacman.svg', width='170', alt='', padding="20px")
-
-    // TODO: style properly as alert
-    div#info
-
     div#menu
       button(onclick='toggleView("register")') Mit Code anmelden!
       br
       button(onclick='toggleView("waitlist")') Kein Code? Auf die Warteliste!
       br
       button(onclick='toggleView("optout")') Doch keine Zeit? Abmelden!
-
+      br
+      br
+      br
+      div#info(style='display:none')
+    
     div#back.hidden
       button(onclick='toggleView("menu")') zurück
 
@@ -112,6 +109,10 @@ html
         | E-Mail:
         input#email-optout(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
       input(type='submit', value='Absenden')
-
+    div(class='logo')
+      img(src='images/pacman.svg', width='150', alt='', padding="20px")
+      img(src='images/notpacman.svg', width='170', alt='', padding="20px")
+  
+      
     script(src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
     script(src='js/index.js')

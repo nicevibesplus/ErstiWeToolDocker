@@ -23,10 +23,11 @@ function toggleView(mode) {
 
 function showAlert(text, type) {
   // TODO: toggle classes for appropiate styling ('success', 'error')
-  $('#info').html(text);
+  /*
   $('html, body').animate({
     scrollTop: $('#info').offset().top - 20
-  }, 400);
+  }, 400);*/
+  $('#info').text('Erfolgreich angemeldet!').fadeIn(200).delay(5000).fadeOut(400); 
 }
 
 $(document).ready(function() {

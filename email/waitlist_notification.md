@@ -5,8 +5,6 @@ Wer sich als erstes mit dem folgenden Token unter [geofs.de/erstiwe](https://geo
 
 - **Token**: `{{ token }}`
 
-Anmerkung: Die Fahrt ist altersbeschränkt ab 18! Wir behalten es uns vor das Alter der Nachrücker am Morgen der Abfahrt zu kontrollieren.
-
 Viel Glück wünscht
 
 deine Fachschaft Geoinformatik und Fachschaft Geographie/Landschaftsökologie

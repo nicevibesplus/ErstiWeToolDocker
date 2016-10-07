@@ -11,6 +11,11 @@ Das Erstiwochenende findet vom {{ dates.begin.[0] }} bis {{ dates.end.[0] }} {{ 
 
 Bitte denkt daran am Freitag genügend Proviant für die Busfahrt mitzunehmen! Wir werden erst um etwa 19 Uhr Abendessen. Für die Rückfahrt werdet ihr die Möglichkeit haben euch extra Brote vom Frühstück zu schmieren und auch etwas Obst zu stibitzen.
 
+{{#if prev_user}}
+**Hinweis:** Die Fahrt ist altersbeschränkt ab 18!
+Wir werden das Alter der Teilnehmer am Morgen der Abfahrt zu kontrollieren, halte deinen Ausweis bereit!
+{{/if}}
+
 #### Packliste
   - **wichtig**: Bettzeug oder Schlafsack & Bettlaken
     (Wer sich Bettzeug vom Haus leiht, muss diese direkt bezahlen)

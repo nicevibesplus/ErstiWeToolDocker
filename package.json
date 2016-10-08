@@ -11,6 +11,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.4",
     "handlebars": "^4.0.5",
+    "handlebars-dateformat": "^1.0.1",
     "helmet": "~2.1.2",
     "http-auth": "~2.4.0",
     "kramed": "^0.5.6",

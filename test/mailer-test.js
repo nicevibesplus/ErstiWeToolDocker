@@ -1,3 +1,4 @@
+var db = require('../DBhandler.js');
 var mailer = require('../email/mailer.js');
 
 var userData = {
@@ -14,8 +15,15 @@ var userData = {
   token: 'asdfasdf'
 };
 
-mailer.sendRegistrationMail(userData, function(err, info) {
+db.connect();
+
+/*mailer.sendRegistrationMail(userData, function(err, info) {
   if (err) return console.error(err);
   console.log(info);
   process.exit();
+});*/
+
+mailer.sendWaitlistNotification('asdfasdf', function(err, res) {
+  console.log(err);
+  console.log(res);
 });

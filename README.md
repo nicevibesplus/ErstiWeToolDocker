@@ -21,12 +21,12 @@ You now can start the app by running `npm start`.
 - (Adminpanel Styling `admin.pug`)
 - Improve Statistics API
 - Add "create admin.htpasswd" file to installation instructions
-- improve delayed email sending times
-    - nicht nachts
-    - spätestens am abend vor fahrtbeginn?
 - systemd script for autostart
 
 ## DONE
+- improve delayed email sending times
+    - nicht nachts
+    - spätestens am abend vor fahrtbeginn?
 - Invalid Token Alert!
 - landingpage `#info` styling as alert/toast/..
 - Token export

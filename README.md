@@ -21,10 +21,12 @@ htpasswd -c ./admin.htpasswd <username>
 ```
 
 You now can start the app by running `npm start`.
+
 There are two frontend endpoints:
 - './': contains the user facing forms
 - './admin': contains an adminpanel, requires authentication
 
-## TODO
-- systemd script for autostart
-- Improve Statistics API
+## Autostart
+On a system running systemd, you may copy the file `ErstiWeTool` to `/etc/init.d/`, and start the app via
+`sudo service ErstiWeTool start`
+

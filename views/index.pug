@@ -81,17 +81,20 @@ html
           | Aus diesen Filmaufnahmen wird ein Video geschnitten welches auf der GEO-Weihnachtsfeier gezeigt wird.
           | Mit der Anmeldung zum Ersti-Wochenende erklärst du dich damit einverstanden, dass auch Material verwendet wird auf dem du zu sehen bist.
         br
-        li Deine Anmeldung ist verbindlich. Wenn du an der Fahrt nicht mehr teilnehmen willst/kannst, ist die Rückerstattung des Teilnehmerbetrages nur möglich, wenn ein Nachfolger gefunden wird (je nach Andrang auf der Warteliste).
+        li Deine Anmeldung ist verbindlich. 
+          | Wenn du an der Fahrt nicht mehr teilnehmen willst/kannst, ist die Rückerstattung des Teilnehmerbetrages nur möglich, wenn ein Nachfolger gefunden wird (je nach Andrang auf der Wartelizste).
 
       input(type='submit', value='Absenden')
 
     form#form-waitlist.hidden(action='api/waitlist' method='POST')
       p.description
         | Du kannst dich hier auf die Warteliste setzen lassen.
-        | Wenn ein Platz frei wird, bekommen alle Personen auf der Warteliste
-        | zu einer zufälligen Zeit in den nächsten 24 Stunden eine Email mit einem
-        | neuen Zugangscode zugesendet. Den Kostenbeitrag für das Wochenende
-        | gibst du bitte an diejenige Person weiter, deren Platz frei geworden ist (siehe Email).
+        ul
+          li Wenn ein Platz frei wird bekommen alle Personen auf der Warteliste zu einer zufälligen Zeit in den nächsten Stunden eine Email mit einem neuen Zugangscode zugesendet. 
+          br
+          li Die Person die den Zugangscode als Erstes einlöst bekommt den freigewordenen Platz (first-come-first-serve Prinzip). 
+          br
+          li Den Kostenbeitrag für das Wochenende gibst du bitte an diejenige Person, deren Platz frei geworden ist (siehe Email).
       label(for='email') E-Mail:
       input#email-waitlist(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength='50')
       input(type='submit', value='Absenden')

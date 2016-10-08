@@ -69,7 +69,7 @@ exports.insertUser = function(data, callback) {
     function(next) {
       queryWrapper(tokenQuery, [data.token], function(err, rows) {
         if (err) next(err);
-        rows[0].count ? next() : next('invalid token');
+        rows[0].count ? next() : next('Ungültiger Zugangscode');
       });
     },
     // insert new empty user
@@ -146,7 +146,7 @@ exports.optoutUser = function(token, email, callback) {
     function(next) {
       queryWrapper(tokenCheckQuery, [token, email], function(err, rows) {
         if (err) return next(err);
-        rows[0].count ? next() : next('invalid token:email pair');
+        rows[0].count ? next() : next('Ungültige Code/Email Kombination');
       });
     },
     // mark user opted out

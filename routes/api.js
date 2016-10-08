@@ -132,13 +132,14 @@ router.get('/statistics', auth, function(req, res) {
 
 // Parsing the MYSQL Row Data to CSV format
 function createCSVfile_token(tokens, filename,cb){
-  tokens.forEach(tokens => fs.appendFile(filename,
-                                                JSON.stringify(tokens.token) + "\n"));
+  fs.appendFileSync(filename,"\"Token\" \n");    
+  tokens.forEach(tokens => fs.appendFile(filename, JSON.stringify(tokens.token) + "\n"));
   cb(filename);
 }
 
 // Parsing the MYSQL Row Data to CSV format
 function createCSVfile_waitlist(waitlist, filename,cb){
+  fs.appendFileSync(filename, "\"Email\",,\"Year\",\"Timestamp\" \n");    
   waitlist.forEach(waitlist => fs.appendFile(filename,
                                                 JSON.stringify(waitlist.email) + "," +
                                                 JSON.stringify(waitlist.year) + "," +
@@ -148,7 +149,8 @@ function createCSVfile_waitlist(waitlist, filename,cb){
 
 // Parsing the MYSQL Row Data to CSV format
 function createCSVfile_users(users, filename,cb){
-  users.forEach(users => fs.appendFileSync(filename,
+  fs.appendFileSync(filename, "\"Firstname\",\"Lastname\",\"Gender\",\"Email\",\"Phone\",\"Food\",\"Comment\",\"Study\" \n");    
+  users.forEach(users => fs.appendFile(filename,
                                                 JSON.stringify(users.firstname) + "," +
                                                 JSON.stringify(users.lastname)  + "," +
                                                 JSON.stringify(users.gender)     + "," +

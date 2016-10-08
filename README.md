@@ -2,7 +2,7 @@
 Prototype of ErstiWeTool in nodejs express framework.
 
 ## Installation
-Requires `node >= 4.x` and `mysql-server`.
+Requires `node >= 4.x` and `mysql-server >=5.x`.
 
 ```bash
 git clone https://github.com/SpeckiJ/ErstiWeTool.git
@@ -15,26 +15,16 @@ cp config.sample.js config.js
 
 Now open `config.js` and configure the application to your likings
 
+At last, create login credentials for the admin panel (requires `htpasswd` from apache-utils):
+```
+htpasswd -c ./admin.htpasswd <username>
+```
+
 You now can start the app by running `npm start`.
+There are two frontend endpoints:
+- './': contains the user facing forms
+- './admin': contains an adminpanel, requires authentication
 
 ## TODO
-- (Adminpanel Styling `admin.pug`)
-- Improve Statistics API
-- Add "create admin.htpasswd" file to installation instructions
 - systemd script for autostart
-
-## DONE
-- improve delayed email sending times
-    - nicht nachts
-    - spätestens am abend vor fahrtbeginn?
-- Invalid Token Alert!
-- landingpage `#info` styling as alert/toast/..
-- Token export
-- User export
-- query für nachrücker auflistung
-- improve registration mail template
-    - teilnehmerbeitrag aus config übernehmen
-    - hinweis für nachrücker: perso wird geprüft
-- registration disclaimers:
-    - du bist 18 jahre alt (wird vor fahrtantritt geprüft!)
-    - auf dem wochenende wird gefilmt!
+- Improve Statistics API

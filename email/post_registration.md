@@ -42,11 +42,7 @@ ist die Rückerstattung des Teilnehmerbetrages nur möglich,
 wenn ein Nachfolger gefunden wird (je nach Andrang auf der Warteliste).
 
 Um dich abzumelden, besuche [geofs.de/erstiwe](https://geofs.uni-muenster.de/erstiwe/)
-<<<<<<< HEAD
-und gebe unter "Abmelden" deinen Token und deine Emailaddresse an.
-=======
 und gebe unter "Abmelden" deinen Code und deine Emailaddresse an.
->>>>>>> a019edd... Renamed Errors to be user-friendly.
 Die Nachrücker auf der Warteliste werden informiert werden,
 und bei der Registrierung deine Emailaddresse erhalten,
 um den Teilnehmerbetrag an dich zu übertragen.

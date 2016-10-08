@@ -63,13 +63,9 @@ CREATE TRIGGER `registerUser` BEFORE UPDATE ON `users`
 |
 DELIMITER ;
 
--- Compatibility to mysql < 5.6.*
--- Same functionality as:
+-- Compatibility to mysql < 5.6.*, replacing
 -- CREATE USER IF NOT EXISTS `ersti-we`;
-GRANT SELECT ON *.* TO 'ersti-we';
-DROP USER `ersti-we`;
 CREATE USER `ersti-we`;
-
 GRANT ALL PRIVILEGES ON `ersti-we`.* TO `ersti-we`;
 
 SET SQL_MODE=@OLD_SQL_MODE;

@@ -4,29 +4,29 @@ html
     meta(http-equiv='content-type', content='text/html; charset=utf-8; width=device-width; initial-scale=1.0')
     link(rel='stylesheet', href='stylesheets/style.css')
   body
-  
+
     div#info
-  
-    form(action='api/generateTokens/', method='GET')
+
+    form(action='./api/generateTokens/', method='GET')
       label(for='amount') Tokenanzahl:
         input#email(name='amount', type='text', required='', autocomplete='off',placeholder='70', maxlength='3')
       input(type='submit', value='Generieren')
     br
     br
-    button(onclick="location.href='/api/download/token/'") Download unused Token .CSV
+    button(onclick="location.href='./api/download/token/'") Download unused Token .CSV
     br
-    button(onclick="location.href='/api/download/users/'") Download Regular User .CSV
+    button(onclick="location.href='./api/download/users/'") Download Regular User .CSV
     br
-    button(onclick="location.href='/api/download/successor/'") Download Nachruecker .CSV
+    button(onclick="location.href='./api/download/successor/'") Download Nachruecker .CSV
     br
-    button(onclick="location.href='/api/download/waitlist/'") Download Warteliste .CSV
-    
+    button(onclick="location.href='./api/download/waitlist/'") Download Warteliste .CSV
+
   br
   br
   br
   br
   br
   label(id="attendeecount")
-      
+
     script(src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
-    script(src='js/admin.js')
+    script(src='./js/admin.js')

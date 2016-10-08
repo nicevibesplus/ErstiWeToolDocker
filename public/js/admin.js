@@ -1,20 +1,18 @@
 'use strict';
 
-
 function showAlert(text, type) {
-  // TODO: toggle classes for appropiate styling ('success', 'error')
   $('#info').html(text);
   $('html, body').animate({
     scrollTop: $('#info').offset().top - 20
   }, 400);
 }
 
-$(document).ready(function() {  
+$(document).ready(function() {
   var that = this;
-  
-  $.ajax({ 
+
+  $.ajax({
       type: 'GET',
-      url:  '/api/statistics',
+      url:  './api/statistics',
       error: function(xhr, status, err) {
         showAlert(xhr.responseText, 'error');
       },
@@ -22,12 +20,12 @@ $(document).ready(function() {
         $('#attendeecount').text(res);
       }
   });
-  
-  
+
+
   // submit handler for forms
   $('form').submit(function() {
     var that = this;
-    
+
     // submit via ajax
     $.ajax({
       data: $(that).serialize(),

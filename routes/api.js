@@ -40,7 +40,7 @@ router.post('/waitlist', validator.waitlist, function(req, res) {
 router.post('/optout', validator.optout, function(req, res) {
   let data = validator.escapeHtml(req.body);
   db.optoutUser(data.token, data.email, function(err, newToken) {
-    if (err) return res.end(err);
+    if (err) return res.status(403).end(err);
     res.end('Erfolgreich abgemeldet!');
 
     // send email to waitlist
@@ -62,7 +62,7 @@ router.get('/download/users/:year?', auth, function(req, res) {
             res.setHeader('Content-disposition', 'attachment; filename=Erstiwochende-Teilnehmer.csv');
             res.setHeader('Content-type', 'text/csv');
             fs.createReadStream(filename).pipe(res);
-      })});  
+      })});
     };
   });
 });
@@ -78,7 +78,7 @@ router.get('/download/waitlist/:year?', auth, function(req, res) {
             res.setHeader('Content-disposition', 'attachment; filename=Erstiwochende-Warteliste.csv');
             res.setHeader('Content-type', 'text/csv');
             fs.createReadStream(filename).pipe(res);
-      })});  
+      })});
     };
   });
 });
@@ -94,7 +94,7 @@ router.get('/download/successor/:year?', auth, function(req, res) {
             res.setHeader('Content-disposition', 'attachment; filename=Erstiwochende-Nachruecker.csv');
             res.setHeader('Content-type', 'text/csv');
             fs.createReadStream(filename).pipe(res);
-      })});  
+      })});
     };
   });
 });
@@ -110,7 +110,7 @@ router.get('/download/token/:year?', auth, function(req, res) {
               res.setHeader('Content-disposition', 'attachment; filename=Erstiwochende-Tokens.csv');
               res.setHeader('Content-type', 'text/csv');
               fs.createReadStream(filename12).pipe(res);
-      })});  
+      })});
     };
   });
 });
@@ -121,9 +121,9 @@ router.get('/statistics', auth, function(req, res) {
     db.countWaiting(req.params.year || cfg.year, function(err, waiting) {
       if(err){res.status(501).send(err)}
       else{res.end(
-        "Momentan angemeldete Teilnehmer: " + 
-        JSON.stringify(attendants) + 
-        "Momentan auf der Warteliste: " + 
+        "Momentan angemeldete Teilnehmer: " +
+        JSON.stringify(attendants) +
+        "Momentan auf der Warteliste: " +
         JSON.stringify(waiting)
       )};
     });
@@ -140,8 +140,8 @@ function createCSVfile_token(tokens, filename,cb){
 // Parsing the MYSQL Row Data to CSV format
 function createCSVfile_waitlist(waitlist, filename,cb){
   waitlist.forEach(waitlist => fs.appendFile(filename,
-                                                JSON.stringify(waitlist.email) + "," + 
-                                                JSON.stringify(waitlist.year) + "," +  
+                                                JSON.stringify(waitlist.email) + "," +
+                                                JSON.stringify(waitlist.year) + "," +
                                                 JSON.stringify(waitlist.timestamp)+ "\n"));
   cb(filename);
 }
@@ -149,11 +149,11 @@ function createCSVfile_waitlist(waitlist, filename,cb){
 // Parsing the MYSQL Row Data to CSV format
 function createCSVfile_users(users, filename,cb){
   users.forEach(users => fs.appendFileSync(filename,
-                                                JSON.stringify(users.firstname) + "," + 
-                                                JSON.stringify(users.lastname)  + "," + 
+                                                JSON.stringify(users.firstname) + "," +
+                                                JSON.stringify(users.lastname)  + "," +
                                                 JSON.stringify(users.gender)     + "," +
-                                                JSON.stringify(users.email)       + "," + 
-                                                JSON.stringify(users.phone)      + "," + 
+                                                JSON.stringify(users.email)       + "," +
+                                                JSON.stringify(users.phone)      + "," +
                                                 JSON.stringify(users.food)        + "," +
                                                 JSON.stringify(users.comment)  + "," +
                                                 JSON.stringify(users.study)        + "\n"));

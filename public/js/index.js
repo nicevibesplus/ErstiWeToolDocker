@@ -22,12 +22,12 @@ function toggleView(mode) {
 }
 
 function showAlert(text, type) {
-  // TODO: toggle classes for appropiate styling ('success', 'error')
-  /*
-  $('html, body').animate({
-    scrollTop: $('#info').offset().top - 20
-  }, 400);*/
-  $('#info').text('Erfolgreich angemeldet!').fadeIn(200).delay(5000).fadeOut(400); 
+  // toggle classes for appropiate styling ('success', 'error')
+  $('#info').removeClass('success error');
+  $('#info').addClass(type);
+
+  $('html, body').animate({ scrollTop: 0 }, 400);
+  $('#info').html(text).fadeIn(200).delay(5000).fadeOut(400);
 }
 
 $(document).ready(function() {

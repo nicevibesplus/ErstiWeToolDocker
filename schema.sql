@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `ersti-we`.`users` (
 DROP TABLE IF EXISTS `ersti-we`.`waitlist` ;
 
 CREATE TABLE IF NOT EXISTS `ersti-we`.`waitlist` (
-  `email` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `year` INT NOT NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`email`, `year`))

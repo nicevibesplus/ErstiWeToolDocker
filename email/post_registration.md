@@ -51,7 +51,7 @@ Folgend noch einmal die von dir angegebenen Daten:
 |                     |                            |
 |---------------------|----------------------------|
 |           **Name:** | {{firstname}} {{lastname}} |
-|          **Token:** | {{token}}                  |
+|           **Code:** | {{token}}                  |
 |     **Geburtstag:** | {{birthday}}               |
 |    **Studiengang:** | {{study}}                  |
 | **Ernährungsstil:** | {{food}}                   |

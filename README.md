@@ -18,9 +18,7 @@ Now open `config.js` and configure the application to your likings
 You now can start the app by running `npm start`.
 
 ## TODO
-- Invalid Token Alert!
-- improve landingpage styling
-- Adminpanel Styling `admin.pug`
+- (Adminpanel Styling `admin.pug`)
 - Improve Statistics API
 - Add "create admin.htpasswd" file to installation instructions
 - improve delayed email sending times
@@ -29,6 +27,7 @@ You now can start the app by running `npm start`.
 - systemd script for autostart
 
 ## DONE
+- Invalid Token Alert!
 - landingpage `#info` styling as alert/toast/..
 - Token export
 - User export

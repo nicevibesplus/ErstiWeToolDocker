@@ -6,113 +6,105 @@ html
     title Ersti Wochenende Anmeldung
   body
     header
-      div(class='alert', style='display:none')
-        //- TODO: make responsive -> no min size
-        a Window too small! Please resize the window.
-      div(class='headline')
-        span(id='titel')='Ersti-Wochenende ' + year
+      div.headline='Ersti-Wochenende ' + year
+
+    div#info-container
+      div#info(style='display:none')
+
     div#menu
       button(onclick='toggleView("register")') Mit Code anmelden!
       br
       button(onclick='toggleView("waitlist")') Kein Code? Auf die Warteliste!
       br
       button(onclick='toggleView("optout")') Doch keine Zeit? Abmelden!
-      br
-      br
-      br
-      div#info(style='display:none')
-    
+
     div#back.hidden
       button(onclick='toggleView("menu")') zurück
 
     form#form-register.hidden(action='api/register' method='POST')
-      input#token(name='token', type='text', required='', autocomplete='off', placeholder='Code', maxlength="8")
-      p
-        | Bitte gebe deine persönlichen Daten an.
+      input#token(name='token', type='text', required='', autocomplete='off', placeholder='Anmeldungs-Code', maxlength="8")
+      p Bitte gebe deine persönlichen Daten an.
         | Dies macht die Organisation des Wochenendes für dich & uns deutlich einfacher.
-        | 
       label(for='firstname') Vorname:
-        input#firstname(name='firstname', type='text', required='', autocomplete='off',placeholder='Donald', maxlength="50")
+      input#firstname(name='firstname', type='text', required='', autocomplete='off',placeholder='Donald', maxlength="50")
       label(for='lastname') Nachname:
-        input#lastname(name='lastname', type='text', required='', autocomplete='off',placeholder='Duck', maxlength="50")
+      input#lastname(name='lastname', type='text', required='', autocomplete='off',placeholder='Duck', maxlength="50")
       fieldset#gender
         legend Geschlecht:
-        label(for='m')
-          input#m(type='radio', name='gender', value='male', required='')
-          | männlich
-        label(for='f')
-          input#f(type='radio', name='gender', value='female', required='')
-          | weiblich
-        label(for='n')
-          input#n(type='radio', name='gender', value='other', required='')
-          | who cares?!
+        input(type='radio', name='gender', value='male', required='')
+        | männlich
+        br
+        input(type='radio', name='gender', value='female', required='')
+        | weiblich
+        br
+        input(type='radio', name='gender', value='other', required='')
+        | who cares?!
       label(for='email') E-Mail:
-        input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength="50")
+      input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength="50")
       label(for='email-confirmation') E-Mail bestätigen:
-        input#email-confirmation(type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength="50")
+      input#email-confirmation(type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength="50")
       label(for='phone') Telefon:
-        input#phone(name='phone', type='tel', required='', autocomplete='off',placeholder='0123456789', maxlength="50")
+      input#phone(name='phone', type='tel', required='', autocomplete='off',placeholder='0123456789', maxlength="50")
       label(for='birthday') Geburtstag:
-        input#birthday(name='birthday', type='date', placeholder='1523-02-02', autocomplete='off', maxlength="50")
+      input#birthday(name='birthday', type='date', placeholder='1523-02-02', autocomplete='off', maxlength="50")
       fieldset#study(required='true')
         legend Studiengang:
-        label(for='geo')
-          input#geo(type='radio', name='study', value='Geographie' required='')
-          | Geographie
-        label(for='loek')
-          input#loek(type='radio', name='study', value='Landschaftsökologie', required='')
-          | Landschaftsökologie
-        label(for='zweifach')
-          input#zweifach(type='radio', name='study', value='Zwei-Fach-Bachelor', required='')
-          | Zwei-Fach-Bachelor
-        label(for='geoinf')
-          input#geoinf(type='radio', name='study', value='Geoinformatik', required='')
-          | Geoinformatik
+        input(type='radio', name='study', value='Geographie' required='')
+        | Geographie
+        br
+        input(type='radio', name='study', value='Landschaftsökologie', required='')
+        | Landschaftsökologie
+        br
+        input(type='radio', name='study', value='Zwei-Fach-Bachelor', required='')
+        | Zwei-Fach-Bachelor
+        br
+        input(type='radio', name='study', value='Geoinformatik', required='')
+        | Geoinformatik
       fieldset#food
         legend Ich ernähre mich
-        label(for='normal')
-          input#normal(type='radio', name='food', value='fleischig', required='')
-          | fleischig
-        label(for='vegetarisch')
-          input#vegetarisch(type='radio', name='food', value='vegetarisch', required='')
-          | vegetarisch
-        label(for='vegan')
-          input#vegan(type='radio', name='food', value='vegan', required='')
-          | vegan
+        input(type='radio', name='food', value='fleischig', required='')
+        | fleischig
+        br
+        input(type='radio', name='food', value='vegetarisch', required='')
+        | vegetarisch
+        br
+        input(type='radio', name='food', value='vegan', required='')
+        | vegan
       label(for='comment') Willst du uns noch etwas mitteilen?
-        textarea#comment(name='comment', autocomplete='off', placeholder='Allergene, ... [max 500 Zeichen]', maxlength="500")
-        p
-        | Auf dem Ersti-Wochende wird gefilmt. Aus diesen Filmaufnahmen wird ein Video geschnitten welches auf der Weihnachtsfeier ausgestrahlt wird. Mit der Anmeldung zum Ersti-Wochenende erklärst du dich damit einverstanden, dass auch Material verwendet wird auf dem du zu sehen bist.
+      textarea#comment(name='comment', autocomplete='off', placeholder='Allergene, ... [max 500 Zeichen]', maxlength="500")
+      label
+        em Hinweis:
+      ul
+        li Die Teilnahme ist ab 18. Dein Alter wird vor der Fahrt geprüft!
+        li Auf dem Ersti-Wochende wird gefilmt.
+          | Aus diesen Filmaufnahmen wird ein Video geschnitten welches auf der GEO-Weihnachtsfeier gezeigt wird.
+          | Mit der Anmeldung zum Ersti-Wochenende erklärst du dich damit einverstanden, dass auch Material verwendet wird auf dem du zu sehen bist.
       input(type='submit', value='Absenden')
 
     form#form-waitlist.hidden(action='api/waitlist' method='POST')
       p.description
-      | Du kannst dich hier auf die Warteliste setzen lassen.
-      | Wenn ein Platz frei wird, bekommen alle Personen auf der Warteliste
-      | zu einer zufälligen Zeit in den nächsten 12 Stunden eine Email mit einem
-      | neuen Zugangscode zugesendet. Den Kostenbeitrag für das Wochenende
-      | gibst du bitte an diejenige Person weiter, deren Platz frei geworden ist (siehe Email).
-      label(for='email')
-        | E-Mail:
-        input#email-waitlist(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
+        | Du kannst dich hier auf die Warteliste setzen lassen.
+        | Wenn ein Platz frei wird, bekommen alle Personen auf der Warteliste
+        | zu einer zufälligen Zeit in den nächsten 24 Stunden eine Email mit einem
+        | neuen Zugangscode zugesendet. Den Kostenbeitrag für das Wochenende
+        | gibst du bitte an diejenige Person weiter, deren Platz frei geworden ist (siehe Email).
+      label(for='email') E-Mail:
+      input#email-waitlist(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength='50')
       input(type='submit', value='Absenden')
 
     form#form-optout.hidden(action='api/optout' method='POST')
       p.description
-      | Hier Kannst du dich abmelden und deinen reservierten Platz
-      | für andere frei machen, solltest du an dem Ersti-Wochende nicht teilnehmen können.
-      | Den Kostenbeitrag erhältst du - sofern sich jemand findet - von einem Nachrücker erstattet.
-      label(for='token-optout')
-        | Code:
-        input#token-optout(name='token', type='text', required='', autocomplete='off',placeholder='Code')
-      label(for='email-optout')
-        | E-Mail:
-        input#email-optout(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente')
+        | Hier Kannst du dich abmelden und deinen reservierten Platz
+        | für andere frei machen, solltest du am Ersti-Wochende nicht teilnehmen können.
+        | Den Kostenbeitrag erhältst du - sofern sich jemand findet - von einem Nachrücker erstattet.
+      label(for='token-optout') Code:
+      input#token-optout(name='token', type='text', required='', autocomplete='off',placeholder='Code', maxlength='8')
+      label(for='email-optout') E-Mail:
+      input#email-optout(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength='50')
       input(type='submit', value='Absenden')
     div(class='logo')
       img(src='images/pacman.svg', width='150', alt='', padding="20px")
       img(src='images/notpacman.svg', width='170', alt='', padding="20px")
-  
-      
+
     script(src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
     script(src='js/index.js')

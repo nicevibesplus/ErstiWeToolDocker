@@ -9,8 +9,8 @@ module.exports = {
   year: 2016,
   attendee_cost: 40,
   dates: {
-    begin: ['28. Oktober', '09:30'],
-    end:   ['30. Oktober', '13:00']
+    begin: '2016-10-28T09:30:00Z',
+    end: '2016-10-30T13:00:00Z'
   },
   // delay for the waitlist token-notification mails in minutes
   waitlistDelay: {

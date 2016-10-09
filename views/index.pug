@@ -23,7 +23,8 @@ html
 
     form#form-register.hidden(action='api/register' method='POST')
       input#token(name='token', type='text', required='', autocomplete='off', placeholder='Anmeldungs-Code', maxlength="8")
-      p Bitte gebe deine persönlichen Daten an.
+      p
+        | Bitte gebe deine persönlichen Daten an.
         | Dies macht die Organisation des Wochenendes für dich & uns deutlich einfacher.
       label(for='firstname') Vorname:
       input#firstname(name='firstname', type='text', required='', autocomplete='off',placeholder='Donald', maxlength="50")
@@ -46,7 +47,7 @@ html
       label(for='phone') Telefon:
       input#phone(name='phone', type='tel', required='', autocomplete='off',placeholder='0123456789', maxlength="50")
       label(for='birthday') Geburtstag:
-      input#birthday(name='birthday', type='date', placeholder='1523-02-02', autocomplete='off', maxlength="50")
+      input#birthday(name='birthday', type='date', placeholder='21.03.1994', autocomplete='off', maxlength="50")
       fieldset#study(required='true')
         legend Studiengang:
         input(type='radio', name='study', value='Geographie' required='')
@@ -77,12 +78,14 @@ html
       ul
         li Die Teilnahme ist ab 18. Dein Alter wird vor der Fahrt geprüft!
         br
-        li Auf dem Ersti-Wochende wird gefilmt. 
+        li
+          | Auf dem Ersti-Wochende wird gefilmt.
           | Aus diesen Filmaufnahmen wird ein Video geschnitten welches auf der GEO-Weihnachtsfeier gezeigt wird.
           | Mit der Anmeldung zum Ersti-Wochenende erklärst du dich damit einverstanden, dass auch Material verwendet wird auf dem du zu sehen bist.
         br
-        li Deine Anmeldung ist verbindlich. 
-          | Wenn du an der Fahrt nicht mehr teilnehmen willst/kannst, ist die Rückerstattung des Teilnehmerbetrages nur möglich, wenn ein Nachfolger gefunden wird (je nach Andrang auf der Wartelizste).
+        li
+          | Deine Anmeldung ist verbindlich.
+          | Wenn du an der Fahrt nicht mehr teilnehmen willst/kannst, ist die Rückerstattung des Teilnehmerbetrages nur möglich, wenn ein Nachfolger gefunden wird (je nach Andrang auf der Warteliste).
 
       input(type='submit', value='Absenden')
 
@@ -90,18 +93,18 @@ html
       p.description
         | Du kannst dich hier auf die Warteliste setzen lassen.
         ul
-          li Wenn ein Platz frei wird bekommen alle Personen auf der Warteliste zu einer zufälligen Zeit in den nächsten Stunden eine Email mit einem neuen Zugangscode zugesendet. 
+          li Wenn ein Platz frei wird, bekommen alle Personen auf der Warteliste gleichzeitig in den nächsten Stunden eine Email mit einem neuen Zugangscode zugesendet.
           br
-          li Die Person die den Zugangscode als Erstes einlöst bekommt den freigewordenen Platz (first-come-first-serve Prinzip). 
+          li Die Person die den Zugangscode als erstes einlöst bekommt den freigewordenen Platz (first-come-first-serve Prinzip).
           br
-          li Den Kostenbeitrag für das Wochenende gibst du bitte an diejenige Person, deren Platz frei geworden ist (siehe Email).
+          li Den Kostenbeitrag für das Wochenende gibst du an diejenige Person, deren Platz frei geworden ist (Kontaktdaten kommen per Email).
       label(for='email') E-Mail:
       input#email-waitlist(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength='50')
       input(type='submit', value='Absenden')
 
     form#form-optout.hidden(action='api/optout' method='POST')
       p.description
-        | Hier Kannst du dich abmelden und deinen reservierten Platz
+        | Hier kannst du dich abmelden und deinen reservierten Platz
         | für andere frei machen, solltest du am Ersti-Wochende nicht teilnehmen können.
         | Den Kostenbeitrag erhältst du - sofern sich jemand findet - von einem Nachrücker erstattet.
       label(for='token-optout') Code:

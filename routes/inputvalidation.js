@@ -2,23 +2,59 @@ let validator = require('node-validator');
 let sanitizeHtml = require('sanitize-html');
 
 let checkRegistration = validator.isObject()
-  .withRequired('token', validator.isString({regex: /^\S{8}$/}))
-  .withRequired('email', validator.isString({regex: /^\S+@\S+$/}))
-  .withRequired('firstname', validator.isString({regex: /^(?=.{1,50}$)\S+$/}))
-  .withRequired('lastname', validator.isString({regex: /^(?=.{1,50}$)\S+$/}))
-  .withRequired('birthday', validator.isString({regex: /^(?=.{1,50}$).+$/}))
-  .withRequired('phone', validator.isString({regex: /^(?=.{1,50}$).+$/}))
-  .withRequired('food', validator.isString({regex: /^(vegan|vegetarisch|fleischig)$/}))
-  .withRequired('gender', validator.isString({regex: /^(male|female|other)$/}))
-  .withRequired('study', validator.isString({regex: /^(Geoinformatik|Zwei-Fach-Bachelor|Geographie|Landschaftsökologie)$/}))
+  .withRequired('token', validator.isString({
+    regex: /^\S{8}$/,
+    message: 'token musst be aplhanumeric and 8 characters.'
+  }))
+  .withRequired('email', validator.isString({
+    regex: /^(?=.{1,50}$)\S+@\S+$/,
+    message: 'invalid email, must be shorter than 50 characters.'
+  }))
+  .withRequired('firstname', validator.isString({
+    regex: /^(?=.{1,50}$).+$/,
+    message: 'firstname must be shorter than 50 characters.'
+  }))
+  .withRequired('lastname', validator.isString({
+    regex: /^(?=.{1,50}$).+$/,
+    message: 'lastname must be shorter than 50 characters.'
+  }))
+  .withRequired('birthday', validator.isString({
+    regex: /^(?=.{1,50}$).+$/,
+    message: 'birthday must be shorter than 50 characters.'
+  }))
+  .withRequired('phone', validator.isString({
+    regex: /^(?=.{1,50}$).+$/,
+    message: 'phone must be shorter than 50 characters.'
+  }))
+  .withRequired('food', validator.isString({
+    regex: /^(vegan|vegetarisch|fleischig)$/,
+    message: 'invalid value for food (one of vegan, vegetarisch, fleischig).'
+  }))
+  .withRequired('gender', validator.isString({
+    regex: /^(male|female|other)$/,
+    message: 'invalid value for gender (one of male, female, other).'
+  }))
+  .withRequired('study', validator.isString({
+    regex: /^(Geoinformatik|Zwei-Fach-Bachelor|Geographie|Landschaftsökologie)$/,
+    message: 'invalid value for study (one of Geoinformatik, Zwei-Fach-Bachelor, Geographie, Landschaftsökologie).'
+  }))
   .withOptional('comment');
 
 let checkOptout = validator.isObject()
-  .withRequired('token', validator.isString({regex: /^\S{8}$/}))
-  .withRequired('email', validator.isString({regex: /^\S+@\S+$/}));
+  .withRequired('token', validator.isString({
+    regex: /^\S{8}$/,
+    message: 'token musst be aplhanumeric and 8 characters.'
+  }))
+  .withRequired('email', validator.isString({
+    regex: /^\S+@\S+$/,
+    message: 'invalid email, must be shorter than 50 characters.'}
+  ));
 
 let checkWaitlist = validator.isObject()
-  .withRequired('email', validator.isString({regex: /^\S+@\S+$/}));
+  .withRequired('email', validator.isString({
+    regex: /^\S+@\S+$/,
+    message: 'invalid email, must be shorter than 50 characters.'}
+  ));
 
 let sanitizeUserInput = function(data) {
   Object.keys(data).forEach((key) => {

@@ -10,7 +10,7 @@ und wird aufgrund des damit verbundenen Aufwands nicht angeboten.
 
 Hier die Kontaktdaten von {{ oldUser.firstname }}:
 
-- **Email**: [{{ oldUser.email }}](mailto:{{ oldUser.email }}?subject=Teilnehmerbeitrag Erstiwochenende).
+- **Email**: [{{ oldUser.email }}](mailto:{{ oldUser.email }}?subject=Teilnehmerbeitrag Erstiwochenende)
 
 Viele Grüße,
 

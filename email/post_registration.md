@@ -4,18 +4,16 @@ vielen Dank für deine Anmeldung zum Erstiwochenende {{ year }}!
 Bitte lies dir diese E-Mail aufmerksam durch.
 Sie enthält viele Informationen, die für einen reibungslosen Ablauf des Wochenendes wichtig sind.
 
-Das Erstiwochenende findet vom {{ dateFormat dates.begin "dd DD[.] MMMM" }} bis {{ dateFormat dates.end "dd DD[.] MMMM" }} {{ year }} statt.
+Das Erstiwochenende findet vom {{ dateFormat dates.begin "Do MMMM" }} bis {{ dateFormat dates.end "Do MMMM" }} {{ year }} statt.
 Wir fahren wieder in das [Tagungshaus Drübberholz](http://www.druebberholz.de/).
 
-  - Hinfahrt: {{ dateFormat dates.begin "DD[.] MMMM [um] hh[:]mm [Uhr]" }} vom GEO1
-  - Rückfahrt: {{ dateFormat dates.end "DD[.] MMMM [um] hh[:]mm [Uhr]" }} aus Drübberholz
+  - Hinfahrt: {{ dateFormat dates.begin "dd Do MMMM [um] LT [Uhr]" }} vom GEO 1
+  - Rückfahrt: {{ dateFormat dates.end "dd Do MMMM [um] LT [Uhr]" }} aus Drübberholz
 
 Bitte denkt daran am Freitag genügend Proviant für die Busfahrt mitzunehmen! Wir werden erst um etwa 19 Uhr Abendessen. Für die Rückfahrt werdet ihr die Möglichkeit haben euch extra Brote vom Frühstück zu schmieren und auch etwas Obst zu stibitzen.
 
-{{#if prev_user}}
 **Hinweis:** Die Fahrt ist altersbeschränkt ab 18!
-Wir werden das Alter der Teilnehmer am Morgen der Abfahrt zu kontrollieren, halte deinen Ausweis bereit!
-{{/if}}
+Wir werden das Alter der Teilnehmer vor der Abfahrt zu kontrollieren, halte deinen Ausweis bereit!
 
 #### Packliste
   - **wichtig**: Bettzeug oder Schlafsack & Bettlaken

@@ -5,8 +5,10 @@ var nodemailer = require('nodemailer');
 var cook = require('handlebars');
 var fs = require('fs');
 var kramed = require('kramed');
+var moment = require('moment');
+moment.locale('de');
 
-cook.registerHelper('dateFormat', require('handlebars-dateformat'));
+cook.registerHelper('dateFormat', (date, format) => moment(date).format(format));
 
 /**
  * Sends an Email generated from the given options. Options have the following structure
@@ -77,21 +79,18 @@ exports.sendWaitlistNotification = function(token, callback) {
   // send the mail randomly in the next 30min-24h
   let timeout = randomTimeout(0.5, 24);
 
-  db.getWaitlist(cfg.year, function(err, waitlist) {
-    if (err) return callback('error getting waitlist: ', err);
+  setTimeout(function() {
+    db.getWaitlist(cfg.year, function(err, waitlist) {
+      if (err) return callback('error getting waitlist: ', err);
 
-    // create string from waitlist
-    waitlist = waitlist.map(el => el.email).join(',');
-
-    setTimeout(function() {
       sendMail({
         templateName: 'waitlist_notification.md',
         templateLocals: { token: token },
         subject: 'Freier Platz für das Ersti-Wochenende ' + cfg.year + '!',
-        bccAddress: waitlist // BCC for privacy
+        bccAddress: waitlist.map(el => el.email).join(',') // BCC for privacy
       }, callback);
-    }, timeout);
-  });
+    });
+  }, timeout);
 };
 
 function randomTimeout(min, max) {
@@ -102,7 +101,6 @@ function randomTimeout(min, max) {
 
   let timeout = Math.random() * (max - min);
   timeout = Math.floor((timeout + min) * 3600000); // scale hours to millisec
-
   const scheduled = new Date(now.getTime() + timeout);
   console.log(scheduled);
 

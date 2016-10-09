@@ -3,7 +3,7 @@ html
   head
     meta(http-equiv='content-type', content='text/html; charset=utf-8; width=device-width; initial-scale=1.0')
     link(rel='stylesheet', href='stylesheets/index.css')
-    title Ersti Wochenende Anmeldung
+    title='GEO Ersti-Wochenende ' + year
   body
     header
       div.headline='Ersti-Wochenende ' + year
@@ -41,10 +41,10 @@ html
         input(type='radio', name='gender', value='other', required='')
         | who cares?!
       label(for='email') E-Mail:
-      input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength="50")
+      input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.com', maxlength="50")
       label(for='email-confirmation') E-Mail bestätigen:
-      input#email-confirmation(type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength="50")
-      label(for='phone') Telefon:
+      input#email-confirmation(type='email', required='', autocomplete='off',placeholder='donald@duck.com', maxlength="50")
+      label(for='phone') Handynummer:
       input#phone(name='phone', type='tel', required='', autocomplete='off',placeholder='0123456789', maxlength="50")
       label(for='birthday') Geburtstag:
       input#birthday(name='birthday', type='date', placeholder='21.03.1994', autocomplete='off', maxlength="50")

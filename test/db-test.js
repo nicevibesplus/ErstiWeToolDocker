@@ -17,10 +17,12 @@ var userData = {
 db.connect();
 
 async.series([
-  async.apply(insertTest),
-  async.apply(optoutTest)
+  //async.apply(insertTest),
+  //async.apply(optoutTest)
+  async.apply(db.getCounts, 2016)
 ], function(err, results) {
   if (err) console.error(err);
+  console.log(results);
   process.exit();
 });
 

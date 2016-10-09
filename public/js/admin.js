@@ -1,44 +1,54 @@
 'use strict';
 
-function showAlert(text, type) {
-  $('#info').html(text);
-  $('html, body').animate({
-    scrollTop: $('#info').offset().top - 20
-  }, 400);
-}
-
 $(document).ready(function() {
-  var that = this;
-
-  $.ajax({
-      type: 'GET',
-      url:  './api/statistics',
-      error: function(xhr, status, err) {
-        showAlert(xhr.responseText, 'error');
-      },
-      success: function(res) {
-        $('#attendeecount').text(res);
-      }
-  });
-
-
-  // submit handler for forms
-  $('form').submit(function() {
-    var that = this;
-
-    // submit via ajax
+  // token generation form submit handler
+  $('#gen-tokens').submit(function() {
     $.ajax({
-      data: $(that).serialize(),
-      type: $(that).attr('method'),
-      url:  $(that).attr('action') + $('[name=amount]').val(),
+      data: $(this).serialize(),
+      type: $(this).attr('method'),
+      url:  $(this).attr('action') + $('[name=amount]', this).val(),
       error: function(xhr, status, err) {
-        showAlert(xhr.responseText, 'error');
+        $('#new-tokens').removeClass('hidden').text(xhr.responseText);
       },
       success: function(res) {
-        // Show Success
-        showAlert(res, 'success');
+        $('#new-tokens')
+          .attr('rows', res.length)
+          .removeClass('hidden')
+          .text(res.join('\n'));
       }
     });
     return false;
+  });
+
+  // get stats
+  $.get('./api/statistics', function(stats, status) {
+    for (let measure in stats)
+      $('#count-' + measure).html(stats[measure]);
+  });
+
+  // fill user table
+  $.get('./api/users', function(users, status) {
+    if (status !== 'success') return showAlert(users, 'error');
+    // convert user objects to arrays for further use with DataTables
+    users.forEach(function(user, i, arr) {
+      users[i] = $.map(user, function(e) { return e || ''; });
+    });
+
+    $('#user-table').dataTable({
+      data: users,
+    });
+  });
+
+  // fill waitlist table
+  $.get('./api/waitlist', function(users, status) {
+    if (status !== 'success') return showAlert(users, 'error');
+    // convert user objects to arrays for further use with DataTables
+    users.forEach(function(user, i, arr) {
+      users[i] = $.map(user, function(e) { return e || ''; });
+    });
+
+    $('#waitlist-table').dataTable({
+      data: users,
+    });
   });
 });

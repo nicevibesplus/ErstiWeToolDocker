@@ -19,6 +19,7 @@
     "node-validator": "^0.1.23",
     "nodemailer": "^2.6.0",
     "pug": "~2.0.0-beta6",
-    "sanitize-html": "^1.13.0"
+    "sanitize-html": "^1.13.0",
+    "to-csv": "^0.1.1"
   }
 }

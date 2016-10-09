@@ -87,6 +87,24 @@ exports.getUsers = function(year, callback) {
 }
 
 /*
+  Gets all successors for the given year.
+  @param {int} year - Year
+*/
+exports.getAttendees = function(year, callback) {
+  var q = 'SELECT * FROM users WHERE year=? AND state=\'registered\';';
+  queryWrapper(q, [year], callback);
+}
+
+/*
+  Gets all successors for the given year.
+  @param {int} year - Year
+*/
+exports.getOptouts = function(year, callback) {
+  var q = 'SELECT * FROM users WHERE year=? AND state=\'opted_out\';';
+  queryWrapper(q, [year], callback);
+}
+
+/*
   Gets all attendees for the given year who are not Successors.
   @param {int} year - Year
 */
@@ -114,7 +132,7 @@ exports.getWaitlist = function(year, callback) {
 };
 
 /*
-  Gets all unused Tokens in given year.
+  Gets all unused Tokens in given year, including newly generated tokens for nachrückers.
   @param {int} year - Year
 */
 exports.getUnusedToken = function(year, callback) {
@@ -167,19 +185,21 @@ exports.optoutUser = function(token, email, callback) {
 };
 
 /*
-  Returns the number of attendants for given year to cb function.
-  @param {int} year - Year
-*/
-exports.countAttendants = function(year, cb) {
-  var q = 'SELECT COUNT(*) AS count FROM users WHERE year=? AND state=\'registered\';';
-  queryWrapper(q, [year || cfg.year], (err, rows) => cb(err, rows[0].count));
-}
+ * get statistics about the database
+ */
+exports.getCounts = function(year, callback) {
+  const queries = {
+    waitlist:  'SELECT COUNT(*) AS count FROM waitlist WHERE year=?;',
+    total:     'SELECT COUNT(*) AS count FROM users WHERE year=?;',
+    attendees: 'SELECT COUNT(*) AS count FROM users WHERE year=? AND state=\'registered\';',
+    optouts:   'SELECT COUNT(*) AS count FROM users WHERE year=? AND state=\'opted_out\';',
+    unused:    'SELECT COUNT(*) AS count FROM users WHERE year=? AND state=\'free\';',
+    successors:'SELECT COUNT(*) AS count FROM users WHERE year=? AND state=\'registered\' AND prev_user IS NOT NULL;',
+  };
 
-/*
-  Returns the number of people on waitlist for given year to cb function.
-  @param {int} year - Year
-*/
-exports.countWaiting = function(year, cb) {
-  var q = 'SELECT COUNT(*) AS count FROM waitlist;';
-  queryWrapper(q, [year || cfg.year], (err, rows) => cb(err, rows[0].count));
+  async.mapValuesLimit(queries, cfg.mysql.connectionlimit, function(query, measure, cb) {
+    queryWrapper(query, [year], (err, result) => {
+      err ? cb(err) : cb(null, result[0].count);
+    });
+  }, callback);
 }

@@ -5,7 +5,7 @@ let auth = require('../auth.js');
 let mailer = require('../email/mailer.js');
 let validator = require('./inputvalidation.js');
 let cfg = require('../config.js');
-let fs = require('fs');
+let csv = require('to-csv');
 
 router.post('/register', validator.registration, function(req, res) {
   let data = validator.escapeHtml(req.body);
@@ -31,10 +31,9 @@ router.post('/register', validator.registration, function(req, res) {
 router.post('/waitlist', validator.waitlist, function(req, res) {
   let data = validator.escapeHtml(req.body);
   db.insertWaitlist(data.email, function(err) {
-    if (err) return res.status(400).end('Fehler: ' + err);
+    if (err) return res.status(501).end('Fehler: ' + err);
     res.end(data.email + ' erfolgreich zur Warteliste hinzugefügt.');
   });
-
 });
 
 router.post('/optout', validator.optout, function(req, res) {
@@ -51,122 +50,89 @@ router.post('/optout', validator.optout, function(req, res) {
   });
 });
 
-// return list of all registered users as downloadable File
-router.get('/download/users/:year?', auth, function(req, res) {
-  db.getRegulars(req.params.year || cfg.year, function(err, users) {
-    if(err){res.status(501).send(err)}
-    else{
-      var filename = "/tmp/erstiwe" + cfg.year + "-users.csv";
-      fs.unlink(filename, function(){
-          createCSVfile_users(users,filename, function(filename){
-            res.setHeader('Content-disposition', 'attachment; filename=Erstiwochende-Teilnehmer.csv');
-            res.setHeader('Content-type', 'text/csv');
-            fs.createReadStream(filename).pipe(res);
-      })});
-    };
-  });
-});
+// require basic authentication on all following routes
+router.use(auth);
 
 // return list of all users on waitlist as downloadable File
-router.get('/download/waitlist/:year?', auth, function(req, res) {
-  db.getWaitlist(req.params.year || cfg.year, function(err, waitlist) {
-        if(err){res.status(501).send(err)}
-    else{
-      var filename = "/tmp/erstiwe" + cfg.year + "-waitinglist.csv";
-      fs.unlink(filename, function(){
-          createCSVfile_waitlist(waitlist,filename, function(filename){
-            res.setHeader('Content-disposition', 'attachment; filename=Erstiwochende-Warteliste.csv');
-            res.setHeader('Content-type', 'text/csv');
-            fs.createReadStream(filename).pipe(res);
-      })});
-    };
+router.get('/waitlist', function(req, res) {
+  db.getWaitlist(req.query.year || cfg.year, function(err, waitlist) {
+    if (err) return res.status(501).end(err);
+    handleResponse(req, res, waitlist);
   });
 });
 
-// return list of all waitings now attending [Nachruecker] as downloadable File
-router.get('/download/successor/:year?', auth, function(req, res) {
-  db.getSuccessors(req.params.year || cfg.year, function(err, successors) {
-        if(err){res.status(501).send(err)}
-    else{
-      var filename = "/tmp/erstiwe" + cfg.year + "-successors.csv";
-      fs.unlink(filename, function(){
-          createCSVfile_users(successors,filename, function(filename){
-            res.setHeader('Content-disposition', 'attachment; filename=Erstiwochende-Nachruecker.csv');
-            res.setHeader('Content-type', 'text/csv');
-            fs.createReadStream(filename).pipe(res);
-      })});
-    };
+// return list of all users, including unused tokens
+router.get('/users', function(req, res) {
+  db.getUsers(req.query.year || cfg.year, function(err, users) {
+    if (err) return res.status(501).end(err);
+    handleResponse(req, res, users);
   });
 });
 
-// return list of all unsused Token as downloadable File
-router.get('/download/token/:year?', auth, function(req, res) {
-  db.getUnusedToken(req.params.year || cfg.year, function(err, tokens) {
-        if(err){res.status(501).send(err)}
-    else{
-      var filename12 = "/tmp/erstiwe" + cfg.year + "-tokens.csv";
-      fs.unlink(filename12, function(){
-            createCSVfile_token(tokens, filename12, function(filename){
-              res.setHeader('Content-disposition', 'attachment; filename=Erstiwochende-Tokens.csv');
-              res.setHeader('Content-type', 'text/csv');
-              fs.createReadStream(filename12).pipe(res);
-      })});
-    };
+// return list of attending users
+router.get('/users/attending', function(req, res) {
+  db.getAttendees(req.query.year || cfg.year, function(err, users) {
+    if (err) return res.status(501).end(err);
+    handleResponse(req, res, users);
+  });
+});
+
+// return list of nachrückers
+router.get('/users/from-waitlist', function(req, res) {
+  db.getSuccessors(req.query.year || cfg.year, function(err, users) {
+    if (err) return res.status(501).end(err);
+    handleResponse(req, res, users);
+  });
+});
+
+// return list of users that have opted out
+router.get('/users/opted-out', function(req, res) {
+  db.getOptouts(req.query.year || cfg.year, function(err, users) {
+    if (err) return res.status(501).end(err);
+    handleResponse(req, res, users);
+  });
+});
+
+// return list of users that have opted out
+router.get('/users/regular', function(req, res) {
+  db.getRegulars(req.query.year || cfg.year, function(err, users) {
+    if (err) return res.status(501).end(err);
+    handleResponse(req, res, users);
   });
 });
 
 // return Number of Attendees
-router.get('/statistics', auth, function(req, res) {
-  db.countAttendants(req.params.year || cfg.year, function(err, attendants) {
-    db.countWaiting(req.params.year || cfg.year, function(err, waiting) {
-      if(err){res.status(501).send(err)}
-      else{res.end(
-        "Momentan angemeldete Teilnehmer: " +
-        JSON.stringify(attendants) +
-        "Momentan auf der Warteliste: " +
-        JSON.stringify(waiting)
-      )};
-    });
+router.get('/statistics', function(req, res) {
+  db.getCounts(req.params.year || cfg.year, function(err, counts) {
+    if (err) return res.status(501).end(err);
+    handleResponse(req, res, counts);
   });
 });
-
-// Parsing the MYSQL Row Data to CSV format
-function createCSVfile_token(tokens, filename,cb){
-  fs.appendFileSync(filename,"\"Token\" \n");    
-  tokens.forEach(tokens => fs.appendFile(filename, JSON.stringify(tokens.token) + "\n"));
-  cb(filename);
-}
-
-// Parsing the MYSQL Row Data to CSV format
-function createCSVfile_waitlist(waitlist, filename,cb){
-  fs.appendFileSync(filename, "\"Email\",,\"Year\",\"Timestamp\" \n");    
-  waitlist.forEach(waitlist => fs.appendFile(filename,
-                                                JSON.stringify(waitlist.email) + "," +
-                                                JSON.stringify(waitlist.year) + "," +
-                                                JSON.stringify(waitlist.timestamp)+ "\n"));
-  cb(filename);
-}
-
-// Parsing the MYSQL Row Data to CSV format
-function createCSVfile_users(users, filename,cb){
-  fs.appendFileSync(filename, "\"Firstname\",\"Lastname\",\"Gender\",\"Email\",\"Phone\",\"Food\",\"Comment\",\"Study\" \n");    
-  users.forEach(users => fs.appendFile(filename,
-                                                JSON.stringify(users.firstname) + "," +
-                                                JSON.stringify(users.lastname)  + "," +
-                                                JSON.stringify(users.gender)     + "," +
-                                                JSON.stringify(users.email)       + "," +
-                                                JSON.stringify(users.phone)      + "," +
-                                                JSON.stringify(users.food)        + "," +
-                                                JSON.stringify(users.comment)  + "," +
-                                                JSON.stringify(users.study)        + "\n"));
-  cb(filename);
-}
 
 // generate [amount] new tokens
-router.get('/generateTokens/:amount', auth, function(req, res) {
+router.get('/generateTokens/:amount', function(req, res) {
   db.createTokens(req.params.amount, function(err, tokens) {
-     if(err){res.status(501).send(err)}else{res.sendStatus(200)}
+    if (err) return res.status(501).end(err);
+    handleResponse(req, res, tokens);
   });
 });
+
+function handleResponse(req, res, data) {
+  const format = req.query.format || 'json';
+  // add download headers to any response,
+  // if the param "download" is present in the query
+  if (req.query.download !== undefined) {
+    res.append('Content-Disposition', 'attachment');
+    res.append('filename', req.path + '.' + format);
+  }
+
+  // convert to csv if format=csv is present in the query
+  if (format === 'csv') {
+    if (!data.length) data.push({'empty': 'no data'});
+    res.append('Content-Type', 'text/csv').send(csv(data));
+  } else {
+    res.json(data);
+  }
+}
 
 module.exports = router;

@@ -136,7 +136,7 @@ exports.getWaitlist = function(year, callback) {
   @param {int} year - Year
 */
 exports.getUnusedToken = function(year, callback) {
-  var q = 'SELECT token FROM users WHERE year=? AND email IS NULL;';
+  var q = 'SELECT token FROM users WHERE year=? AND state=\'free\';';
   queryWrapper(q, [year], callback);
 };
 

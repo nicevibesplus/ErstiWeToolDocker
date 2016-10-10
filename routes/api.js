@@ -93,7 +93,15 @@ router.get('/users/opted-out', function(req, res) {
   });
 });
 
-// return list of users that have opted out
+// return list of unused tokens
+router.get('/users/unused', function(req, res) {
+  db.getUnusedToken(req.query.year || cfg.year, function(err, users) {
+    if (err) return res.status(501).end(err);
+    handleResponse(req, res, users);
+  });
+});
+
+// return list of users that are not from the waitlist
 router.get('/users/regular', function(req, res) {
   db.getRegulars(req.query.year || cfg.year, function(err, users) {
     if (err) return res.status(501).end(err);
@@ -101,7 +109,7 @@ router.get('/users/regular', function(req, res) {
   });
 });
 
-// return Number of Attendees
+// return statistics about the database
 router.get('/statistics', function(req, res) {
   db.getCounts(req.params.year || cfg.year, function(err, counts) {
     if (err) return res.status(501).end(err);

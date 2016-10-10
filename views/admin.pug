@@ -13,54 +13,48 @@ html
       tr
         th(style="text-align: right;") Token insgesamt:
         td#count-total
+        td
+          a(href='./api/users?download&format=csv') [CSV]
+        td
+          a(href='./api/users' target='_blank') [API]
       tr
         th(style="text-align: right;") Token frei:
         td#count-unused
+        td
+          a(href='./api/users/unused?download&format=csv') [CSV]
+        td
+          a(href='./api/users/unused' target='_blank') [API]
       tr
         th(style="text-align: right;") Angemeldete User:
         td#count-attendees
+        td
+          a(href='./api/users/attending?download&format=csv') [CSV]
+        td
+          a(href='./api/users/attending' target='_blank') [API]
       tr
         th(style="text-align: right;") Abgemeldete User:
         td#count-optouts
+        td
+          a(href='./api/users/opted-out?download&format=csv') [CSV]
+        td
+          a(href='./api/users/opted-out' target='_blank') [API]
       tr
         th(style="text-align: right;") Nachgerückte User:
         td#count-successors
+        td
+          a(href='./api/users/from-waitlist?download&format=csv') [CSV]
+        td
+          a(href='./api/users/from-waitlist' target='_blank') [API]
       tr
         th(style="text-align: right;") Warteliste:
         td#count-waitlist
-
-    h1 Token generieren
-    form#gen-tokens(action='./api/generateTokens/', method='GET')
-      label(for='amount') Tokenanzahl:
-        input#email(name='amount', type='number', required='', autocomplete='off', placeholder='70', max='1000')
-      input(type='submit', value='Generieren')
-      br
-      textarea.hidden#new-tokens
-
-    h1 Downloads (CSV)
-    ul
-      li
-        a(href='./api/users?download&format=csv') alle user + ungenutzte token
-      li
-        a(href='./api/users/attending?download&format=csv') Teilnehmer
-      li
-        a(href='./api/users/from-waitlist?download&format=csv') nur Nachrücker
-      li
-        a(href='./api/users/opted-out?download&format=csv') Abmeldungen
-      li
-        a(href='./api/waitlist?download&format=csv') Warteliste
-
-    h1 Warteliste
-    table#waitlist-table.compact.striped.order-column.hover(data-scroll-x='true' width='100%')
-      thead
-        tr
-          th Email
-          th(data-visible="false") Jahr
-          th Anmeldung
-      tbody
+        td
+          a(href='./api/waitlist?download&format=csv') [CSV]
+        td
+          a(href='./api/waitlist' target='_blank') [API]
 
     h1 Userliste
-    table#user-table.compact.striped.order-column.hover(data-page-length='100', data-order='[[11]]', data-scroll-x='true')
+    table#user-table.compact.striped.order-column.hover(data-page-length='100', data-order='[[11]]', data-scroll-x='true', width='100%')
       thead
         tr
           th Token
@@ -73,11 +67,28 @@ html
           th Geburtstag
           th Ernährung
           th Studiengang
-          th Jahr
+          th(data-visible="false") Jahr
           th state
           th timestamp
           th prev_user
       tbody
+
+    h1 Warteliste
+    table#waitlist-table.compact.striped.order-column.hover(data-scroll-x='true', width='100%')
+      thead
+        tr
+          th Email
+          th(data-visible="false") Jahr
+          th Anmeldung
+      tbody
+
+    h1 Token generieren
+    form#gen-tokens(action='./api/generateTokens/', method='GET')
+      label(for='amount') Tokenanzahl:
+        input#email(name='amount', type='number', required='', autocomplete='off', placeholder='70', max='1000')
+      input(type='submit', value='Generieren')
+      br
+      textarea.hidden#new-tokens
 
     script(src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
     script(type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js")

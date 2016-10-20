@@ -130,8 +130,8 @@ function handleResponse(req, res, data) {
   // add download headers to any response,
   // if the param "download" is present in the query
   if (req.query.download !== undefined) {
-    res.append('Content-Disposition', 'attachment');
-    res.append('filename', req.path + '.' + format);
+    const filename = req.path.slice(1).replace(/\//g, '_') + '.' + format;
+    res.append('Content-Disposition', 'attachment; filename=' + filename);
   }
 
   // convert to csv if format=csv is present in the query

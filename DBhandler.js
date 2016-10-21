@@ -1,8 +1,7 @@
-var async = require('async');
-var cfg = require('./config.js');
-var mysql = require('mysql');
-
-var pool = null;
+let async = require('async'),
+  mysql = require('mysql'),
+  cfg = require('./config.js'),
+  pool = null;
 
 /**
  * wraps the connection handling
@@ -61,15 +60,12 @@ exports.insertUser = function(data, callback) {
   var tokenQuery = 'SELECT COUNT(*) AS count FROM users WHERE token=? AND state=\'free\';';
   var insertQuery = 'UPDATE users SET ?, state=\'registered\' WHERE token=? AND year=?;';
 
-  // TODO: sanitize user inputs
-  // for (var prop of data) { data[prop].sanitize() ....?
-
   async.series([
     // validate token
     function(next) {
       queryWrapper(tokenQuery, [data.token], function(err, rows) {
         if (err) next(err);
-        rows[0].count ? next() : next('Ungültiger Zugangscode');
+        rows[0].count ? next() : next('Ungültiger oder bereits eingelöster Zugangscode');
       });
     },
     // insert new empty user

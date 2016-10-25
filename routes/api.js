@@ -43,7 +43,7 @@ router.post('/optout', validator.optout, function(req, res) {
     res.end('Erfolgreich abgemeldet!');
 
     // send email to waitlist
-    mailer.sendWaitlistNotification(newToken, function(err) {
+    mailer.scheduleWaitlistNotification(newToken, function(err) {
       if (err) return console.error('could not send waitlist mail:', err);
       console.log('token ' + newToken + ' sent to waitlist!');
     });
@@ -59,6 +59,11 @@ router.get('/waitlist', function(req, res) {
     if (err) return res.status(501).end(err);
     handleResponse(req, res, waitlist);
   });
+});
+
+// return list of all users on waitlist as downloadable File
+router.get('/waitlist/scheduled', function(req, res) {
+  res.json(mailer.waitlistSchedule);
 });
 
 // return list of all users, including unused tokens
@@ -113,6 +118,7 @@ router.get('/users/regular', function(req, res) {
 router.get('/statistics', function(req, res) {
   db.getCounts(req.params.year || cfg.year, function(err, counts) {
     if (err) return res.status(501).end(err);
+    counts.waitlistScheduled = mailer.waitlistSchedule.length;
     handleResponse(req, res, counts);
   });
 });

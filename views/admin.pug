@@ -7,6 +7,7 @@ html
   body
 
     // TODO: druckansicht freie tokens?
+    // TODO: render via jade, not ajax?
 
     h1 Statistiken
     table
@@ -52,6 +53,13 @@ html
           a(href='./api/waitlist?download&format=csv') [CSV]
         td
           a(href='./api/waitlist' target='_blank') [API]
+      tr
+        th(style="text-align: right;") eingereihte Wartelistenmails:
+        td#count-waitlistScheduled
+        td
+          a(href='./api/waitlist/scheduled?download&format=csv') [CSV]
+        td
+          a(href='./api/waitlist/scheduled' target='_blank') [API]
 
     h1 Userliste
     table#user-table.compact.striped.order-column.hover(data-page-length='100', data-order='[[11]]', data-scroll-x='true', width='100%')

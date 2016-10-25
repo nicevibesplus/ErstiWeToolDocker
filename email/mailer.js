@@ -75,12 +75,20 @@ exports.sendMoneyTransfer = function(newToken, callback) {
   });
 };
 
-exports.sendWaitlistNotification = function(token, callback) {
-  // send the mail randomly in the next 30min-24h
-  let timeout = randomTimeout(0.5, 24);
+// will contain moment()s of scheduled waitlist notifications for API
+exports.waitlistSchedule = [];
+
+// send the mail randomly in the next 30min-24h
+exports.scheduleWaitlistNotification = function(token, callback) {
+  const scheduledAt = randomTimeout(0.5, 24);
+  exports.waitlistSchedule.push(scheduledAt);
 
   setTimeout(function() {
     db.getWaitlist(cfg.year, function(err, waitlist) {
+      // delete all scheduled times that have passed (eg the one we are currently handling)
+      exports.waitlistSchedule = exports.waitlistSchedule
+        .filter(time => (moment().diff(time) <= 0));
+
       if (err) return callback('error getting waitlist: ', err);
 
       sendMail({
@@ -90,23 +98,26 @@ exports.sendWaitlistNotification = function(token, callback) {
         bccAddress: waitlist.map(el => el.email).join(',') // BCC for privacy
       }, callback);
     });
-  }, timeout);
+  }, scheduledAt.diff(moment())); // get milliseconds from now on
 };
 
+// returns a moment() of the scheduled time,
+// which is min-max hours in the future.
 function randomTimeout(min, max) {
-  const weDate = new Date(cfg.dates.begin);
-  const now = new Date();
-  // exception: is the event closer than 24h? -> send instantly
-  if (weDate - now < 1000*3600*24) return 0;
+  let eventDate = moment(cfg.dates.begin);
+  let now = moment();
+
+  // exception: is the event closer than 40h? -> send after 30min
+  if (eventDate.diff(now, 'h', true) < 40)
+    return now.add(30, 'm');
 
   let timeout = Math.random() * (max - min);
   timeout = Math.floor((timeout + min) * 3600000); // scale hours to millisec
-  const scheduled = new Date(now.getTime() + timeout);
-  console.log(scheduled);
+  const scheduled = now.add(timeout, 'ms');
 
   // resulting date is not at night?
-  if (scheduled.getHours() < 22 && scheduled.getHours() > 9)
-    return timeout;
+  if (scheduled.hour() < 22 && scheduled.hour() > 9)
+    return scheduled;
   else
     return randomTimeout(min, max);
 }

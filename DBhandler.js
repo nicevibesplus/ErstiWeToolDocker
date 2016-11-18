@@ -193,7 +193,7 @@ exports.getCounts = function(year, callback) {
     successors:'SELECT COUNT(*) AS count FROM users WHERE year=? AND state=\'registered\' AND prev_user IS NOT NULL;',
   };
 
-  async.mapValuesLimit(queries, cfg.mysql.connectionlimit, function(query, measure, cb) {
+  async.mapValues(queries, function(query, measure, cb) {
     queryWrapper(query, [year], (err, result) => {
       err ? cb(err) : cb(null, result[0].count);
     });

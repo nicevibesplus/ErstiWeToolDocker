@@ -26,11 +26,19 @@ There are two frontend endpoints:
 - `./`:      contains the user facing forms
 - `./admin`: contains an adminpanel, requires authentication
 
-## run as service
-On a system capable of running init scripts, you may edit the file `ErstiWeTool` and copy it to `/etc/init.d/`, then start the app via
-`sudo service ErstiWeTool start`
-
-To enable starting on boot, run
+`## run as service
+### systemd
+```bash
+vi init/erstiwetool.service # change installation path
+sudo cp init/erstiwetool.service /etc/systemd/system/
+sudo systemctl enable erstiwetool
+sudo systemctl start erstiwetool
 ```
-sudo update-rc.d ErstiWeTool defaults 98 02
+
+### upstart
+```bash
+vi init/erstiwetool # change installation path
+sudo cp init/erstiwetool /etc/init.d/
+sudo update-rc.d erstiwetool defaults 98 02
+sudo service erstiwetoolstart
 ```

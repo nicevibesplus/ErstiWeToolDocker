@@ -1,0 +1,20 @@
+[Unit]
+Description=ErstiWe Management tool (node + mysql)
+After=network.target
+
+[Service]
+WorkingDirectory=/srv/ErstiWeTool
+ExecStart=/usr/bin/nodejs ./bin/www
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=erstiwetool
+User=node
+Group=www-data
+Environment='NODE_ENV=production'
+Environment='PORT=3000'
+
+[Install]
+WantedBy=multi-user.target
+

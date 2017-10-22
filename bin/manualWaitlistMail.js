@@ -1,0 +1,62 @@
+var async = require('async');
+var nodemailer = require('nodemailer');
+var cook = require('handlebars');
+var fs = require('fs');
+var kramed = require('kramed');
+var moment = require('moment');
+var cfg = require('../config');
+var db = require('../lib/DBhandler');
+
+moment.locale('de');
+cook.registerHelper('dateFormat', (date, format) => moment(date).format(format));
+
+/**
+ * Sends an Email generated from the given options. Options have the following structure
+ * { templateName, templateLocals, subject, toAddress }
+ */
+function sendMail(options, callback) {
+  fs.readFile(__dirname + '/mail-templates/' + options.templateName, {encoding: 'utf-8'}, function (err, template) {
+    if (err) return callback(err);
+
+    var transporter = nodemailer.createTransport(cfg.mailer);
+    var markdown = cook.compile(template)(options.templateLocals);
+
+    transporter.sendMail({
+      to: options.toAddress,
+      cc: options.ccAddress,
+      bcc: options.bccAddress,
+      subject: options.subject,
+      from: cfg.mailer.from,
+      html: kramed(markdown)
+    }, callback);
+  });
+}
+
+function scheduleWaitlistNotification (token, callback) {
+  db.getWaitlist(cfg.year, function(err, waitlist) {
+    if (err) return callback(`error getting waitlist: ${err}`);
+
+    sendMail({
+      templateName: 'waitlist_notification.md',
+      templateLocals: { token: token },
+      subject: 'Freier Platz für das Ersti-Wochenende ' + cfg.year + '!',
+      bccAddress: waitlist.map(el => el.email).join(',') // BCC for privacy
+    }, callback);
+  });
+};
+
+if (process.argv.length < 3) {
+  console.error(`usage: node ${process.argv[1]} TOKEN [..TOKEN]`);
+  return process.exit(1);
+}
+
+db.connect();
+
+process.argv.splice(2).forEach(function(token) {
+  scheduleWaitlistNotification(token, (err, result) => {
+    if (err) return console.error(err);
+
+    console.log(JSON.stringify(result, null, 2));
+    process.exit(0);
+  });
+});

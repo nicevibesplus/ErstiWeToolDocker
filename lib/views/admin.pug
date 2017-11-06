@@ -61,6 +61,11 @@ html
         td
           a(href='./api/waitlist/scheduled' target='_blank') [API]
 
+    div
+      canvas#chart-gender(width="300", height="200")
+      canvas#chart-study(width="400", height="200")
+      canvas#chart-food(width="400", height="200")
+
     h1 Userliste
     table#user-table.compact.striped.order-column.hover(data-page-length='100', data-order='[[11]]', data-scroll-x='true', width='100%')
       thead
@@ -100,4 +105,5 @@ html
 
     script(src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
     script(type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js")
+    script(type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js")
     script(src='./js/admin.js')

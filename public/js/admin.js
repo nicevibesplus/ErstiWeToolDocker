@@ -41,11 +41,25 @@ $(document).ready(function() {
   });
 
   // get participants' stats
-  var colors = {
-    gender: ['skyblue', 'pink', 'lightgrey'],
-    study:  ['orange', 'mediumseagreen', 'cornflowerblue', 'gold'],
-    food:   ['lightsalmon', 'yellowgreen', 'olive']
+  const COLORS = {
+    'Geographie': 'orange',
+    'Geoinformatik': 'cornflowerblue', // uuuuh
+    'Landschaftsökologie': 'mediumseagreen',
+    'Zwei-Fach-Bachelor': 'gold',
+
+    'female': 'orange',
+    'male': 'gold',
+    'other': 'grey',
+
+    'fleischig': 'darkred',
+    'vegan': 'olive',
+    'vegetarisch': 'yellowgreen',
   };
+
+  function getColors (stats, aspect) {
+    return stats.map(item => COLORS[item[aspect]]);
+  }
+
   ['gender', 'study', 'food'].forEach(function(aspect) {
     $.get(`./api/statistics/${aspect}${yearParam}`, function(stats, status) {
       if (status !== 'success') return console.error(stats, 'error');
@@ -57,7 +71,7 @@ $(document).ready(function() {
           labels: stats.map(s => s[aspect]),
           datasets: [{
             data: stats.map(s => s.count),
-            backgroundColor: colors[aspect],
+            backgroundColor: getColors(stats, aspect) || ['black'],
             borderWidth: 1
           }]
         },

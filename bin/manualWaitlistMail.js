@@ -15,7 +15,7 @@ cook.registerHelper('dateFormat', (date, format) => moment(date).format(format))
  * { templateName, templateLocals, subject, toAddress }
  */
 function sendMail(options, callback) {
-  fs.readFile(__dirname + '/mail-templates/' + options.templateName, {encoding: 'utf-8'}, function (err, template) {
+  fs.readFile(__dirname + '../lib/mail-templates/' + options.templateName, {encoding: 'utf-8'}, function (err, template) {
     if (err) return callback(err);
 
     var transporter = nodemailer.createTransport(cfg.mailer);

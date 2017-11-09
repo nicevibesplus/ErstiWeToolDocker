@@ -47,7 +47,12 @@ $(document).ready(function() {
       type: $(that).attr('method'),
       url:  $(that).attr('action'),
       error: function(xhr, status, err) {
-        showAlert(xhr.responseText, 'error');
+        try {
+          const error = JSON.parse(xhr.responseText)
+          showAlert(error.errors.map(e => e.message).join('<br>'), 'error');
+        } catch (e) {
+          showAlert(xhr.responseText, 'error');
+        }
       },
       success: function(res) {
         // reset the view

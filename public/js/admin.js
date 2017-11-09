@@ -1,5 +1,7 @@
 'use strict';
 
+/* global $ Chart */
+
 $(document).ready(function() {
   // token generation form submit handler
   $('#gen-tokens').submit(function() {
@@ -25,7 +27,7 @@ $(document).ready(function() {
     for (let measure in stats)
       $('#count-' + measure).html(stats[measure]);
   });
-  
+
   // get participants' stats
   var colors = {
     gender: ['skyblue', 'pink', 'lightgrey'],
@@ -34,13 +36,14 @@ $(document).ready(function() {
   };
   ['gender', 'study', 'food'].forEach(function(aspect) {
     $.get('./api/statistics/'+aspect, function(stats, status) {
+
       var canvas = document.getElementById("chart-"+aspect);
       var options = {
         type: 'pie',
         data: {
-          labels: Object.keys(stats),
+          labels: stats.map(s => s[aspect]),
           datasets: [{
-            data: Object.values(stats),
+            data: stats.map(s => s.count),
             backgroundColor: colors[aspect],
             borderWidth: 1
           }]

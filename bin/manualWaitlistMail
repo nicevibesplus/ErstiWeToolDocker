@@ -1,3 +1,7 @@
+#!/usr/bin/env node
+
+'use strict';
+
 var async = require('async');
 var nodemailer = require('nodemailer');
 var cook = require('handlebars');

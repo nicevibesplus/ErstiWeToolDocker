@@ -40,7 +40,7 @@ $(document).ready(function() {
       $('#count-' + measure).html(stats[measure]);
   });
 
-  // get participants' stats
+  // pie chart stats
   const COLORS = {
     'Geographie': 'orange',
     'Geoinformatik': 'cornflowerblue', // uuuuh
@@ -56,8 +56,8 @@ $(document).ready(function() {
     'vegetarisch': 'yellowgreen',
   };
 
-  function getColors (stats, aspect) {
-    return stats.map(item => COLORS[item[aspect]]);
+  function getColors (stats) {
+    return stats.map(s => COLORS[s.field]);
   }
 
   ['gender', 'study', 'food'].forEach(function(aspect) {
@@ -68,10 +68,10 @@ $(document).ready(function() {
       var options = {
         type: 'pie',
         data: {
-          labels: stats.map(s => s[aspect]),
+          labels: stats.map(s => s.field),
           datasets: [{
             data: stats.map(s => s.count),
-            backgroundColor: getColors(stats, aspect) || ['black'],
+            backgroundColor: getColors(stats),
             borderWidth: 1
           }]
         },

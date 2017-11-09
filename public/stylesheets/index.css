@@ -22,7 +22,7 @@ body {
     background: #f3f3f3
 }
 
-label, legend {
+form>label, legend {
   font-weight: 900;
 }
 

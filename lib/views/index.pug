@@ -32,15 +32,16 @@ html
       input#lastname(name='lastname', type='text', required='', autocomplete='off',placeholder='Duck', maxlength="50")
       fieldset#gender
         legend Geschlecht:
-        input(type='radio', name='gender', value='male', required='')
-        | männlich
-        br
-        input(type='radio', name='gender', value='female', required='')
-        | weiblich
-        br
-        input(type='radio', name='gender', value='other', required='')
-        | who cares?!
-      label(for='email') E-Mail:
+        label
+          input(type='radio', name='gender', value='male', required='')
+          | männlich
+        label
+          input(type='radio', name='gender', value='female', required='')
+          | weiblich
+        label
+          input(type='radio', name='gender', value='other', required='')
+          | who cares?!
+      legend(for='email') E-Mail:
       input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.com', maxlength="50")
       label(for='email-confirmation') E-Mail bestätigen:
       input#email-confirmation(type='email', required='', autocomplete='off',placeholder='donald@duck.com', maxlength="50")
@@ -50,27 +51,29 @@ html
       input#birthday(name='birthday', type='date', placeholder='1994-03-21', autocomplete='off', maxlength="10")
       fieldset#study(required='true')
         legend Studiengang:
-        input(type='radio', name='study', value='Geographie' required='')
-        | Geographie
-        br
-        input(type='radio', name='study', value='Landschaftsökologie', required='')
-        | Landschaftsökologie
-        br
-        input(type='radio', name='study', value='Zwei-Fach-Bachelor', required='')
-        | Zwei-Fach-Bachelor
-        br
-        input(type='radio', name='study', value='Geoinformatik', required='')
-        | Geoinformatik
+        label
+          input(type='radio', name='study', value='Geographie' required='')
+          | Geographie
+        label
+          input(type='radio', name='study', value='Landschaftsökologie', required='')
+          | Landschaftsökologie
+        label
+          input(type='radio', name='study', value='Zwei-Fach-Bachelor', required='')
+          | Zwei-Fach-Bachelor
+        label
+          input(type='radio', name='study', value='Geoinformatik', required='')
+          | Geoinformatik
       fieldset#food
         legend Ich ernähre mich
-        input(type='radio', name='food', value='fleischig', required='')
-        | fleischig
-        br
-        input(type='radio', name='food', value='vegetarisch', required='')
-        | vegetarisch
-        br
-        input(type='radio', name='food', value='vegan', required='')
-        | vegan
+        label
+          input(type='radio', name='food', value='fleischig', required='')
+          | fleischig
+        label
+          input(type='radio', name='food', value='vegetarisch', required='')
+          | vegetarisch
+        label
+          input(type='radio', name='food', value='vegan', required='')
+          | vegan
       label(for='comment') Willst du uns noch etwas mitteilen?
       textarea#comment(name='comment', autocomplete='off', placeholder='Allergene, ... [max 500 Zeichen]', maxlength="500")
       label

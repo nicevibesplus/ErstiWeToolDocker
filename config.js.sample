@@ -4,6 +4,7 @@
 
 module.exports = {
   http_port: 3000,
+  send_errors: false,
 
   // affects the database queries & email templates
   year: 2016,

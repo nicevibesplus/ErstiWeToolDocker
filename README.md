@@ -2,7 +2,7 @@
 Tool to manage a freshmans weekend by GEOFS.
 
 ## Installation
-Requires [`node >= 6.x`](https://nodejs.org/en/download/package-manager/) and `mysql-server >=5.x`.
+Requires [`node  ^6.12.0`](https://nodejs.org/en/download/package-manager/) and `mysql-server ^5.7.20`.
 
 ```bash
 git clone https://github.com/SpeckiJ/ErstiWeTool.git
@@ -26,7 +26,7 @@ There are two frontend endpoints:
 - `./`:      contains the user facing forms
 - `./admin`: contains an adminpanel, requires authentication
 
-`## run as service
+## run as service
 ### systemd
 ```bash
 vi init/erstiwetool.service # change installation path
@@ -42,3 +42,6 @@ sudo cp init/erstiwetool /etc/init.d/
 sudo update-rc.d erstiwetool defaults 98 02
 sudo service erstiwetoolstart
 ```
+
+## license
+GPL-3.0

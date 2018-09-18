@@ -132,3 +132,17 @@ fieldset {
 canvas {
   display:inline-block!important;
 }
+
+#centerd {
+  width: 175px;
+  text-align: center;
+  padding: 5px;
+  background:#ccc;
+  border:0 none;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}

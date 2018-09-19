@@ -13,14 +13,10 @@ html
 
     div#menu
       button(onclick='toggleView("register")') Mit Code anmelden!
-      br
       button(onclick='toggleView("waitlist")') Kein Code? Auf die Warteliste!
-      br
       button(onclick='toggleView("optout")') Doch keine Zeit? Abmelden!
-      br
-      div#centerd
-        a(href="/datenschutz.html",target="_blank") Datenschutzerklärung
-    
+      a#datenschmutz(href="./datenschutz.html", target="_blank") Datenschutzerklärung
+
     div#back.hidden
       button(onclick='toggleView("menu")') zurück
 
@@ -96,7 +92,7 @@ html
       fieldset#dsgvo(required='true')
         legend Einverständnis:
         label
-          input(type='radio', required='true')
+          input(type='checkbox', required='true')
           | Ich habe die <a href="/datenschutz.html" target="_blank"> Datenschutzerklärung </a> zur Kenntnis genommen und stimme der Verarbeitung der Daten zu
       input(type='submit', value='Absenden')
 
@@ -114,7 +110,7 @@ html
       fieldset#dsgvo(required='true')
         legend Einverständnis:
         label
-          input(type='radio', required='true')
+          input(type='checkbox', required='true')
           | Ich habe die <a href="/datenschutz.html" target="_blank"> Datenschutzerklärung </a> zur Kenntnis genommen und stimme der Verarbeitung der Daten zu
       input(type='submit', value='Absenden')
 

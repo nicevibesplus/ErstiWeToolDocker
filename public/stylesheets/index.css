@@ -43,11 +43,22 @@ form>label, legend {
     transform: scale(0.7);
 }
 
+#menu #datenschmutz {
+  margin-top: 20px;
+  color: gray;
+}
+
 form, #menu, #back, #info-container {
   width: 432px;
   margin: auto;
   padding: 5px;
   padding-bottom: 15px;
+}
+
+#menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #info{
@@ -112,7 +123,7 @@ input, textarea {
   transition: box-shadow 0.3s;
 }
 
-input[type="radio"] {
+input[type="radio"], input[type="checkbox"] {
   width:auto;
   margin-right:8px;
   margin-bottom:5px;

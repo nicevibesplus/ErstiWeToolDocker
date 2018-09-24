@@ -13,10 +13,9 @@ html
 
     div#menu
       button(onclick='toggleView("register")') Mit Code anmelden!
-      br
       button(onclick='toggleView("waitlist")') Kein Code? Auf die Warteliste!
-      br
       button(onclick='toggleView("optout")') Doch keine Zeit? Abmelden!
+      a#datenschmutz(href="./datenschutz.html", target="_blank") Datenschutzerklärung
 
     div#back.hidden
       button(onclick='toggleView("menu")') zurück
@@ -90,6 +89,11 @@ html
           | Deine Anmeldung ist verbindlich.
           | Wenn du an der Fahrt nicht mehr teilnehmen willst/kannst, ist die Rückerstattung des Teilnehmerbetrages nur möglich, wenn ein Nachfolger gefunden wird (je nach Andrang auf der Warteliste).
 
+      fieldset#dsgvo(required='')
+        legend Einverständnis:
+        label
+          input(type='checkbox', required='', name='dsgvo')
+          | Ich habe die <a href="/datenschutz.html" target="_blank"> Datenschutzerklärung </a> zur Kenntnis genommen und stimme der Verarbeitung der Daten zu
       input(type='submit', value='Absenden')
 
     form#form-waitlist.hidden(action='api/waitlist' method='POST')
@@ -103,6 +107,11 @@ html
           li Den Kostenbeitrag für das Wochenende gibst du an diejenige Person, deren Platz frei geworden ist (Kontaktdaten kommen per Email).
       label(for='email') E-Mail:
       input#email-waitlist(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength='50')
+      fieldset#dsgvo(required='true')
+        legend Einverständnis:
+        label
+          input(type='checkbox', required='', name='dsgvo')
+          | Ich habe die <a href="/datenschutz.html" target="_blank"> Datenschutzerklärung </a> zur Kenntnis genommen und stimme der Verarbeitung der Daten zu
       input(type='submit', value='Absenden')
 
     form#form-optout.hidden(action='api/optout' method='POST')
@@ -115,6 +124,7 @@ html
       label(for='email-optout') E-Mail:
       input#email-optout(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.ente', maxlength='50')
       input(type='submit', value='Absenden')
+
     div(class='logo')
       img(src='images/pacman.svg', width='150', alt='', padding="20px")
       img(src='images/notpacman.svg', width='170', alt='', padding="20px")

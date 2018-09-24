@@ -89,10 +89,10 @@ html
           | Deine Anmeldung ist verbindlich.
           | Wenn du an der Fahrt nicht mehr teilnehmen willst/kannst, ist die Rückerstattung des Teilnehmerbetrages nur möglich, wenn ein Nachfolger gefunden wird (je nach Andrang auf der Warteliste).
 
-      fieldset#dsgvo(required='true')
+      fieldset#dsgvo(required='')
         legend Einverständnis:
         label
-          input(type='checkbox', required='true')
+          input(type='checkbox', required='', name='dsgvo')
           | Ich habe die <a href="/datenschutz.html" target="_blank"> Datenschutzerklärung </a> zur Kenntnis genommen und stimme der Verarbeitung der Daten zu
       input(type='submit', value='Absenden')
 
@@ -110,7 +110,7 @@ html
       fieldset#dsgvo(required='true')
         legend Einverständnis:
         label
-          input(type='checkbox', required='true')
+          input(type='checkbox', required='', name='dsgvo')
           | Ich habe die <a href="/datenschutz.html" target="_blank"> Datenschutzerklärung </a> zur Kenntnis genommen und stimme der Verarbeitung der Daten zu
       input(type='submit', value='Absenden')
 

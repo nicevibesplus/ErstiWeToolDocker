@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+'use strict';
+var db = require('../lib/DBhandler');
+
+// arg0 = node path
+// arg1 = script path
+// arg2 = year
+// arg3 = confirm flag
+
+if (process.argv.length <= 2) {
+  console.error(`usage: ${process.argv[1]} [year] --yes-for-real`);
+  process.exit(1);
+}
+
+const year = parseInt(process.argv[2])
+if (!isFinite(year)) {
+  console.error('invalid year')
+  process.exit(1);
+}
+
+if (!process.argv[3] || process.argv[3] !== '--yes-for-real') {
+  console.error(`are you sure? please confirm with --yes-for-real`);
+  process.exit(1);
+}
+
+db.connect();
+
+db.anonymizeUsers({
+  year: process.argv[2]
+}, (err, result) => {
+  if (err) return console.error(err);
+  console.log(JSON.stringify(result, null, 2));
+  process.exit(0);
+})

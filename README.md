@@ -52,5 +52,8 @@ sudo update-rc.d erstiwetool defaults 98 02
 sudo service erstiwetoolstart
 ```
 
+## anonymize PII
+Run `bin/anonymizeUsers [year] --yes-for-real` to replace user PII (first name, last name, email, phone) with placeholders. Birthdate is truncated to months.
+
 ## license
 GPL-3.0

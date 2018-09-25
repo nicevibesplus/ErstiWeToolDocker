@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `ersti-we`.`users` (
   `state` ENUM('free', 'registered', 'opted_out') NOT NULL DEFAULT 'free', -- flag, whether a token is used or not
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, -- date of registration
   `prev_user` CHAR(8) NULL, -- references the the user previous user of the spot (for waitlist registrations)
+  `dsgvo` TIMESTAMP NULL,
   PRIMARY KEY (`token`, `year`),
   FOREIGN KEY (`prev_user`) REFERENCES users(`token`)
 ) ENGINE = InnoDB;

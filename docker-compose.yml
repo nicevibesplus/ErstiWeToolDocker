@@ -1,0 +1,14 @@
+version: "2"
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=supersecretstuff
+    volumes:
+      - './schema.sql:/schema.sql'
+  erstiwetool:
+    build: .
+    ports:
+      - "3000:3000"

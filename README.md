@@ -2,12 +2,12 @@
 Tool to manage a freshmans weekend by GEOFS.
 
 ## Installation
-Requires [`node  ^6.12.0`](https://nodejs.org/en/download/package-manager/) and `mysql-server ^5.7.20`.
+Requires [`node ^6.12`](https://nodejs.org/en/download/package-manager/), [`yarn`](https://yarnpkg.com/en/docs/install) and `mysql-server ^5.7`.
 
 ```bash
 git clone https://github.com/SpeckiJ/ErstiWeTool.git
 cd ErstiWeTool
-npm install
+yarn install
 mysql -u root -p < schema.sql
 echo "SET PASSWORD FOR 'ersti-we' = PASSWORD('my pass word here')" | mysql -u root -p
 cp config.js.sample config.js
@@ -20,11 +20,20 @@ At last, create login credentials for the admin panel (requires `htpasswd` from 
 htpasswd -c ./admin.htpasswd <username>
 ```
 
-You now can start the app by running `npm start`.
+## Run
+You now can start the app by running `yarn start`.
 
 There are two frontend endpoints:
 - `./`:      contains the user facing forms
 - `./admin`: contains an adminpanel, requires authentication
+
+## Database via docker
+```sh
+# the root pw is set in docker-compose.yml
+docker-compose up -d mysql
+docker-compose exec mysql bash -c 'mysql --default-character-set=utf8 -p < schema.sql'
+docker-compose exec mysql bash -c "echo 'SET PASSWORD FOR \"ersti-we\" = PASSWORD(\"test\")' | mysql -p"
+```
 
 ## run as service
 ### systemd

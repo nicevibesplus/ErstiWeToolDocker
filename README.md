@@ -31,7 +31,7 @@ There are two frontend endpoints:
 ```sh
 # the root pw is set in docker-compose.yml
 docker-compose up -d mysql
-docker-compose exec mysql bash -c 'mysql -p < schema.sql'
+docker-compose exec mysql bash -c 'mysql --default-character-set=utf8 -p < schema.sql'
 docker-compose exec mysql bash -c "echo 'SET PASSWORD FOR \"ersti-we\" = PASSWORD(\"test\")' | mysql -p"
 ```
 

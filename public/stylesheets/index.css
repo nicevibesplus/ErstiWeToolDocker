@@ -26,13 +26,13 @@ form>label, legend {
   font-weight: 900;
 }
 
-.headline{
+header {
+  text-align: center;
+}
+.headline {
     font-size: 6vw;
-    margin: auto;
     line-height: 175px;
     padding-top: 50px;
-    text-align: center;
-    align-content: center;
 }
 
 .logo{

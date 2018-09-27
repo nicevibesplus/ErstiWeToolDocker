@@ -2,7 +2,7 @@
 Tool to manage a freshmans weekend by GEOFS.
 
 ## Installation
-Requires [`node ^6.12`](https://nodejs.org/en/download/package-manager/), [`yarn`](https://yarnpkg.com/en/docs/install) and `mysql-server ^5.7`.
+Requires [`node ^8.x`](https://nodejs.org/en/download/package-manager/), [`yarn`](https://yarnpkg.com/en/docs/install) and `mysql-server ^5.7`.
 
 ```bash
 git clone https://github.com/SpeckiJ/ErstiWeTool.git
@@ -51,6 +51,9 @@ sudo cp init/erstiwetool /etc/init.d/
 sudo update-rc.d erstiwetool defaults 98 02
 sudo service erstiwetoolstart
 ```
+
+## anonymize PII
+Run `bin/anonymizeUsers [year] --yes-for-real` to replace user PII (first name, last name, email, phone) with placeholders. Birthdate is truncated to months.
 
 ## license
 GPL-3.0

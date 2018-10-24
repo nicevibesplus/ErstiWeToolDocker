@@ -19,7 +19,7 @@ cook.registerHelper('dateFormat', (date, format) => moment(date).format(format))
  * { templateName, templateLocals, subject, toAddress }
  */
 function sendMail(options, callback) {
-  fs.readFile(__dirname + '../lib/mail-templates/' + options.templateName, {encoding: 'utf-8'}, function (err, template) {
+  fs.readFile(__dirname + '/../lib/mail-templates/' + options.templateName, {encoding: 'utf-8'}, function (err, template) {
     if (err) return callback(err);
 
     var transporter = nodemailer.createTransport(cfg.mailer);
@@ -44,6 +44,7 @@ function scheduleWaitlistNotification (token, callback) {
       templateName: 'waitlist_notification.md',
       templateLocals: { token: token },
       subject: 'Freier Platz für das Ersti-Wochenende ' + cfg.year + '!',
+      toAddress: cfg.mailer.from,
       bccAddress: waitlist.map(el => el.email).join(',') // BCC for privacy
     }, callback);
   });

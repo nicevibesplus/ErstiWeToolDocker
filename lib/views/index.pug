@@ -30,7 +30,7 @@ html
       input#firstname(name='firstname', type='text', required='', autocomplete='off',placeholder='Donald', maxlength="50")
       label(for='lastname') Nachname:
       input#lastname(name='lastname', type='text', required='', autocomplete='off',placeholder='Duck', maxlength="50")
-      fieldset#gender
+      fieldset#gender.hidden
         legend Geschlecht:
         label
           input(type='radio', name='gender', value='male', required='')
@@ -39,7 +39,7 @@ html
           input(type='radio', name='gender', value='female', required='')
           | weiblich
         label
-          input(type='radio', name='gender', value='other', required='')
+          input(type='radio', name='gender', value='other', required='', checked)
           | who cares?!
       legend(for='email') E-Mail:
       input#email(name='email', type='email', required='', autocomplete='off',placeholder='donald@duck.com', maxlength="50")

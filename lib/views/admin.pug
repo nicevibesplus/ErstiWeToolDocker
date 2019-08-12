@@ -6,11 +6,10 @@ html
     link(rel='stylesheet' type="text/css" href='stylesheets/index.css')
   body
 
-    // TODO: druckansicht freie tokens?
-    // TODO: render via jade, not ajax?
     each y in years
       span
         a(href='?year='+y)= y
+        |&nbsp;
 
     h1 Statistiken
     table

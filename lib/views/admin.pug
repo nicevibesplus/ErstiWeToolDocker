@@ -8,6 +8,9 @@ html
 
     // TODO: druckansicht freie tokens?
     // TODO: render via jade, not ajax?
+    each y in years
+      span
+        a(href='?year='+y)= y
 
     h1 Statistiken
     table

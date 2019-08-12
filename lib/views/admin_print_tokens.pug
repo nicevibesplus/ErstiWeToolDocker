@@ -1,0 +1,54 @@
+doctype html
+html
+  head
+    meta(http-equiv='content-type', content='text/html; charset=utf-8; width=device-width; initial-scale=1.0')
+    style.
+      body {
+        width: 100%;
+        margin: 0;
+        font-family: sans;
+      }
+
+      .container {
+        display: flex;
+        width: 100%;
+      }
+
+      .container span {
+        width: 33%;
+        max-width: 10em;
+        padding: 1em;
+        font-size: 16pt;
+      }
+      .token {
+        font-family: mono;
+      }
+      .link {
+        text-decoration: none;
+        color: #ccc;
+        font-size: 12px;
+      }
+  body
+    div.status
+    div.container
+
+    script.
+      async function main () {
+        const url = '../api/users/unused' + (window.location.query || '')
+        const res = await fetch(url)
+        const tokens = (await res.json()).map(x => x.token)
+        if (!tokens.length)
+          return document.querySelector('.status').innerHTML = 'No free tokens. generate some first!'
+
+        const container = document.querySelector('.container')
+        for (let token of tokens)
+          container.appendChild(createTokenElement(token))
+      }
+
+      function createTokenElement (token) {
+        const span = document.createElement('span')
+        span.innerHTML = `<div class="token">${token}</div><div class="link">Einlösen auf <a href="http://geofs.de/erstiwe">geofs.de/erstiwe</a></div>`
+        return span
+      }
+
+      main()

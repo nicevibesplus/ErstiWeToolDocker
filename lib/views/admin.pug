@@ -27,6 +27,8 @@ html
           a(href='./api/users/unused?download&format=csv&year='+year) [CSV]
         td
           a(href='./api/users/unused?year='+year target='_blank') [API]
+        td
+          a(href='./admin/print/tokens?year='+year target='_blank') [PRINT]
       tr
         th(style="text-align: right;") Angemeldete User:
         td#count-attendees
@@ -34,6 +36,8 @@ html
           a(href='./api/users/attending?download&format=csv&year='+year) [CSV]
         td
           a(href='./api/users/attending?year='+year target='_blank') [API]
+        td
+          a(href='./admin/print/attending?year='+year target='_blank') [PRINT]
       tr
         th(style="text-align: right;") Abgemeldete User:
         td#count-optouts

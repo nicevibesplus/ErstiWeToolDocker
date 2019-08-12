@@ -7,24 +7,25 @@ html
         margin: 0;
         font-family: sans;
       }
-
       .container {
         display: flex;
         flex-wrap: wrap;
       }
-
       .container span {
-        padding: 0.9em;
+        padding: 1.3em;
         font-size: 14pt;
       }
       .token {
         font-family: mono;
-        letter-spacing: 0.3em;
+        letter-spacing: 0.5em;
       }
       .link, .link a {
         text-decoration: none;
         color: #666;
         font-size: 8pt;
+      }
+      @media print {
+        .status { display: none; }
       }
 
   body
@@ -44,7 +45,10 @@ html
         for (let token of tokens)
           container.appendChild(createTokenElement(token))
 
-        window.print()
+        if(navigator.userAgent.indexOf("Chrome") === -1)
+          document.querySelector('.status').innerHTML = 'Print looks best when using Chrome :('
+        else
+          window.print()
       }
 
       function createTokenElement (token) {

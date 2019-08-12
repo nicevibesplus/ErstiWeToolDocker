@@ -15,51 +15,51 @@ html
         th(style="text-align: right;") Token insgesamt:
         td#count-total
         td
-          a(href='./api/users?download&format=csv') [CSV]
+          a(href='./api/users?download&format=csv&year='+year) [CSV]
         td
-          a(href='./api/users' target='_blank') [API]
+          a(href='./api/users?year='+year target='_blank') [API]
       tr
         th(style="text-align: right;") Token frei:
         td#count-unused
         td
-          a(href='./api/users/unused?download&format=csv') [CSV]
+          a(href='./api/users/unused?download&format=csv&year='+year) [CSV]
         td
-          a(href='./api/users/unused' target='_blank') [API]
+          a(href='./api/users/unused?year='+year target='_blank') [API]
       tr
         th(style="text-align: right;") Angemeldete User:
         td#count-attendees
         td
-          a(href='./api/users/attending?download&format=csv') [CSV]
+          a(href='./api/users/attending?download&format=csv&year='+year) [CSV]
         td
-          a(href='./api/users/attending' target='_blank') [API]
+          a(href='./api/users/attending?year='+year target='_blank') [API]
       tr
         th(style="text-align: right;") Abgemeldete User:
         td#count-optouts
         td
-          a(href='./api/users/opted-out?download&format=csv') [CSV]
+          a(href='./api/users/opted-out?download&format=csv&year='+year) [CSV]
         td
-          a(href='./api/users/opted-out' target='_blank') [API]
+          a(href='./api/users/opted-out?year='+year target='_blank') [API]
       tr
         th(style="text-align: right;") Nachgerückte User:
         td#count-successors
         td
-          a(href='./api/users/from-waitlist?download&format=csv') [CSV]
+          a(href='./api/users/from-waitlist?download&format=csv&year='+year) [CSV]
         td
-          a(href='./api/users/from-waitlist' target='_blank') [API]
+          a(href='./api/users/from-waitlist?year='+year target='_blank') [API]
       tr
         th(style="text-align: right;") Warteliste:
         td#count-waitlist
         td
-          a(href='./api/waitlist?download&format=csv') [CSV]
+          a(href='./api/waitlist?download&format=csv&year='+year) [CSV]
         td
-          a(href='./api/waitlist' target='_blank') [API]
+          a(href='./api/waitlist?year='+year target='_blank') [API]
       tr
         th(style="text-align: right;") eingereihte Wartelistenmails:
         td#count-waitlistScheduled
         td
-          a(href='./api/waitlist/scheduled?download&format=csv') [CSV]
+          a(href='./api/waitlist/scheduled?download&format=csv&year='+year) [CSV]
         td
-          a(href='./api/waitlist/scheduled' target='_blank') [API]
+          a(href='./api/waitlist/scheduled?year='+year target='_blank') [API]
 
     div
       canvas#chart-gender(width="300", height="200")

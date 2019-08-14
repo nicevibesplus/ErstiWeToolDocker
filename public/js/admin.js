@@ -40,50 +40,6 @@ $(document).ready(function() {
       $('#count-' + measure).html(stats[measure]);
   });
 
-  // pie chart stats
-  const COLORS = {
-    'Geographie': 'orange',
-    'Geoinformatik': 'cornflowerblue', // uuuuh
-    'Landschaftsökologie': 'mediumseagreen',
-    'Zwei-Fach-Bachelor': 'gold',
-
-    'female': 'orange',
-    'male': 'gold',
-    'other': 'grey',
-
-    'fleischig': 'darkred',
-    'vegan': 'olive',
-    'vegetarisch': 'yellowgreen',
-  };
-
-  function getColors (stats) {
-    return stats.map(s => COLORS[s.field]);
-  }
-
-  ['gender', 'study', 'food'].forEach(function(aspect) {
-    $.get(`./api/statistics/${aspect}${yearParam}`, function(stats, status) {
-      if (status !== 'success') return console.error(stats, 'error');
-
-      var canvas = document.getElementById("chart-"+aspect);
-      var options = {
-        type: 'pie',
-        data: {
-          labels: stats.map(s => s.field),
-          datasets: [{
-            data: stats.map(s => s.count),
-            backgroundColor: getColors(stats),
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: false,
-          maintainAspectRation: false
-        }
-      };
-      new Chart(canvas, options);
-    });
-  });
-
   // fill user table
   $.get(`./api/users${yearParam}`, function(users, status) {
     if (status !== 'success') return console.error(users, 'error');

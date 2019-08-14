@@ -4,23 +4,28 @@ html
     meta(http-equiv='content-type', content='text/html; charset=utf-8; width=device-width; initial-scale=1.0')
     style.
       body {
-        margin: 0;
+        font-size: 9pt;
         font-family: sans;
+        --webkit-color-adjust: exact;
+        color-adjust: exact;
       }
-      table tr:nth-child(odd) {
-        background-color: #ccc;
+      canvas {
+        display:inline-block !important;
       }
-      @media print {
-        .status { display: none; }
+      table td {
+        padding: 0.2em 0.5em;
+      }
+      table tr:nth-child(even) {
+        background-color: #eee;
       }
 
   body
-    h3= 'Erstifahrt ' + year + ': ' + attendees.length + ' Teilnehmende'
+    h3 Erstifahrt #{year}: #{attendees.length} Teilnehmende
 
     div
-      canvas#chart-gender(width="300", height="200")
-      canvas#chart-study(width="400", height="200")
-      canvas#chart-food(width="400", height="200")
+      canvas#chart-gender(width="180", height="160")
+      canvas#chart-study(width="300", height="160")
+      canvas#chart-food(width="190", height="160")
 
     table.table
       thead
@@ -32,13 +37,13 @@ html
 
       each u in attendees
         tr
-          td= u.firstname + ' ' + u.lastname
+          td #{u.firstname} <br/> #{u.lastname}
           td= u.birthday
           td= u.study
           td= u.comment
 
-    script.
-      const BASE_URL = '../..'
+    script const BASE_URL = '../..'
     script(src='../../js/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
     script(src="../../js/Chart.min.js")
     script(src='../../js/admin-charts.js')
+    script setTimeout(window.print, 1000)

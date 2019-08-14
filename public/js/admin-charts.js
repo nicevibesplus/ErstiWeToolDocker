@@ -35,7 +35,7 @@ $(document).ready(function() {
   }
 
   ['gender', 'study', 'food'].forEach(function(aspect) {
-    $.get(`./api/statistics/${aspect}${yearParam}`, function(stats, status) {
+    $.get(`${BASE_URL}/api/statistics/${aspect}${yearParam}`, function(stats, status) {
       if (status !== 'success') return console.error(stats, 'error');
 
       var canvas = document.getElementById("chart-"+aspect);

@@ -2,6 +2,8 @@
 
 /* global $ Chart */
 
+const BASE_URL = '.'
+
 $(document).ready(function() {
   // get year from url query to apply to all backend requests
   const urlQuery = window.location.search

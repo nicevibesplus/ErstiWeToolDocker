@@ -42,7 +42,7 @@ header {
     transform: scale(0.7);
 }
 
-#menu #datenschmutz {
+#menu button~a {
   margin-top: 20px;
   color: gray;
 }

@@ -24,7 +24,8 @@ html
       button(onclick='toggleView("menu")') zurück
 
     form#form-register.hidden(action='api/register' method='POST')
-      input#token(name='token', type='text', required='', autocomplete='off', placeholder='Anmeldungs-Code', maxlength="8")
+      label(for='token') Anmeldungs-Code:
+      input#token(name='token', type='text', required='', autocomplete='off', maxlength="8")
       p
         | Bitte gebe deine persönlichen Daten an.
         | Dies macht die Organisation des Wochenendes für dich & uns deutlich einfacher.

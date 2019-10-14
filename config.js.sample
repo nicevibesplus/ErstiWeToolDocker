@@ -35,5 +35,10 @@ module.exports = {
     pool: true, // Use connection pool
     maxConnections: 10, // Maximum number of connections
   },
+
+  // VIP whitelist for waitlist notification timeout: these emails will get the notification earlier.
+  waitlistwhitelist: [
+    'fsgi@wwu.de',
+  ],
 };
 

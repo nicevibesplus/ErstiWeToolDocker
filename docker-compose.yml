@@ -8,7 +8,10 @@ services:
       - MYSQL_ROOT_PASSWORD=supersecretstuff
     volumes:
       - './schema.sql:/schema.sql'
-  erstiwetool:
+    container_name: MySQL
+  anmeldetool:
     build: .
+    image: erstiwetooldocker
     ports:
       - "3000:3000"
+    container_name: ErstiWeTool

@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:20.11.0-alpine
 
 #RUN apk --no-cache --virtual .build add build-base python git
 
@@ -15,4 +15,8 @@ RUN yarn install --pure-lockfile --production
 COPY . /usr/src/app
 
 ENV NODE_ENV production
+
+EXPOSE 3000
+
+
 CMD [ "yarn", "start" ]

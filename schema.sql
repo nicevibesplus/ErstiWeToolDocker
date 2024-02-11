@@ -66,7 +66,7 @@ DELIMITER ;
 
 -- Compatibility to mysql < 5.6.*, replacing
 -- CREATE USER IF NOT EXISTS `ersti-we`;
-CREATE USER `ersti-we`;
+CREATE USER `ersti-we` IDENTIFIED BY 'test';
 GRANT ALL PRIVILEGES ON `ersti-we`.* TO `ersti-we`;
 
 SET SQL_MODE=@OLD_SQL_MODE;

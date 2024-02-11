@@ -102,12 +102,10 @@ html
       tbody
 
     h1 Token generieren
-    form#gen-tokens(action='./api/generateTokens/', method='GET')
+    form#gen-tokens(action='./api/generateTokens', method='GET')
       label(for='amount') Tokenanzahl:
-        input#email(name='amount', type='number', required='', autocomplete='off', placeholder='70', max='1000')
+        input#token-amount(name='amount', type='number', required='', autocomplete='off', placeholder='70', max='1000')
       input(type='submit', value='Generieren')
-      br
-      textarea.hidden#new-tokens
 
     script(src='./js/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous')
     script(src="./js/jquery.dataTables.js")

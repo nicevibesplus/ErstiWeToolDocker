@@ -12,10 +12,13 @@ cp config.js.sample config.js
 ```
 Now customize `config.js`.
 
-Continue with:
-
+Create new admin password:
 ```bash
 htpasswd -c ./admin.htpasswd admin
+```
+
+Startup docker container:
+```bash
 docker compose up --build -d
 sleep 30
 docker exec mysql bash -c 'mysql --default-character-set=utf8 --password=supersecretstuff < schema.sql'

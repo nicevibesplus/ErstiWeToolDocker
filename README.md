@@ -18,7 +18,7 @@ Continue with:
 ```bash
 docker compose up --build -d
 sleep 30
-docker exec MySQL bash -c 'mysql --default-character-set=utf8 --password=supersecretstuff < schema.sql'
+docker exec mysql bash -c 'mysql --default-character-set=utf8 --password=supersecretstuff < schema.sql'
 ```
 
 ## anonymize PII

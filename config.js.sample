@@ -17,7 +17,7 @@ module.exports = {
   // if you change these values, also change them in schema.sql !
   mysql: {
     database: 'ersti-we',
-    host: 'localhost',
+    host: 'mysql',
     user: 'ersti-we',
     password: 'test',
     connectionlimit: 25,

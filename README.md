@@ -5,51 +5,20 @@ Tool to manage a freshmans weekend by GEOFS.
 Requires [`node ^8.x`](https://nodejs.org/en/download/package-manager/), [`yarn`](https://yarnpkg.com/en/docs/install) and `mysql-server ^5.7`.
 
 ```bash
-git clone https://github.com/SpeckiJ/ErstiWeTool.git
-cd ErstiWeTool
+git clone https://github.com/nicevibesplus/ErstiWeToolDocker.git
+cd ErstiWeToolDocker
 yarn install
-mysql -u root -p < schema.sql
-echo "SET PASSWORD FOR 'ersti-we' = PASSWORD('my pass word here')" | mysql -u root -p
+htpasswd -c ./admin.htpasswd admin
 cp config.js.sample config.js
 ```
+Now customize `config.js`.
 
-Now open `config.js` and configure the application to your likings.
+Continue with:
 
-At last, create login credentials for the admin panel (requires `htpasswd` from apache-utils):
-```
-htpasswd -c ./admin.htpasswd <username>
-```
-
-## Run
-You now can start the app by running `yarn start`.
-
-There are two frontend endpoints:
-- `./`:      contains the user facing forms
-- `./admin`: contains an adminpanel, requires authentication
-
-## Database via docker
-```sh
-# the root pw is set in docker-compose.yml
-docker-compose up -d mysql
-docker-compose exec mysql bash -c 'mysql --default-character-set=utf8 -p < schema.sql'
-docker-compose exec mysql bash -c "echo 'SET PASSWORD FOR \"ersti-we\" = PASSWORD(\"test\")' | mysql -p"
-```
-
-## run as service
-### systemd
 ```bash
-vi init/erstiwetool.service # change installation path
-sudo cp init/erstiwetool.service /etc/systemd/system/
-sudo systemctl enable erstiwetool
-sudo systemctl start erstiwetool
-```
-
-### upstart
-```bash
-vi init/erstiwetool # change installation path
-sudo cp init/erstiwetool /etc/init.d/
-sudo update-rc.d erstiwetool defaults 98 02
-sudo service erstiwetoolstart
+docker compose up --build -d
+sleep 30
+docker exec MySQL bash -c 'mysql --default-character-set=utf8 --password=supersecretstuff < schema.sql'
 ```
 
 ## anonymize PII

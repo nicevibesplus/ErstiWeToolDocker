@@ -18,6 +18,25 @@ $(document).ready(function() {
 
     const yearParam = urlQuery.year ? `?year=${urlQuery.year}` : '';
 
+    // token generation form submit handler
+    $('#gen-tokens').submit(function() {
+        $.ajax({
+            data: $(this).serialize(),
+            type: $(this).attr('method'),
+            url: $(this).attr('action') + $('[name=amount]', this).val(),
+            error: function(xhr, status, err) {
+                $('#new-tokens').removeClass('hidden').text(xhr.responseText);
+            },
+            success: function(res) {
+                $('#new-tokens')
+                    .attr('rows', res.length)
+                    .removeClass('hidden')
+                    .text(res.join('\n'));
+            }
+        });
+        return false;
+    });
+
     // get stats
     $.get(`./api/statistics${yearParam}`, function(stats, status) {
         if (status !== 'success') return console.error(stats, 'error');

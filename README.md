@@ -8,7 +8,6 @@ Requires [`node ^8.x`](https://nodejs.org/en/download/package-manager/), [`yarn`
 git clone https://github.com/nicevibesplus/ErstiWeToolDocker.git
 cd ErstiWeToolDocker
 yarn install
-htpasswd -c ./admin.htpasswd admin
 cp config.js.sample config.js
 ```
 Now customize `config.js`.
@@ -16,6 +15,7 @@ Now customize `config.js`.
 Continue with:
 
 ```bash
+htpasswd -c ./admin.htpasswd admin
 docker compose up --build -d
 sleep 30
 docker exec mysql bash -c 'mysql --default-character-set=utf8 --password=supersecretstuff < schema.sql'

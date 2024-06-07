@@ -102,7 +102,7 @@ html
       tbody
 
     h1 Token generieren
-    form#gen-tokens(action='./api/generateTokens', method='GET')
+    form#gen-tokens(action='./api/generateTokens/', method='GET')
       label(for='amount') Tokenanzahl:
         input#token-amount(name='amount', type='number', required='', autocomplete='off', placeholder='70', max='1000')
       input(type='submit', value='Generieren')
